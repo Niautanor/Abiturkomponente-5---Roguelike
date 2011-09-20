@@ -1,0 +1,3 @@
+font.ttf - Von Dwarf Fortress
+cour.ttf - Courier New aus Fonts Ordner von Win
+video_terminal_screen.ttf - www.abstractfonts.com/font/3941
