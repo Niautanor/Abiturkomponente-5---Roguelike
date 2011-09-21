@@ -24,5 +24,5 @@ public:
 	void SetBg(CColor Color);
 
 	//Zeichnet das Zeichen an den angegebenen Koordinaten auf die angegeben Oberfläche
-	bool DrawTile(SDL_Surface* pDisplay, TTF_Font* pFont, Uint32 XOffset, Uint32 YOffset);
+	bool DrawTile(SDL_Surface* pDisplay, TTF_Font* pFont, Uint32 XOffset, Uint32 YOffset, Uint32 TileWidth, Uint32 TileHeight);
 };

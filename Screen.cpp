@@ -69,7 +69,7 @@ bool Screen::Render(SDL_Surface* pDisplay, TTF_Font* pFont)
 {
 	for(Uint16 Y=0;Y<NumRows;Y++)
 		for(Uint16 X=0;X<NumCols;X++)
-			if(!Tiles[Y][X].DrawTile(pDisplay, pFont, TileWidth * X, TileHeight * Y))
+			if(!Tiles[Y][X].DrawTile(pDisplay, pFont, TileWidth * X, TileHeight * Y, TileWidth, TileHeight))
 				return false;
 	return true;
 }
