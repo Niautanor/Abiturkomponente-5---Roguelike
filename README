@@ -1,11 +1,12 @@
 The First actual Readme for a project, that I will actually release.
 
-I may include something like a MAKEFILE later on so you can compile it more easyly but at time it isn't that important for me.
+I may include something like a MAKEFILE later on so you can compile it more easyly but at time it isn't that important to me.
 
-To Install it download the Release/Abiturkomponente(...).exe
-and the 'Lib' as well as the 'Font' Directory.
-
-and extract the 'Lib' Directory to the .exe and copy the 'Font' Dir in the same Directory(the Directory should still be named 'Font')
+To Install it:
+1. download the Release/Abiturkomponente(...).exe
+2. extract the contents of the 'Lib' Directory in the same Directory you moved the .exe
+3. copy the 'Font' Directory in the Directory(The whole Font not just its contents)
+4. Now you should be able to see what I did in my spare time
 
 It may be, that you need aditional Libraries to run it on your OS. If you would tell me, which Librarys it demands I can see if I can distribute them in the Lib directory
 
