@@ -1,1 +1,6 @@
 The First actual Readme for a project, that I will actually release.
+
+To Install it download the Release/Abiturkomponente(...).exe
+and the 'Lib' as well as the 'Font' Directory.
+
+and extract the 'Lib' Directory to the .exe and copy the 'Font' Dir in the same Directory(the Directory should still be named 'Font')
