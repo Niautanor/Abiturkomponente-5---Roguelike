@@ -54,15 +54,13 @@ bool Tile::DrawTile(SDL_Surface* pDisplay, TTF_Font* pFont, Uint32 XOffset, Uint
 
 	SDL_BlitSurface(pGlyph, NULL, pTile, &TileRc);
 
-	//SDL_FreeSurface(pGlyph);
+	SDL_FreeSurface(pGlyph);
 
 	SDL_Rect DisplayRc;
 	DisplayRc.x = XOffset;
 	DisplayRc.y = YOffset;
 
 	SDL_BlitSurface(pTile, NULL, pDisplay, &DisplayRc);
-
-	SDL_FreeSurface(pGlyph);
 
 	SDL_FreeSurface(pTile);
 
