@@ -65,6 +65,10 @@ bool Main::OnInit()
 	if(!Messages.OnInit(0,0,5))
 		return false;
 
+	if(!Map.OnInit(4,5))
+		return false;
+	Map.ClearMap(CMapTile(Tile('#',CColor(0,255,0),CColor(0,0,0))));
+
 	SDL_EnableUNICODE(1);
 
 	return true;
@@ -72,6 +76,7 @@ bool Main::OnInit()
 
 void Main::OnExit()
 {
+	Map.OnExit();
 	Messages.OnExit();
 	s.OnExit();
 
@@ -95,6 +100,8 @@ void Main::OnRender()
 	UNICODE_STRING Text = TextToUnicode("ASDF! .. ####");
 	s.PutText(Text, CColor(255,255,255),CColor(0,0,0), 1,5);
 	delete[] Text;
+
+	Map.DrawMap(&s, 2,6);
 
 	s.Render(pDisplay, pFont);
 

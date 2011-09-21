@@ -14,6 +14,7 @@
 
 #include "Screen.h"
 
+#include "CMap.h"
 #include "CMessageQueue.h"
 
 class Main
@@ -30,6 +31,7 @@ private:
 	Screen s;
 
 	CMessageQueue Messages;
+	CMap Map;
 
 	Uint16 AtX, AtY;
 
