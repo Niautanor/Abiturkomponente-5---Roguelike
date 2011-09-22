@@ -55,7 +55,7 @@ bool CMap::DrawMap(Screen* s, Uint16 StartX, Uint16 StartY)
 	bool ret = true;
 	for(Uint16 Y=0;Y<MapHeight;Y++)
 		for(Uint16 X=0;X<MapWidth;X++)
-			if(!(Tiles[Y][X].PutToScreen(s, StartX+X, StartY+Y)))
+			if(!(s->Put(Tiles[Y][X], StartX+X, StartY+Y)))
 				ret = false;
 	return ret;
 }

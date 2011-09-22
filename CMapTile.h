@@ -9,15 +9,11 @@
 
 #include "Unicode.h"
 
-#include "Screen.h"
+#include "Tile.h"
 
-class CMapTile
+class CMapTile : public Tile
 {
 public:
 	CMapTile();
 	CMapTile(Tile t);
-
-	Tile T;
-
-	bool PutToScreen(Screen* s, Uint16 X, Uint16 Y);
 };
