@@ -5,10 +5,20 @@ And I am still learning to work with vim(therefor this line).
 I may include something like a MAKEFILE later on so you can compile it more easyly but at time it isn't that important to me.
 
 To Install it:
+(NOTE: the Files in this Repo might not be up to date but the source will be. please consider to build it from the source by yourself)
 1. download the Release/Abiturkomponente(...).exe
 2. extract the contents of the 'Lib' Directory in the same Directory you moved the .exe
 3. copy the 'Font' Directory in the Directory(The whole Font not just its contents)
 4. Now you should be able to see what I did in my spare time
+
+To MAKE the project from source:
+Prerequisites:
+	Librarys: Freetype2, SDL_ttf, SDL and SDLmain (development versions)
+	Includes: the coresponding headers(you might have to make them somehow accessible to your compiler(If that is the case: I have no Idea))
+
+	GNU make is required although you can write your own makefile if you wish
+
+1.Try make Abiturkomponente-Roguelike
 
 It may be, that you need additional Libraries to run it on your OS. If you would tell me, which Librarys it demands I can see if I can distribute them in the Lib directory
 
