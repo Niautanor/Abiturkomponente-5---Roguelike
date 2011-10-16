@@ -3,3 +3,4 @@ MapTiles
 
 Entitys
 -Subclasses Items, Monsters
+-MAYBE: Store a Pointer(or Coordinates) of an asociated MapTile
