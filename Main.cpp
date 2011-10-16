@@ -67,7 +67,8 @@ bool Main::OnInit()
 
 	if(!Map.OnInit(4,5))
 		return false;
-	Map.ClearMap(CMapTile(Tile('#',CColor(0,255,0),CColor(0,0,0))));
+	Map.ClearMap(CMapTile(Tile('#',CColor(0,255,0),CColor(0,0,0)), MTF_EXISTANT | MTF_VISIBLE));
+	Map.UnsetTileFlag(1, 2, MTF_VISIBLE);
 
 	SDL_EnableUNICODE(1);
 

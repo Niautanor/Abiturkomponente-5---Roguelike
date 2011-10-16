@@ -9,11 +9,24 @@
 
 #include "Unicode.h"
 
+#include "FlagSet.h"
+
 #include "Tile.h"
+
+typedef Uint16 MapTileFlag;
+
+enum eMapTileFlags
+{
+	MTF_EXISTANT = 0x0001,
+	MTF_VISIBLE = 0x0002,
+	MTF_SOLIT = 0x0003
+};
 
 class CMapTile : public Tile
 {
 public:
 	CMapTile();
-	CMapTile(Tile t);
+	CMapTile(Tile t, MapTileFlag Flagset);
+
+	FlagSet<Uint16> Flags;
 };
