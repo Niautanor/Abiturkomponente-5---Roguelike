@@ -1,0 +1,5 @@
+MapTiles
+-Should Store a linked list(vector?) of Entitys
+
+Entitys
+-Subclasses Items, Monsters
