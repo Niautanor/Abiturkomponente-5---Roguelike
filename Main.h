@@ -38,7 +38,7 @@ private:
 public:
 	Main();
 
-	static Main* g_pMain;
+	static Main* g_pMain;//Kann als globaler Zeiger auf die Aktuelle Anwendung verwendet werden
 
 	//Diese Funktion wird von beim Start der Anwendung aufgerufen und ihr wert zurückgegeben
 	int OnExecute();
