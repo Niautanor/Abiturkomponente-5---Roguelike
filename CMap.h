@@ -9,6 +9,7 @@
 
 #include "Unicode.h"
 #include "Screen.h"
+#include "CVector.h"
 #include "CMapTile.h"
 
 class CMap
