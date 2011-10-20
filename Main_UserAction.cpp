@@ -42,7 +42,7 @@ void Main::HandleUserAction(Uint16 c)
 {
 	switch(c)
 	{
-	case 'q':
+	case 'Q':
 		Finished = true;
 		break;
 	case '1':

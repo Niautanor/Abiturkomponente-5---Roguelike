@@ -1,5 +1,8 @@
+Map
+-Mental Note: Culling is completely useless, as I don't intend to make the map scrollable
+
 MapTiles
--Should Store a linked list(vector?) of Entitys
+-Should Store a linked list(vector?) of Entitys(either Pointer or indexes in a Global List)
 
 Entitys
 -Subclasses Items, Monsters
