@@ -1,5 +1,7 @@
 #include "Main.h"
 
+Main* Main::g_pMain;
+
 Main::Main()
 {
 	Finished = false;
@@ -111,8 +113,10 @@ void Main::OnRender()
 
 int main(int argc, char** argv)
 {
-	Main theMain;
-	return theMain.OnExecute();
+	Main::g_pMain = new Main;
+	int ret = Main::g_pMain->OnExecute();
+	delete Main::g_pMain;
+	return ret;
 }
 
 

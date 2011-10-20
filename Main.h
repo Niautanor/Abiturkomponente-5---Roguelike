@@ -38,6 +38,8 @@ private:
 public:
 	Main();
 
+	static Main* g_pMain;
+
 	//Diese Funktion wird von beim Start der Anwendung aufgerufen und ihr wert zurückgegeben
 	int OnExecute();
 
