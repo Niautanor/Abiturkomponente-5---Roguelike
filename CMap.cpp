@@ -45,7 +45,7 @@ void CMap::OnExit()
 bool CMap::DrawTile(Screen* s, Uint16 X, Uint16 Y, Uint16 StartX, Uint16 StartY)
 {
 	if(GetTileFlag(X,Y,MTF_EXISTANT) && GetTileFlag(X,Y,MTF_VISIBLE))
-		if(!(s->Put(Tiles[Y][X], StartX+X, StartY+Y)))
+		if(!(s->Put(Tiles[Y][X].GetTile(), StartX+X, StartY+Y)))
 			return false;
 	return true;
 }
@@ -61,7 +61,10 @@ void CMap::ClearMap(CMapTile ClearTile)
 {
 	for(Uint16 Y=0;Y<MapHeight;Y++)
 		for(Uint16 X=0;X<MapWidth;X++)
+		{
+			Tiles[Y][X].PrepareRemoval();
 			Tiles[Y][X] = ClearTile;
+		}
 }
 
 /**
@@ -102,7 +105,10 @@ bool CMap::DrawMap(Screen* s, Uint16 StartX, Uint16 StartY)
 void CMap::PutMapTile(CMapTile T, Uint16 X, Uint16 Y)
 {
 	if(!((X < 0 || X >= MapWidth) || (Y < 0 || Y >= MapHeight)))
+	{
+		Tiles[Y][X].PrepareRemoval();
 		Tiles[Y][X] = T;
+	}
 }
 
 /**

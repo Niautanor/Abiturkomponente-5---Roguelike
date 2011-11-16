@@ -22,11 +22,18 @@ enum eMapTileFlags
 	MTF_SOLIT = 0x0003
 };
 
-class CMapTile : public Tile
+class CMapTile
 {
+private:
+	Tile FloorTile;
+
 public:
 	CMapTile();
 	CMapTile(Tile t, MapTileFlag Flagset);
 
 	FlagSet<Uint16> Flags;
+
+	void PrepareRemoval();
+
+	Tile GetTile();
 };
