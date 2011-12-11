@@ -9,9 +9,9 @@
 
 #include <SDL/SDL.h>
 
-#include "Unicode.h"
+#include "HelperAPI/Unicode.h"
 
-#include "Screen.h"
+#include "Main/Screen.h"
 
 class CMessageQueue
 {

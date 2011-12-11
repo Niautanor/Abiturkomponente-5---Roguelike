@@ -10,11 +10,11 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 
-#include "Unicode.h"
+#include "HelperAPI/Unicode.h"
 
-#include "Screen.h"
+#include "Main/Screen.h"
 
-#include "CMap.h"
+#include "Map/CMap.h"
 #include "CMessageQueue.h"
 
 class Main

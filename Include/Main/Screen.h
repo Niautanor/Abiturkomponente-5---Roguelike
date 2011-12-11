@@ -10,7 +10,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 
-#include "Tile.h"
+#include "Main/Tile.h"
 
 class Screen
 {

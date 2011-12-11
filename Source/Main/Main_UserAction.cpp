@@ -5,7 +5,7 @@
  *      Author: Tim
  */
 
-#include "Main.h"
+#include "Main/Main.h"
 
 Uint16 Main::GetUserAction(SDL_Event* pEvent)
 {

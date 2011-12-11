@@ -21,4 +21,4 @@ public:
 	void Unset(T Flag);
 };
 
-#include "FlagSet.cpp.inc"
+#include "HelperAPI/FlagSet.cpp.inc"

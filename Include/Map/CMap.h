@@ -7,10 +7,10 @@
 
 #pragma once/* CMAP_H_ */
 
-#include "Unicode.h"
-#include "Screen.h"
-#include "CVector.h"
-#include "CMapTile.h"
+#include "HelperAPI/Unicode.h"
+#include "Main/Screen.h"
+#include "HelperAPI/CVector.h"
+#include "Map/CMapTile.h"
 
 class CMap
 {

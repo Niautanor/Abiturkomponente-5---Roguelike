@@ -5,7 +5,7 @@
  *      Author: Tim
  */
 
-#include "CMap.h"
+#include "Map/CMap.h"
 
 CMap::CMap()
 {

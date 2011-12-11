@@ -5,7 +5,7 @@
  *      Author: Tim
  */
 
-#include "Unicode.h"
+#include "HelperAPI/Unicode.h"
 
 UNICODE_STRING TextToUnicode(const char* Text)
 {

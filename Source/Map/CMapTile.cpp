@@ -5,7 +5,7 @@
  *      Author: Tim
  */
 
-#include "CMapTile.h"
+#include "Map/CMapTile.h"
 
 CMapTile::CMapTile()
 {

@@ -7,11 +7,11 @@
 
 #pragma once/* CMAPTILE_H_ */
 
-#include "Unicode.h"
+#include "HelperAPI/Unicode.h"
 
-#include "FlagSet.h"
+#include "HelperAPI/FlagSet.h"
 
-#include "Tile.h"
+#include "Main/Tile.h"
 
 typedef Uint16 MapTileFlag;
 

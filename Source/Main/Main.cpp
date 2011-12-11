@@ -1,6 +1,4 @@
-#include "Main.h"
-
-Main* Main::g_pMain;
+#include "Main/Main.h"
 
 Main::Main()
 {
@@ -113,10 +111,8 @@ void Main::OnRender()
 
 int main(int argc, char** argv)
 {
-	Main::g_pMain = new Main;
-	int ret = Main::g_pMain->OnExecute();
-	delete Main::g_pMain;
-	return ret;
+	Main App;
+	return App.OnExecute();
 }
 
 

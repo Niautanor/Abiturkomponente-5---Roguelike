@@ -5,7 +5,7 @@
  *      Author: Tim
  */
 
-#include "Tile.h"
+#include "Main/Tile.h"
 
 Tile::Tile()
 {

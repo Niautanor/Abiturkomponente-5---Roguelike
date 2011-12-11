@@ -5,7 +5,7 @@
  *      Author: Tim
  */
 
-#include "Screen.h"
+#include "Main/Screen.h"
 
 Screen::Screen()
 {

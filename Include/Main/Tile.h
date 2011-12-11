@@ -8,7 +8,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 
-#include "CColor.h"
+#include "HelperAPI/CColor.h"
 
 class Tile
 {
