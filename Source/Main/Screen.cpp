@@ -34,6 +34,13 @@ void Screen::OnExit()
 	delete[] Tiles;
 }
 
+Tile Screen::GetTile(Uint16 X, Uint16 Y)
+{
+	if(X > W() || Y > H())
+		return Tile();
+	return Tiles[Y][X];
+}
+
 bool Screen::Put(Tile T, Uint16 X, Uint16 Y)
 {
 	if(X >= NumCols || Y >= NumRows)
@@ -53,6 +60,20 @@ bool Screen::PutText(Uint16* Text, CColor Fg, CColor Bg, Uint16 X, Uint16 Y)
 			return false;
 		i++;
 	}
+	return true;
+}
+
+bool Screen::PutScreen(Screen* pSrc, Uint16 X, Uint16 Y, Uint16 SrcX, Uint16 SrcY, Uint16 W, Uint16 H)
+{
+	if(X > NumCols || Y > NumRows)
+		return false;
+	if(!W) W = pSrc->W();
+	if(!H) H = pSrc->H();
+
+	for(Uint16 Xpos=0;Xpos<W;Xpos++)
+		for(Uint16 Ypos=0;Ypos<H;Ypos++)
+			Put(pSrc->GetTile(Xpos, Ypos), X+Xpos, Y+Ypos);
+
 	return true;
 }
 
