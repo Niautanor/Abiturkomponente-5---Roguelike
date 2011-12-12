@@ -14,12 +14,12 @@ class Tile
 {
 public:
 	Tile();
-	Tile(Uint16 Char, CColor fg, CColor bg);
+	Tile(char Char, CColor fg, CColor bg);
 	Uint16 C;//char
 	SDL_Color fg;
 	SDL_Color bg;
 
-	void SetC(Uint16 Char);
+	void SetC(char Char);
 	void SetFg(CColor Color);
 	void SetBg(CColor Color);
 

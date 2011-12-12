@@ -7,8 +7,6 @@
 
 #pragma once/* CMAPTILE_H_ */
 
-#include "HelperAPI/Unicode.h"
-
 #include "HelperAPI/FlagSet.h"
 
 #include "Main/Tile.h"

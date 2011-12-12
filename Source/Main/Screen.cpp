@@ -51,12 +51,17 @@ bool Screen::Put(Tile T, Uint16 X, Uint16 Y)
 	return true;
 }
 
-bool Screen::PutText(Uint16* Text, CColor Fg, CColor Bg, Uint16 X, Uint16 Y)
+bool Screen::PutText(char* Text, CColor Fg, CColor Bg, Uint16 X, Uint16 Y)
 {
 	int i = 0;
 	while(Text[i])
 	{
-		if(!Put(Tile(Text[i], Fg, Bg), X+i, Y))
+		if(Text[i] == '\n')
+		{
+			Y++;
+			continue;
+		}
+		else if(!Put(Tile(Text[i], Fg, Bg), X+i, Y))
 			return false;
 		i++;
 	}

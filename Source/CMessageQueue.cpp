@@ -19,7 +19,7 @@ bool CMessageQueue::OnInit(Uint16 X, Uint16 Y, Uint16 Max)
 	MaxMessages = Max;
 	NumMessages = 0;
 
-	Messages = new UNICODE_STRING[MaxMessages];
+	Messages = new char*[MaxMessages];
 	for(int i=0;i<MaxMessages;i++)
 		Messages[i] = NULL;
 
@@ -43,33 +43,25 @@ void CMessageQueue::Clear()
 	NumMessages = 0;
 }
 
-void CMessageQueue::AddMessage(UNICODE_STRING M)
+
+void CMessageQueue::AddMessage(const char* M)
 {
 	Uint16 MId = 0;//Index an dem Die Nachricht in das Message_Array geschrieben werden soll
 	if(NumMessages < MaxMessages)
 	{
-		MId = NumMessages;
-		NumMessages++;
+		MId = NumMessages;//Nachricht in die Letzte stelle des Nachrichtenarrays schreiben
+		NumMessages++;//Es gibt eine Nachricht mehr
 	}
-	else
+	else //Ansonsten töte die erste nachricht und lösche ihre gesamte Fammilie
 	{
 		delete[] Messages[0];
 		for(int i=1;i<MaxMessages;i++)
 			Messages[i-1] = Messages[i];
 		MId = MaxMessages-1;
 	}
-
-	unsigned int MessageLen = UnicodeStrlen(M);
-	Messages[MId] = new UNICODE_CHAR[MessageLen+1];
-	UnicodeCpy(M, Messages[MId], MessageLen);
-}
-
-
-void CMessageQueue::AddMessage(const char* M)
-{
-	UNICODE_STRING UnicodeM = TextToUnicode(M);
-	AddMessage(UnicodeM);
-	delete[] UnicodeM;
+	unsigned int MessageLen = strlen(M);
+	Messages[MId] = new char[MessageLen+1];
+	strcpy(Messages[MId], M);
 }
 
 bool CMessageQueue::PrintMessages(Screen* s)

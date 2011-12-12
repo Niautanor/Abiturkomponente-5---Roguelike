@@ -10,8 +10,6 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 
-#include "HelperAPI/Unicode.h"
-
 #include "Main/Screen.h"
 
 #include "Map/CMap.h"

@@ -14,14 +14,14 @@ Tile::Tile()
 	bg = (CColor(0,0,0))();
 }
 
-Tile::Tile(Uint16 Char, CColor foreground, CColor background)
+Tile::Tile(char Char, CColor foreground, CColor background)
 {
 	C = Char;
 	fg = foreground();
 	bg = background();
 }
 
-void Tile::SetC(Uint16 Char)
+void Tile::SetC(char Char)
 {
 	C = Char;
 }
@@ -48,7 +48,7 @@ bool Tile::DrawTile(SDL_Surface* pDisplay, TTF_Font* pFont, Uint32 XOffset, Uint
 	SDL_SetColors(pTile, pGlyph->format->palette->colors, 0, pGlyph->format->palette->ncolors);//Die Farben von pGlyph importieren
 	SDL_FillRect(pTile, NULL, 0);//0 ist die Hintergrundfarbe von pGlyph
 
-	SDL_Rect TileRc;
+	SDL_Rect TileRc; //Tile an der Mitte der Bodenlinie ausrichten
 	TileRc.x = (TileWidth / 2) - (pGlyph->w / 2);
 	TileRc.y = TileHeight - pGlyph->h;
 

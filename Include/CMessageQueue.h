@@ -9,8 +9,6 @@
 
 #include <SDL/SDL.h>
 
-#include "HelperAPI/Unicode.h"
-
 #include "Main/Screen.h"
 
 class CMessageQueue
@@ -20,7 +18,7 @@ private:
 	Uint16 MaxMessages;//MaximaleAnzahl nachrichten
 	Uint16 NumMessages;
 
-	UNICODE_STRING* Messages;//Undefiniert langes Array für nachrichten ( wird bei Init() Messages[MaxMessages])
+	char** Messages;//Undefiniert langes Array für nachrichten ( wird bei Init() Messages[MaxMessages])
 
 public:
 	CMessageQueue();//Standardkonstruktor
@@ -35,6 +33,5 @@ public:
 	bool PrintMessages(Screen* s);
 
 	//Fügt die Angegeben Nachricht dem Nachrichtenpuffer hinzu
-	void AddMessage(UNICODE_STRING M);
 	void AddMessage(const char* M);
 };

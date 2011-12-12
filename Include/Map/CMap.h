@@ -7,7 +7,6 @@
 
 #pragma once/* CMAP_H_ */
 
-#include "HelperAPI/Unicode.h"
 #include "Main/Screen.h"
 #include "HelperAPI/CVector.h"
 #include "Map/CMapTile.h"

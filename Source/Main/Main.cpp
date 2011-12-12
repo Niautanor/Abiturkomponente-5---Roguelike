@@ -98,9 +98,8 @@ void Main::OnRender()
 	if(!Messages.PrintMessages(&s))
 		Messages.AddMessage("PrintMessages schlug fehl");
 
-	UNICODE_STRING Text = TextToUnicode("ASDF! .. ####");
+	char Text[] = "ASDF! .. ####";
 	s.PutText(Text, CColor(255,255,255),CColor(0,0,0), 1,5);
-	delete[] Text;
 
 	Map.DrawMap(&s, 2,6);
 

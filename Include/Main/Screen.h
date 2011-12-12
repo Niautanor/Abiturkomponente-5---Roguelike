@@ -34,7 +34,7 @@ public:
 	//Ein Zeichen auf den Bildshirm Setzen
 	bool Put(Tile T, Uint16 X, Uint16 Y);
 	//Einen Text auf den Bildschirm Setzen
-	bool PutText(Uint16* Text, CColor Fg, CColor Bg, Uint16 X, Uint16 Y);
+	bool PutText(char* Text, CColor Fg, CColor Bg, Uint16 X, Uint16 Y);
 	//Zeichnet eine anderen Bildschirm auf diesen
 	bool PutScreen(Screen* pScren, Uint16 X, Uint16 Y, Uint16 SrcX=0, Uint16 SrcY=0, Uint16 W=0, Uint16 H=0);
 
