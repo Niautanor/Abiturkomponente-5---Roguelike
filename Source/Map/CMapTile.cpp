@@ -10,13 +10,15 @@
 CMapTile::CMapTile()
 {
 	FloorTile = Tile('\0', CColor(255,255,255), CColor(0,0,0));
-	this->Flags.Set(1);
+	this->Flags.Clear();
+	this->Flags.Set(MTF_EXISTANT);
 }
 
 CMapTile::CMapTile(Tile t, MapTileFlag Flagset)
 {
 	FloorTile = t;
 
+	this->Flags.Clear();
 	this->Flags.Set(Flagset);
 }
 

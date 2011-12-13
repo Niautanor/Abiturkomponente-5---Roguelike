@@ -48,6 +48,10 @@ void Main::HandleUserAction(Uint16 c)
 	case '1':
 		AtY++;
 		AtX--;
+		if(Map.GetTile((AtX-2)%Map.GetW(), (AtY-6)%Map.GetH())->Flags.Is_Set(MTF_PASSABLE)) {
+			AtY--;
+			AtX++;
+		}
 		break;
 	case '3':
 		AtY++;

@@ -59,7 +59,10 @@ bool Main::OnInit()
 	if((pFont = TTF_OpenFont("Font/video_terminal_screen_regular.ttf", TileHeight)) == NULL)
 		return false;
 
-	if(!s.OnInit(TileHeight, TileWidth, NumRows, NumCols))
+	if(!sMain.OnInit(TileHeight, TileWidth, NumRows, NumCols))
+		return false;
+
+	if(!sMap.OnInit(TileHeight, TileWidth, 5, 4))
 		return false;
 
 	if(!Messages.OnInit(0,0,5))
@@ -67,8 +70,9 @@ bool Main::OnInit()
 
 	if(!Map.OnInit(4,5))
 		return false;
+
 	Map.ClearMap(CMapTile(Tile('#',CColor(0,255,0),CColor(0,0,0)), MTF_EXISTANT | MTF_VISIBLE));
-	Map.UnsetTileFlag(1, 2, MTF_VISIBLE);
+	Map.GetTile(1, 2)->Flags.Unset(MTF_VISIBLE);
 
 	SDL_EnableUNICODE(1);
 
@@ -79,7 +83,9 @@ void Main::OnExit()
 {
 	Map.OnExit();
 	Messages.OnExit();
-	s.OnExit();
+
+	sMap.OnExit();
+	sMain.OnExit();
 
 	TTF_CloseFont(pFont);
 	SDL_FreeSurface(pDisplay);
@@ -92,18 +98,19 @@ void Main::OnRender()
 {
 	SDL_FillRect(pDisplay, NULL, SDL_MapRGB(pDisplay->format, 0,0,0));
 
-	s.ClearScreen();
-	s.Put(Tile('@', CColor(255,0,0), CColor(0,0,0)),AtX,AtY);
+	sMain.ClearScreen();
+	sMain.Put(Tile('@', CColor(255,0,0), CColor(0,0,0)),AtX,AtY);
 
-	if(!Messages.PrintMessages(&s))
+	if(!Messages.PrintMessages(&sMain))
 		Messages.AddMessage("PrintMessages schlug fehl");
 
 	char Text[] = "ASDF! .. ####";
-	s.PutText(Text, CColor(255,255,255),CColor(0,0,0), 1,5);
+	sMain.PutText(Text, CColor(255,255,255),CColor(0,0,0), 1,5);
 
-	Map.DrawMap(&s, 2,6);
+	Map.DrawMap(&sMap, 0,0);
+	sMain.PutScreen(&sMap, 2, 6);
 
-	s.Render(pDisplay, pFont);
+	sMain.Render(pDisplay, pFont);
 
 	SDL_Flip(pDisplay);
 }

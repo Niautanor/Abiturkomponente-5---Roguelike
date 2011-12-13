@@ -24,6 +24,15 @@ private:
 public:
 	CMap();
 
+	CMapTile* GetTile(Uint16 X, Uint16 Y) {
+		if(X < MapWidth && Y < MapHeight)
+			return &Tiles[Y][X];
+		else return NULL;
+	}
+
+	Uint16 GetW() { return MapWidth; }
+	Uint16 GetH() { return MapHeight; }
+
 	/*Init und Exit*/
 	bool OnInit(Uint16 Width, Uint16 Height);
 	void OnExit();
@@ -32,9 +41,4 @@ public:
 	void ClearMap(CMapTile ClearTile);
 	bool DrawMap(Screen* s, Uint16 StartX, Uint16 StartY);
 	void PutMapTile(CMapTile T, Uint16 X, Uint16 Y);
-
-	/*TileFlags abrufen und setzen*/
-	bool GetTileFlag(Uint16 X, Uint16 Y, MapTileFlag Flag);
-	void SetTileFlag(Uint16 X, Uint16 Y, MapTileFlag Flag);
-	void UnsetTileFlag(Uint16 X, Uint16 Y, MapTileFlag Flag);
 };

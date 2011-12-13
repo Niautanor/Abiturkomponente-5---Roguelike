@@ -26,7 +26,8 @@ private:
 	Uint16 TileWidth, TileHeight;
 	Uint16 NumRows, NumCols;
 
-	Screen s;
+	Screen sMain;
+	Screen sMap;
 
 	CMessageQueue Messages;
 	CMap Map;

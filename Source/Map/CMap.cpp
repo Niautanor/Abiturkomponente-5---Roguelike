@@ -44,7 +44,9 @@ void CMap::OnExit()
  **/
 bool CMap::DrawTile(Screen* s, Uint16 X, Uint16 Y, Uint16 StartX, Uint16 StartY)
 {
-	if(GetTileFlag(X,Y,MTF_EXISTANT) && GetTileFlag(X,Y,MTF_VISIBLE))
+	if(!(X < MapWidth || Y < MapWidth)) return false;
+
+	if(Tiles[Y][X].Flags.Is_Set(MTF_EXISTANT) && Tiles[Y][X].Flags.Is_Set(MTF_VISIBLE))
 		if(!(s->Put(Tiles[Y][X].GetTile(), StartX+X, StartY+Y)))
 			return false;
 	return true;
@@ -109,35 +111,4 @@ void CMap::PutMapTile(CMapTile T, Uint16 X, Uint16 Y)
 		Tiles[Y][X].PrepareRemoval();
 		Tiles[Y][X] = T;
 	}
-}
-
-/**
- * @function:
- * Kapselung von CMapTile.Flags.Is_Set(MapTileFlag Flag)
- **/
-bool CMap::GetTileFlag(Uint16 X, Uint16 Y, MapTileFlag Flag)
-{
-	if(!((X < 0 || X >= MapWidth) || (Y < 0 || Y >= MapHeight)))
-		return Tiles[Y][X].Flags.Is_Set(Flag);
-	return false;
-}
-
-/**
- * @function:
- * Kapselung von CMapTile::Flags.Set(MapTileFlag Flag)
- **/
-void CMap::SetTileFlag(Uint16 X, Uint16 Y, MapTileFlag Flag)
-{
-	if(!((X < 0 || X >= MapWidth) || (Y < 0 || Y >= MapHeight)))
-		Tiles[Y][X].Flags.Set(Flag);
-}
-
-/**
- * @function:
- * Kapselung von CMapTile::Flags.Unset(MapTileFlag Flag)
- **/
-void CMap::UnsetTileFlag(Uint16 X, Uint16 Y, MapTileFlag Flag)
-{
-	if(!((X < 0 || X >= MapWidth) || (Y < 0 || Y >= MapHeight)))
-		Tiles[Y][X].Flags.Unset(Flag);
 }

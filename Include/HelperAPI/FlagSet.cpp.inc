@@ -12,6 +12,11 @@ template<class T> FlagSet<T>::FlagSet()
 	Flags = 0;
 }
 
+template<class T> void FlagSet<T>::Clear()
+{
+	Flags = 0;
+}
+
 template<class T> bool FlagSet<T>::Is_Set(T Flag)
 {
 	return (Flags & Flag);

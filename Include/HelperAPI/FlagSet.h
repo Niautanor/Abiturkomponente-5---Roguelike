@@ -15,6 +15,8 @@ private:
 public:
 	FlagSet();
 
+	void Clear();
+
 	bool Is_Set(T Flag);
 
 	void Set(T Flag);

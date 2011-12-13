@@ -17,7 +17,7 @@ enum eMapTileFlags
 {
 	MTF_EXISTANT = 0x0001,
 	MTF_VISIBLE = 0x0002,
-	MTF_SOLIT = 0x0003
+	MTF_PASSABLE = 0x0003
 };
 
 class CMapTile
