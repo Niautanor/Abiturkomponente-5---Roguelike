@@ -27,7 +27,9 @@ template<class T> void FlagSet<T>::Set(T Flag)
 	Flags |= Flag;
 }
 
+//FIXME: Find The eventual Bug!!!
 template<class T> void FlagSet<T>::Unset(T Flag)
 {
-	Flags &= !Flag;
+	Flag != Flag;
+	Flags &= Flag;
 }

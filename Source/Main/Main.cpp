@@ -1,5 +1,7 @@
 #include "Main/Main.h"
 
+#include <iostream>
+
 Main::Main()
 {
 	Finished = false;
@@ -9,7 +11,12 @@ Main::Main()
 	TileWidth = TileHeight = 0;
 	NumRows = NumCols = 0;
 
-	AtX = AtY = 0;
+	GameMode = GM_NONE;
+
+	PendingTicks = 0;
+
+	//Testing Stuff
+	pPlayer = NULL;
 }
 
 int Main::OnExecute()
@@ -20,7 +27,7 @@ int Main::OnExecute()
 
 	SDL_Event Event;
 
-	Uint16 c;//Zwischenspeicherung eines Tastendrucks
+	char c;//Zwischenspeicherung eines Tastendrucks
 
 	//Solange das Spiel nicht durch Benutzereingabe('q') oder Sieg/Vernichtung beendet wurde soll es weiterlaufen
 	while(!Finished)
@@ -29,6 +36,8 @@ int Main::OnExecute()
 
 		c = GetUserAction(&Event);
 		HandleUserAction(c);
+		while(PendingTicks)
+			Tick();
 
 	}
 
@@ -44,6 +53,8 @@ bool Main::OnInit()
 	TileWidth = TileHeight / 2;
 	NumCols = 50;
 	NumRows = 15;
+
+	GameMode = GM_MAIN;
 
 	if(SDL_Init(SDL_INIT_EVERYTHING) > 0)
 		return false;
@@ -62,25 +73,33 @@ bool Main::OnInit()
 	if(!sMain.OnInit(TileHeight, TileWidth, NumRows, NumCols))
 		return false;
 
-	if(!sMap.OnInit(TileHeight, TileWidth, 5, 4))
+	if(!sMap.OnInit(TileHeight, TileWidth, 5, 5))
 		return false;
 
-	if(!Messages.OnInit(0,0,5))
+	if(!Messages.OnInit(40))
 		return false;
 
-	if(!Map.OnInit(4,5))
+	if(!Map.OnInit(5,5))
 		return false;
-
-	Map.ClearMap(CMapTile(Tile('#',CColor(0,255,0),CColor(0,0,0)), MTF_EXISTANT | MTF_VISIBLE));
-	Map.GetTile(1, 2)->Flags.Unset(MTF_VISIBLE);
 
 	SDL_EnableUNICODE(1);
+
+	//Testing Stuff
+	Map.ClearMap(CMapTile::WallTile);
+	for(Uint32 Y=1;Y<(Map.GetH()-1);Y++)
+		for(Uint32 X=1;X<(Map.GetW()-1);X++)
+			Map.GetTile(CVector(X, Y)) = CMapTile::GroundTile;
+
+	pPlayer = new CEntity;
+	Map.AddEntity(pPlayer);
 
 	return true;
 }
 
 void Main::OnExit()
 {
+	Map.RemoveEntity(pPlayer);
+	//pPlayer = NULL;
 	Map.OnExit();
 	Messages.OnExit();
 
@@ -99,24 +118,43 @@ void Main::OnRender()
 	SDL_FillRect(pDisplay, NULL, SDL_MapRGB(pDisplay->format, 0,0,0));
 
 	sMain.ClearScreen();
-	sMain.Put(Tile('@', CColor(255,0,0), CColor(0,0,0)),AtX,AtY);
 
-	if(!Messages.PrintMessages(&sMain))
-		Messages.AddMessage("PrintMessages schlug fehl");
+	switch(GameMode)
+	{
+	case GM_MAIN:
+		if(!Messages.PrintMessages(&sMain, 0, 0, 5,  false))
+			Messages.AddMessage("PrintMessages schlug fehl");
 
-	char Text[] = "ASDF! .. ####";
-	sMain.PutText(Text, CColor(255,255,255),CColor(0,0,0), 1,5);
-
-	Map.DrawMap(&sMap, 0,0);
-	sMain.PutScreen(&sMap, 2, 6);
+		Map.DrawMap(&sMap, 0,0);
+		sMain.PutScreen(&sMap, 2, 6);
+		break;
+	case GM_MESSAGE_ARCHIVE:
+		if(!Messages.PrintMessages(&sMain, 0, 0, NumRows, true))
+			Messages.AddMessage("PrintMessages schlug fehl");
+		break;
+	default:
+		break;
+	}
 
 	sMain.Render(pDisplay, pFont);
 
 	SDL_Flip(pDisplay);
 }
 
+void Main::Tick()
+{
+	Messages.Tick();
+	Map.Tick();
+	PendingTicks--;
+}
+
 int main(int argc, char** argv)
 {
+	setvbuf(stdout, NULL, _IONBF, 0);
+	setvbuf(stderr, NULL, _IONBF, 0);
+
+	std::cout << "HOHOHOHO!" << std::endl;
+
 	Main App;
 	return App.OnExecute();
 }

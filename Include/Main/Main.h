@@ -12,8 +12,15 @@
 
 #include "Main/Screen.h"
 
-#include "Map/CMap.h"
+#include "Map/Map.h"
 #include "CMessageQueue.h"
+
+enum eGameMode
+{
+	GM_NONE = 0,
+	GM_MAIN,
+	GM_MESSAGE_ARCHIVE
+};
 
 class Main
 {
@@ -23,16 +30,20 @@ private:
 	SDL_Surface* pDisplay;//Das Objekt, dass alle Daten zum Tatsächlichen Spielfenster enthält
 	TTF_Font* pFont;//Die Schriftart, die Verwendet wird um den Bildschirm anzuzeigen
 
-	Uint16 TileWidth, TileHeight;
+	Uint16 TileWidth, TileHeight;//Asdf
 	Uint16 NumRows, NumCols;
 
 	Screen sMain;
 	Screen sMap;
 
+	eGameMode GameMode;
+
 	CMessageQueue Messages;
 	CMap Map;
 
-	Uint16 AtX, AtY;
+	Uint16 PendingTicks;//Die Anzahl der Spielschritte die ausgeführt werden muss bevor der Spieler wieder eine Entscheidung treffen kann
+
+	CEntity* pPlayer;
 
 public:
 	Main();
@@ -51,6 +62,9 @@ public:
 
 	//Kümmert sich um alle Benutzeraktionen und beendet gegebenenfals das Spiel
 	Uint16 GetUserAction(SDL_Event* pEvent);
+
+	//Bewegt das Spiel
+	void Tick();
 
 	//Reagiert auf den Druck der Taste C
 	void HandleUserAction(Uint16 c);

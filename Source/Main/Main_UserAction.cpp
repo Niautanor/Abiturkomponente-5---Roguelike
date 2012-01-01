@@ -32,6 +32,7 @@ Uint16 Main::GetUserAction(SDL_Event* pEvent)
 			default:
 				return pEvent->key.keysym.unicode;
 			}
+			break;//disables a unhelpfull eclipse Warning
 		}
 	}
 
@@ -46,42 +47,78 @@ void Main::HandleUserAction(Uint16 c)
 		Finished = true;
 		break;
 	case '1':
-		AtY++;
-		AtX--;
-		if(Map.GetTile((AtX-2)%Map.GetW(), (AtY-6)%Map.GetH())->Flags.Is_Set(MTF_PASSABLE)) {
-			AtY--;
-			AtX++;
+		if(pPlayer->CanMove(&Map, CVector(-1,1))) {
+			pPlayer->Mov += CVector(-1,1);
+			PendingTicks++;
 		}
+		else Messages.AddMessage("Boing!");
 		break;
 	case '3':
-		AtY++;
-		AtX++;
+		if(pPlayer->CanMove(&Map, CVector(1,1))) {
+			pPlayer->Mov += CVector(1,1);
+			PendingTicks++;
+		}
+		else Messages.AddMessage("Boing!");
 		break;
 	case '7':
-		AtY--;
-		AtX--;
+		if(pPlayer->CanMove(&Map, CVector(-1,-1))) {
+			pPlayer->Mov += CVector(-1,-1);
+			PendingTicks++;
+		}
+		else Messages.AddMessage("Boing!");
 		break;
 	case '9':
-		AtY--;
-		AtX++;
+		if(pPlayer->CanMove(&Map, CVector(1,-1))) {
+			pPlayer->Mov += CVector(1,-1);
+			PendingTicks++;
+		}
+		else Messages.AddMessage("Boing!");
 		break;
 	case '2':
-		AtY++;
+		if(pPlayer->CanMove(&Map, CVector(0,1))) {
+			pPlayer->Mov += CVector(0,1);
+			PendingTicks++;
+		}
+		else Messages.AddMessage("Boing!");
 		break;
 	case '4':
-		AtX--;
+		if(pPlayer->CanMove(&Map, CVector(-1,0))) {
+			pPlayer->Mov += CVector(-1,0);
+			PendingTicks++;
+		}
+		else Messages.AddMessage("Boing!");
 		break;
 	case '6':
-		AtX++;
+		if(pPlayer->CanMove(&Map, CVector(1,0))) {
+			pPlayer->Mov += CVector(1,0);
+			PendingTicks++;
+		}
+		else Messages.AddMessage("Boing!");
 		break;
 	case '8':
-		AtY--;
+		if(pPlayer->CanMove(&Map, CVector(0,-1))) {
+			pPlayer->Mov += CVector(0,-1);
+			PendingTicks++;
+		}
+		else Messages.AddMessage("Boing!");
+		break;
+	case 'm':
+		if(GameMode == GM_MESSAGE_ARCHIVE)
+			GameMode = GM_MAIN;
+		else
+			GameMode = GM_MESSAGE_ARCHIVE;
 		break;
 	case 'c':
 		Messages.Clear();
 		break;
+	case 't':
+		PendingTicks++;
+		break;
 	case 'h':
 		Messages.AddMessage("TASTE FUER HALLO GEDRUECKT! ASDFL");
+		break;
+	case 'l':
+		Messages.AddMessage("LOLSCHOCK!");
 		break;
 	}
 }
