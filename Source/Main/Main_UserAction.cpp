@@ -39,6 +39,26 @@ Uint16 Main::GetUserAction(SDL_Event* pEvent)
 	return 0;
 }
 
+void Main::HandleDirectionKey(CVector Dir)
+{
+	if(InputMode == IM_MAIN)
+	{
+		if(pPlayer->CanMove(&Map, Dir)) {
+			pPlayer->Mov += Dir;
+			PendingTicks++;
+		}
+		else gMessages.AddMessage("Boing!");
+	}
+	else if(InputMode == IM_EXAMINE) {
+		Map.GetTile(pPlayer->Pos + Dir)->OnExamine(pPlayer->Pos + Dir, &Map, pPlayer);
+		InputMode = IM_MAIN;
+	}
+	else if(InputMode == IM_INTERACT) {
+		Map.GetTile(pPlayer->Pos + Dir)->OnInteract(pPlayer->Pos + Dir, &Map, pPlayer);
+		InputMode = IM_MAIN;
+	}
+}
+
 void Main::HandleUserAction(Uint16 c)
 {
 	switch(c)
@@ -46,61 +66,36 @@ void Main::HandleUserAction(Uint16 c)
 	case 'Q':
 		Finished = true;
 		break;
+	case 'q':
+		GameMode = GM_MAIN;
+		InputMode = IM_MAIN;
+		break;
 	case '1':
-		if(pPlayer->CanMove(&Map, CVector(-1,1))) {
-			pPlayer->Mov += CVector(-1,1);
-			PendingTicks++;
-		}
-		else Messages.AddMessage("Boing!");
+		HandleDirectionKey(CVector(-1,1));
 		break;
 	case '3':
-		if(pPlayer->CanMove(&Map, CVector(1,1))) {
-			pPlayer->Mov += CVector(1,1);
-			PendingTicks++;
-		}
-		else Messages.AddMessage("Boing!");
+		HandleDirectionKey(CVector(1,1));
 		break;
 	case '7':
-		if(pPlayer->CanMove(&Map, CVector(-1,-1))) {
-			pPlayer->Mov += CVector(-1,-1);
-			PendingTicks++;
-		}
-		else Messages.AddMessage("Boing!");
+		HandleDirectionKey(CVector(-1,-1));
 		break;
 	case '9':
-		if(pPlayer->CanMove(&Map, CVector(1,-1))) {
-			pPlayer->Mov += CVector(1,-1);
-			PendingTicks++;
-		}
-		else Messages.AddMessage("Boing!");
+		HandleDirectionKey(CVector(1,-1));
 		break;
 	case '2':
-		if(pPlayer->CanMove(&Map, CVector(0,1))) {
-			pPlayer->Mov += CVector(0,1);
-			PendingTicks++;
-		}
-		else Messages.AddMessage("Boing!");
+		HandleDirectionKey(CVector(0,1));
 		break;
 	case '4':
-		if(pPlayer->CanMove(&Map, CVector(-1,0))) {
-			pPlayer->Mov += CVector(-1,0);
-			PendingTicks++;
-		}
-		else Messages.AddMessage("Boing!");
+		HandleDirectionKey(CVector(-1,0));
+		break;
+	case '5'://'5' -> warten
+		HandleDirectionKey(CVector(0,0));
 		break;
 	case '6':
-		if(pPlayer->CanMove(&Map, CVector(1,0))) {
-			pPlayer->Mov += CVector(1,0);
-			PendingTicks++;
-		}
-		else Messages.AddMessage("Boing!");
+		HandleDirectionKey(CVector(1,0));
 		break;
 	case '8':
-		if(pPlayer->CanMove(&Map, CVector(0,-1))) {
-			pPlayer->Mov += CVector(0,-1);
-			PendingTicks++;
-		}
-		else Messages.AddMessage("Boing!");
+		HandleDirectionKey(CVector(0,-1));
 		break;
 	case 'm':
 		if(GameMode == GM_MESSAGE_ARCHIVE)
@@ -108,17 +103,29 @@ void Main::HandleUserAction(Uint16 c)
 		else
 			GameMode = GM_MESSAGE_ARCHIVE;
 		break;
+	case 'i':
+		if(InputMode != IM_MAIN)
+			break;
+		InputMode = IM_INTERACT;
+		gMessages.AddMessage("Interaktionsmodus: ('q' zum Beenden)");
+		break;
+	case 'e':
+		if(InputMode != IM_MAIN)
+			break;
+		InputMode = IM_EXAMINE;
+		gMessages.AddMessage("Untersuchungsmodus ('q' zum Beenden)");
+		break;
 	case 'c':
-		Messages.Clear();
+		gMessages.Clear();
 		break;
 	case 't':
 		PendingTicks++;
 		break;
 	case 'h':
-		Messages.AddMessage("TASTE FUER HALLO GEDRUECKT! ASDFL");
+		gMessages.AddMessage("TASTE FUER HALLO GEDRUECKT! ASDFL");
 		break;
 	case 'l':
-		Messages.AddMessage("LOLSCHOCK!");
+		gMessages.AddMessage("LOLSCHOCK!");
 		break;
 	}
 }

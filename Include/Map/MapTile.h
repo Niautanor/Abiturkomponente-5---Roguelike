@@ -18,6 +18,8 @@ class CMapTile;
 #include "HelperAPI/PtrList.h"
 #include "Entities/Entity.h"
 
+#include "CMessageQueue.h"
+
 typedef Uint16 MapTileFlag;
 
 enum eMapTileFlags
@@ -29,25 +31,42 @@ enum eMapTileFlags
 
 class CMapTile
 {
-private:
+protected:
 	Tile FloorTile;
 
 public:
 	CMapTile() : FloorTile(Tile(' ',CColor(0,0,0),CColor(255,255,255))) { Flags.Clear(); }
 	CMapTile(Tile t, MapTileFlag Flagset);
 
+	virtual ~CMapTile() { };
+
 	static CMapTile* EmptyTile;
 	static CMapTile* WallTile;
 	static CMapTile* GroundTile;
+
+	static CMapTile* DoorTile;
 
 	FlagSet<Uint16> Flags;
 
 	virtual void Tick(CVector Pos, CMap* pMap);
 
 	/**
+	 * @function: Erlaubt dem Spieler mit einem Stück der welt zu interagieren
+	 **/
+	virtual void OnInteract(CVector Pos, CMap* pMap, CEntity* pActor);
+
+	/**
+	 * @function: Zeigt eine Statusnachricht für ein Tile an
+	 */
+	virtual void OnExamine(CVector Pos, CMap* pMap, CEntity* pActor);
+
+	/**
 	 * @function: Returns the drawable colored Character of the mapTile
 	 * by default the FloorTile
 	 * which can be replaced by Entitys on the Tile
 	 **/
-	Tile GetTile(CVector Pos, CMap* pMap);
+	virtual Tile GetTile(CVector Pos, CMap* pMap);
 };
+
+//somehow this needs to be at the end (TODO:WHY?)
+#include "Map/DoorTile.h"//Have all the Tiletypes in one spot(as static members of CMapTile)

@@ -22,7 +22,7 @@ class CMap
 private:
 	Uint16 MapWidth, MapHeight;
 
-	PtrList<CMapTile*> TileList; //TileList ist eine Pointerliste OHNE Objektkontrolle, da die Eigenschaften der Spielfelder in globalen Pointern festgelegt werden. Sie dürfen nicht gelöscht werden
+	PtrList<CMapTile*> TileList; //TileList ist eine Pointerliste OHNE Objektkontrolle(automatisches delete), da die Eigenschaften der Spielfelder in globalen Pointern festgelegt werden. Sie dürfen nicht gelöscht werden
 	PtrList<CEntity*> EntityList;
 
 	/*Refractored from DrawMap*/

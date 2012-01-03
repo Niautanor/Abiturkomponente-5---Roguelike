@@ -12,6 +12,7 @@ Main::Main()
 	NumRows = NumCols = 0;
 
 	GameMode = GM_NONE;
+	InputMode = IM_NONE;
 
 	PendingTicks = 0;
 
@@ -55,6 +56,7 @@ bool Main::OnInit()
 	NumRows = 15;
 
 	GameMode = GM_MAIN;
+	InputMode = IM_MAIN;
 
 	if(SDL_Init(SDL_INIT_EVERYTHING) > 0)
 		return false;
@@ -76,7 +78,7 @@ bool Main::OnInit()
 	if(!sMap.OnInit(TileHeight, TileWidth, 5, 5))
 		return false;
 
-	if(!Messages.OnInit(40))
+	if(!gMessages.OnInit(40))
 		return false;
 
 	if(!Map.OnInit(5,5))
@@ -90,6 +92,10 @@ bool Main::OnInit()
 		for(Uint32 X=1;X<(Map.GetW()-1);X++)
 			Map.GetTile(CVector(X, Y)) = CMapTile::GroundTile;
 
+	Map.GetTile(CVector(2,1)) = CMapTile::WallTile;
+	Map.GetTile(CVector(2,2)) = CMapTile::WallTile;
+	Map.GetTile(CVector(2,3)) = CMapTile::DoorTile;
+
 	pPlayer = new CEntity;
 	Map.AddEntity(pPlayer);
 
@@ -101,7 +107,7 @@ void Main::OnExit()
 	Map.RemoveEntity(pPlayer);
 	//pPlayer = NULL;
 	Map.OnExit();
-	Messages.OnExit();
+	gMessages.OnExit();
 
 	sMap.OnExit();
 	sMain.OnExit();
@@ -122,15 +128,15 @@ void Main::OnRender()
 	switch(GameMode)
 	{
 	case GM_MAIN:
-		if(!Messages.PrintMessages(&sMain, 0, 0, 5,  false))
-			Messages.AddMessage("PrintMessages schlug fehl");
+		if(!gMessages.PrintMessages(&sMain, 0, 0, 5,  false))
+			gMessages.AddMessage("PrintMessages schlug fehl");
 
 		Map.DrawMap(&sMap, 0,0);
 		sMain.PutScreen(&sMap, 2, 6);
 		break;
 	case GM_MESSAGE_ARCHIVE:
-		if(!Messages.PrintMessages(&sMain, 0, 0, NumRows, true))
-			Messages.AddMessage("PrintMessages schlug fehl");
+		if(!gMessages.PrintMessages(&sMain, 0, 0, NumRows, true))
+			gMessages.AddMessage("PrintMessages schlug fehl");
 		break;
 	default:
 		break;
@@ -143,7 +149,7 @@ void Main::OnRender()
 
 void Main::Tick()
 {
-	Messages.Tick();
+	gMessages.Tick();
 	Map.Tick();
 	PendingTicks--;
 }

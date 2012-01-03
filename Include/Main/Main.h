@@ -22,6 +22,14 @@ enum eGameMode
 	GM_MESSAGE_ARCHIVE
 };
 
+enum eInputMode
+{
+	IM_NONE = 0,
+	IM_MAIN,
+	IM_INTERACT,
+	IM_EXAMINE
+};
+
 class Main
 {
 private:
@@ -37,8 +45,8 @@ private:
 	Screen sMap;
 
 	eGameMode GameMode;
+	eInputMode InputMode;
 
-	CMessageQueue Messages;
 	CMap Map;
 
 	Uint16 PendingTicks;//Die Anzahl der Spielschritte die ausgeführt werden muss bevor der Spieler wieder eine Entscheidung treffen kann
@@ -68,4 +76,7 @@ public:
 
 	//Reagiert auf den Druck der Taste C
 	void HandleUserAction(Uint16 c);
+
+	//Reagiert auf den Druck einer Richtungstaste(1,2,3,4,6,7,8,9)
+	void HandleDirectionKey(CVector Dir);
 };

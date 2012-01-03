@@ -15,6 +15,7 @@ class Tile
 public:
 	Tile();
 	Tile(char Char, CColor fg, CColor bg);
+	Tile(char Char, SDL_Color Fg, SDL_Color Bg) : C(Char), fg(Fg), bg(Bg) { }
 	Uint16 C;//char
 	SDL_Color fg;
 	SDL_Color bg;
