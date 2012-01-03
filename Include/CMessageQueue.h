@@ -47,3 +47,5 @@ public:
 	//Prüft ob Nachrichten zu alt geworden sind um noch dargestellt zu werden
 	void Tick();
 };
+
+extern CMessageQueue gMessages;

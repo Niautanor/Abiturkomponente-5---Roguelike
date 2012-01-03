@@ -7,6 +7,8 @@
 
 #include "CMessageQueue.h"
 
+CMessageQueue gMessages;
+
 CMessageQueue::CMessageQueue()
 {
 	Messages = NULL;
