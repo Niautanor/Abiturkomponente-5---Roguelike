@@ -9,16 +9,20 @@
 
 #include "Map/MapTile.h"
 
+enum eDoorTileData
+{
+	DTD_NONE = 0,
+	DTD_OPEN = 0x01
+};
+
 class CDoorTile : public CMapTile
 {
-private:
-	bool Open;
-
 public:
-	CDoorTile(Tile t, MapTileFlag Flagset) : CMapTile(t, Flagset) { Open = false; }
+	CDoorTile(Tile t, MapTileFlag Flagset) : CMapTile(t, Flagset) { }
 
 	void OnInteract(CVector Pos, CMap* pMap, CEntity* pActor);
 	void OnExamine(CVector Pos, CMap* pMap, CEntity* pActor);
 
+	bool IsPassable(CVector Pos, CMap* pMap, CEntity* pTrespasser);
 	Tile GetTile(CVector Pos, CMap* pMap);
 };

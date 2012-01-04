@@ -20,7 +20,7 @@ CEntity::~CEntity()
 
 bool CEntity::CanMove(CMap* pMap, CVector Dir)
 {
-	if(pMap->GetTile(Pos+Dir)->Flags.Is_Set(MTF_PASSABLE))
+	if(pMap->GetTile(Pos+Dir)->IsPassable(Pos+Dir,pMap,this))
 		return true;
 	return false;
 }

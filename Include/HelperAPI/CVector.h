@@ -47,6 +47,11 @@ inline bool operator == (const CVector& a, const CVector& b)
 	return (a.X == b.X && a.Y == b.Y);
 }
 
+inline bool operator != (const CVector& a, const CVector& b)
+{
+	return (a.X != b.X || a.Y != b.Y);
+}
+
 inline CVector operator + (const CVector& a, const CVector& b)
 {
 	return CVector(a.X+b.X, a.Y+b.Y);

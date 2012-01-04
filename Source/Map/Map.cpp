@@ -24,6 +24,10 @@ bool CMap::OnInit(Uint16 Width, Uint16 Height)
 	for(Uint32 i=0;i<(MapHeight*MapWidth);i++)
 		TileList.Push(CMapTile::EmptyTile);
 
+	TileDataList = new FlagSet<Uint8>[MapWidth * MapHeight];
+	for(Uint16 i=0;i<(MapWidth*MapHeight);i++)
+		TileDataList[i].Clear();
+
 	EntityList.clear();
 
 	return true;
@@ -35,8 +39,10 @@ void CMap::OnExit()
 		EntityList.Remove(i);
 	EntityList.clear();
 
+	delete[] TileDataList;
+
 	for(Uint32 i=0;i<TileList.size();i++)
-		TileList[i] = NULL;
+		TileList[i] = NULL;//Tiles sind keine eigenständigen Objekte und können deshalb nich gelöscht werden
 	TileList.clear();
 }
 
@@ -49,7 +55,7 @@ void CMap::OnExit()
  **/
 bool CMap::DrawTile(Screen* s, Uint16 X, Uint16 Y, Uint16 StartX, Uint16 StartY)
 {
-	if(!(X < MapWidth || Y < MapWidth)) return false;
+	if(!(X < MapWidth || Y < MapHeight)) return false;
 
 	if(TileList[Y*MapWidth+X]->Flags.Is_Set(MTF_EXISTANT) && TileList[Y*MapWidth+X]->Flags.Is_Set(MTF_VISIBLE))
 		if(!(s->Put(TileList[Y*MapWidth+X]->GetTile(CVector(X, Y), this), StartX+X, StartY+Y)))
@@ -68,6 +74,15 @@ PtrList<CEntity*> CMap::GetTileEntityList(CVector Pos)
 		if(EntityList[i]->Pos == Pos)
 			ReturnList.Push(EntityList[i]);
 	return ReturnList;
+}
+
+/**
+ * @function:
+ * Extradaten eines Tiles
+ **/
+FlagSet<Uint8>& CMap::GetTileData(CVector Pos)
+{
+	return TileDataList[Pos.Y*MapWidth+Pos.X];
 }
 
 void CMap::Tick()

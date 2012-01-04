@@ -42,6 +42,11 @@ void CMapTile::Tick(CVector Pos, CMap* pMap)
 
 }
 
+bool CMapTile::IsPassable(CVector Pos, CMap* pMap, CEntity* pTrespasser)
+{
+	return Flags.Is_Set(MTF_PASSABLE);
+}
+
 Tile CMapTile::GetTile(CVector Pos, CMap* pMap)
 {
 	PtrList<CEntity*> EntityList = pMap->GetTileEntityList(Pos);

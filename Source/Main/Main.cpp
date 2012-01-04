@@ -92,7 +92,7 @@ bool Main::OnInit()
 		for(Uint32 X=1;X<(Map.GetW()-1);X++)
 			Map.GetTile(CVector(X, Y)) = CMapTile::GroundTile;
 
-	Map.GetTile(CVector(2,1)) = CMapTile::WallTile;
+	Map.GetTile(CVector(2,1)) = CMapTile::DoorTile;
 	Map.GetTile(CVector(2,2)) = CMapTile::WallTile;
 	Map.GetTile(CVector(2,3)) = CMapTile::DoorTile;
 

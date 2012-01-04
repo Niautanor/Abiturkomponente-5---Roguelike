@@ -61,6 +61,12 @@ public:
 	virtual void OnExamine(CVector Pos, CMap* pMap, CEntity* pActor);
 
 	/**
+	 * @function: Legt fest, ob ein Feld von der Entity pTrespasser betreten werden kann
+	 * @default: wenn das Flag MTF_PASSABLE gesetzt ist
+	 **/
+	virtual bool IsPassable(CVector Pos, CMap* pMap, CEntity* pTrespasser);
+
+	/**
 	 * @function: Returns the drawable colored Character of the mapTile
 	 * by default the FloorTile
 	 * which can be replaced by Entitys on the Tile
