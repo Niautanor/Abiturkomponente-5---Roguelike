@@ -85,6 +85,10 @@ FlagSet<Uint8>& CMap::GetTileData(CVector Pos)
 	return TileDataList[Pos.Y*MapWidth+Pos.X];
 }
 
+/**
+ * @function:
+ * primitiver Pathfinding algorythmus
+ **/
 CVector CMap::GetPath(CEntity* pEntity, CVector Target)
 {
 	if(pEntity->Pos == Target)
@@ -106,6 +110,20 @@ CVector CMap::GetPath(CEntity* pEntity, CVector Target)
 		return CVector(X, 0);
 
 	return CVector(0,0);
+}
+
+/**
+ * @function:
+ * Gibt die Spieler-Entity zurück
+ **/
+CEntity* CMap::GetPlayer()
+{
+	for(Uint32 i=0;i<EntityList.size();i++)
+	{
+		if(EntityList[i] && EntityList[i]->EntityFlags.Is_Set(EF_PLAYER))
+			return EntityList[i];
+	}
+	return NULL;
 }
 
 void CMap::Tick()

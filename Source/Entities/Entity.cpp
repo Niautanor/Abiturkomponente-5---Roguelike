@@ -7,11 +7,15 @@
 
 #include "Entities/Entity.h"
 
-CEntity::CEntity()
+CEntity::CEntity(Tile T, CVector Position, Uint8 Flags)
 {
-	default_tile = Tile('@', CColor(255,0,255), CColor(0,0,0));
-	Pos = CVector(1,1);
+	default_tile = T;
+
+	Pos = Position;
 	Mov = CVector(0,0);
+
+	EntityFlags.Clear();
+	EntityFlags.Set(Flags);
 }
 
 CEntity::~CEntity()

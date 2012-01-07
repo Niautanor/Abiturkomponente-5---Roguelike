@@ -53,6 +53,9 @@ public:
 	//Berechnet eine Pfad von einer Entity zu einem Punkt
 	CVector GetPath(CEntity* pEntity, CVector Target);
 
+	//Gibt einen Zeiger auf die erste(die auch die einzige sein sollte) Entity mit EF_PLAYER zurück TODO:Hmmm :/
+	CEntity* GetPlayer();
+
 	//Bewegt alle Tiles und Entities
 	void Tick();
 

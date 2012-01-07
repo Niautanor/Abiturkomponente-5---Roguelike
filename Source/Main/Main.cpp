@@ -96,16 +96,22 @@ bool Main::OnInit()
 	Map.GetTile(CVector(2,2)) = CMapTile::WallTile;
 	Map.GetTile(CVector(2,3)) = CMapTile::DoorTile;
 
-	pPlayer = new CEntity;
+	pPlayer = new CMobEntity(Tile('@', CColor(255,0,255), CColor(0,0,0)), CVector(1,1), EF_MOB | EF_PLAYER);
 	Map.AddEntity(pPlayer);
+
+	pPuschel = new CMobEntity(Tile('&', CColor(255,0,0), CColor(0,0,0)), CVector(3,3), EF_MOB);
+	Map.AddEntity(pPuschel);
 
 	return true;
 }
 
 void Main::OnExit()
 {
+	Map.RemoveEntity(pPuschel);
+	//pPuschel = NULL;
 	Map.RemoveEntity(pPlayer);
 	//pPlayer = NULL;
+
 	Map.OnExit();
 	gMessages.OnExit();
 

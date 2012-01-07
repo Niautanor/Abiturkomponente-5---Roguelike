@@ -74,5 +74,5 @@ public:
 	virtual Tile GetTile(CVector Pos, CMap* pMap);
 };
 
-//somehow this needs to be at the end (TODO:WHY?)
+//somehow this needs to be at the end
 #include "Map/DoorTile.h"//Have all the Tiletypes in one spot(as static members of CMapTile)
