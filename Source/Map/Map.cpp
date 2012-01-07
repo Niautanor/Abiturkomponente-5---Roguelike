@@ -85,6 +85,29 @@ FlagSet<Uint8>& CMap::GetTileData(CVector Pos)
 	return TileDataList[Pos.Y*MapWidth+Pos.X];
 }
 
+CVector CMap::GetPath(CEntity* pEntity, CVector Target)
+{
+	if(pEntity->Pos == Target)
+		return CVector(0,0);
+
+	Sint16 X=0, Y=0;
+
+	if(pEntity->Pos.X < Target.X) X = 1;
+	else if(pEntity->Pos.X > Target.X) X = -1;
+
+	if(pEntity->Pos.Y < Target.Y) Y = 1;
+	else if(pEntity->Pos.Y > Target.Y) Y = -1;
+
+	if(pEntity->CanMove(this, CVector(X, Y)))
+		return CVector(X, Y);
+	else if(Y != 0 && pEntity->CanMove(this, CVector(0, Y)))
+		return CVector(0, Y);
+	else if(X != 0 && pEntity->CanMove(this, CVector(X, 0)))
+		return CVector(X, 0);
+
+	return CVector(0,0);
+}
+
 void CMap::Tick()
 {
 	for(Uint32 Y=0;Y<MapHeight;Y++)

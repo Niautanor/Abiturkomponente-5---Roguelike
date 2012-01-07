@@ -11,11 +11,11 @@
 class CVector
 {
 public:
-	Uint16 X,Y;
+	Sint16 X,Y;
 
 	CVector() : X(0), Y(0) { }
 	CVector(const CVector& v) : X(v.X), Y(v.Y) { }
-	CVector(const unsigned short vX, const unsigned short vY) : X(vX), Y(vY) { }
+	CVector(const signed short vX, const signed short vY) : X(vX), Y(vY) { }
 
 	CVector& operator = (const CVector& v)
 	{

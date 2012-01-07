@@ -50,6 +50,9 @@ public:
 	//Gibt eine Referenz auf die Tile-Daten eines Feldes zurück
 	FlagSet<Uint8>& GetTileData(CVector Pos);
 
+	//Berechnet eine Pfad von einer Entity zu einem Punkt
+	CVector GetPath(CEntity* pEntity, CVector Target);
+
 	//Bewegt alle Tiles und Entities
 	void Tick();
 

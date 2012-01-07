@@ -124,8 +124,5 @@ void Main::HandleUserAction(Uint16 c)
 	case 'h':
 		gMessages.AddMessage("TASTE FUER HALLO GEDRUECKT! ASDFL");
 		break;
-	case 'l':
-		gMessages.AddMessage("LOLSCHOCK!");
-		break;
 	}
 }
