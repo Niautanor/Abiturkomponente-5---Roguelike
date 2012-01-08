@@ -36,7 +36,9 @@ void CDoorTile::OnExamine(CVector Pos, CMap* pMap, CEntity* pActor)
 
 bool CDoorTile::IsPassable(CVector Pos, CMap* pMap, CEntity* pTrespasser)
 {
-	return pMap->GetTileData(Pos).Is_Set(DTD_OPEN);
+	bool Open = pMap->GetTileData(Pos).Is_Set(DTD_OPEN);
+	bool TilePassable = CMapTile::IsPassable(Pos, pMap, pTrespasser);
+	return (Open && TilePassable);
 }
 
 Tile CDoorTile::GetTile(CVector Pos, CMap* pMap)

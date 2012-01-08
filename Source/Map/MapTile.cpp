@@ -11,7 +11,7 @@ CMapTile* CMapTile::EmptyTile = new CMapTile(Tile(' ', CColor(0,0,0), CColor(0,0
 CMapTile* CMapTile::WallTile = new CMapTile(Tile('#', CColor(0,255,0), CColor(0,0,0)), MTF_EXISTANT | MTF_VISIBLE);
 CMapTile* CMapTile::GroundTile = new CMapTile(Tile('.', CColor(255,255,255), CColor(0,0,0)), MTF_EXISTANT | MTF_VISIBLE | MTF_PASSABLE);
 
-CMapTile* CMapTile::DoorTile = new CDoorTile(Tile(',', CColor(0,255,0), CColor(0,0,0)), MTF_EXISTANT | MTF_VISIBLE);
+CMapTile* CMapTile::DoorTile = new CDoorTile(Tile(',', CColor(0,255,0), CColor(0,0,0)), MTF_EXISTANT | MTF_VISIBLE | MTF_PASSABLE);
 
 CMapTile::CMapTile(Tile t, MapTileFlag Flagset)
 {
@@ -44,7 +44,18 @@ void CMapTile::Tick(CVector Pos, CMap* pMap)
 
 bool CMapTile::IsPassable(CVector Pos, CMap* pMap, CEntity* pTrespasser)
 {
-	return Flags.Is_Set(MTF_PASSABLE);
+	if(!Flags.Is_Set(MTF_PASSABLE))
+		return false;
+	else {
+		PtrList<CEntity*> EntityList = pMap->GetTileEntityList(Pos);
+		for(Uint16 i=0;i<EntityList.size();i++) {
+			if(EntityList[i] == pTrespasser)
+				continue;
+			if(EntityList[i]->EntityFlags.Is_Set(EF_MOB))
+				return false;
+		}
+	}
+	return true;
 }
 
 Tile CMapTile::GetTile(CVector Pos, CMap* pMap)

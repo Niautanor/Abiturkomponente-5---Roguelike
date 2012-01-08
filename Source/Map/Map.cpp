@@ -71,7 +71,7 @@ PtrList<CEntity*> CMap::GetTileEntityList(CVector Pos)
 {
 	PtrList<CEntity*> ReturnList;
 	for(Uint32 i=0;i<EntityList.size();i++)
-		if(EntityList[i]->Pos == Pos)
+		if(EntityList[i] && EntityList[i]->Pos == Pos)
 			ReturnList.Push(EntityList[i]);
 	return ReturnList;
 }

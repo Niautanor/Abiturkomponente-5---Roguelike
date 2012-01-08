@@ -41,7 +41,7 @@ Uint16 Main::GetUserAction(SDL_Event* pEvent)
 
 void Main::HandleDirectionKey(CVector Dir)
 {
-	if(InputMode == IM_MAIN)
+	if(InputMode == IM_MAIN) //Movement or wait(5)
 	{
 		if(Map.GetEntity(PlayerEntity)->CanMove(&Map, Dir)) {
 			Map.GetEntity(PlayerEntity)->Mov += Dir;
