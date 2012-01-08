@@ -9,7 +9,7 @@
 
 #include "Entities/Entity.h"
 
-#include "HelperAPI/FlagSet.h"
+#include "HelperAPI/Random.h"
 
 class CMobEntity : public CEntity
 {

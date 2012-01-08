@@ -13,6 +13,8 @@ class CEntity;
 
 #include "Map/Map.h"
 
+#include "HelperAPI/FlagSet.h"
+
 #include "HelperAPI/CVector.h"
 
 enum eEntityFlag

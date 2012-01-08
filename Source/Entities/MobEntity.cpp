@@ -15,6 +15,9 @@ void CMobEntity::Tick(CMap* pMap)
 		if(Mov == CVector(0,0))
 		{
 			//TODO: add Random asdf movement
+			do {
+				Mov = RandomVector(-1,-1,1,1);
+			} while(Mov == CVector(0,0));
 		}
 	}
 	CEntity::Tick(pMap);

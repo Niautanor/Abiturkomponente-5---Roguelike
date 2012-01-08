@@ -10,6 +10,8 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 
+#include "HelperAPI/Random.h"
+
 #include "Main/Screen.h"
 
 #include "Map/Map.h"

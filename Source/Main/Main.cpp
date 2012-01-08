@@ -165,6 +165,8 @@ int main(int argc, char** argv)
 	setvbuf(stdout, NULL, _IONBF, 0);
 	setvbuf(stderr, NULL, _IONBF, 0);
 
+	Init_Random();
+
 	std::cout << "HOHOHOHO!" << std::endl;
 
 	Main App;
