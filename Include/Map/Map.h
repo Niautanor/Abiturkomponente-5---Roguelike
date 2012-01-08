@@ -34,8 +34,11 @@ public:
 
 	CMapTile*& GetTile(CVector Pos);
 
-	void AddEntity(CEntity* pEntity);
-	void RemoveEntity(CEntity* pEntity);
+	//Fügt eine Entity zur Liste hinzu und gibt ihre ID zurück
+	int AddEntity(CEntity* pEntity);
+	void RemoveEntity(int Id);
+
+	CEntity* GetEntity(int Id);
 
 	Uint16 GetW() { return MapWidth; }
 	Uint16 GetH() { return MapHeight; }

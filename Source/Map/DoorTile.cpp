@@ -16,6 +16,10 @@ void CDoorTile::OnInteract(CVector Pos, CMap* pMap, CEntity* pActor)
 			gMessages.AddMessage("Du kannst kein Tor schlieﬂen, auf dem du stehst");
 			return;
 		}
+		else if(!pMap->GetTileEntityList(Pos).empty()) {
+			gMessages.AddMessage("Du kannst kein Tor schlieﬂen, auf dem etwas steht");
+			return;
+		}
 		TileData.Unset(DTD_OPEN);
 	}
 	else

@@ -53,8 +53,8 @@ private:
 
 	Uint16 PendingTicks;//Die Anzahl der Spielschritte die ausgeführt werden muss bevor der Spieler wieder eine Entscheidung treffen kann
 
-	CEntity* pPlayer;
-	CEntity* pPuschel;
+	int PlayerEntity;
+	int PuschelEntity;
 
 public:
 	Main();

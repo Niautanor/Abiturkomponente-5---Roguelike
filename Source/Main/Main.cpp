@@ -17,7 +17,8 @@ Main::Main()
 	PendingTicks = 0;
 
 	//Testing Stuff
-	pPlayer = NULL;
+	PlayerEntity = -1;
+	PuschelEntity = -1;
 }
 
 int Main::OnExecute()
@@ -96,20 +97,19 @@ bool Main::OnInit()
 	Map.GetTile(CVector(2,2)) = CMapTile::WallTile;
 	Map.GetTile(CVector(2,3)) = CMapTile::DoorTile;
 
-	pPlayer = new CMobEntity(Tile('@', CColor(255,0,255), CColor(0,0,0)), CVector(1,1), EF_MOB | EF_PLAYER);
-	Map.AddEntity(pPlayer);
 
-	pPuschel = new CMobEntity(Tile('&', CColor(255,0,0), CColor(0,0,0)), CVector(3,3), EF_MOB);
-	Map.AddEntity(pPuschel);
+	PlayerEntity = Map.AddEntity(new CMobEntity(Tile('@', CColor(255,0,255), CColor(0,0,0)), CVector(1,1), EF_MOB | EF_PLAYER));
+
+	PuschelEntity =	Map.AddEntity(new CMobEntity(Tile('&', CColor(255,0,0), CColor(0,0,0)), CVector(3,3), EF_MOB));
 
 	return true;
 }
 
 void Main::OnExit()
 {
-	Map.RemoveEntity(pPuschel);
+	Map.RemoveEntity(PuschelEntity);
 	//pPuschel = NULL;
-	Map.RemoveEntity(pPlayer);
+	Map.RemoveEntity(PlayerEntity);
 	//pPlayer = NULL;
 
 	Map.OnExit();

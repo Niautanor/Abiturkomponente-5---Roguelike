@@ -199,14 +199,22 @@ CMapTile*& CMap::GetTile(CVector Pos)
 		else return CMapTile::EmptyTile;
 }
 
-void CMap::AddEntity(CEntity* pEntity)
+int CMap::AddEntity(CEntity* pEntity)
 {
 	if(pEntity)//If there is an Entity to be pushed
 		EntityList.Push(pEntity);
+	return EntityList.GetId(pEntity);
 }
 
-void CMap::RemoveEntity(CEntity* pEntity)
+void CMap::RemoveEntity(int Id)
 {
-	if(pEntity)
-		EntityList.Remove(pEntity);
+	if(Id >= 0)
+		EntityList.Remove(Id);
+}
+
+CEntity* CMap::GetEntity(int Id)
+{
+	if(Id >= 0 && Id < (int)EntityList.size())
+		return EntityList[Id];
+	else return NULL;
 }

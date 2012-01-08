@@ -43,18 +43,18 @@ void Main::HandleDirectionKey(CVector Dir)
 {
 	if(InputMode == IM_MAIN)
 	{
-		if(pPlayer->CanMove(&Map, Dir)) {
-			pPlayer->Mov += Dir;
+		if(Map.GetEntity(PlayerEntity)->CanMove(&Map, Dir)) {
+			Map.GetEntity(PlayerEntity)->Mov += Dir;
 			PendingTicks++;
 		}
 		else gMessages.AddMessage("Boing!");
 	}
 	else if(InputMode == IM_EXAMINE) {
-		Map.GetTile(pPlayer->Pos + Dir)->OnExamine(pPlayer->Pos + Dir, &Map, pPlayer);
+		Map.GetTile(Map.GetEntity(PlayerEntity)->Pos + Dir)->OnExamine(Map.GetEntity(PlayerEntity)->Pos + Dir, &Map, Map.GetEntity(PlayerEntity));
 		InputMode = IM_MAIN;
 	}
 	else if(InputMode == IM_INTERACT) {
-		Map.GetTile(pPlayer->Pos + Dir)->OnInteract(pPlayer->Pos + Dir, &Map, pPlayer);
+		Map.GetTile(Map.GetEntity(PlayerEntity)->Pos + Dir)->OnInteract(Map.GetEntity(PlayerEntity)->Pos + Dir, &Map, Map.GetEntity(PlayerEntity));
 		InputMode = IM_MAIN;
 	}
 }
