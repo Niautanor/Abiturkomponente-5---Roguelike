@@ -40,6 +40,11 @@ public:
 
 		return *this;
 	}
+
+	Uint16 LengthSq() const//LengthSquared
+	{
+		return (X*X+Y*Y);
+	}
 };
 
 inline bool operator == (const CVector& a, const CVector& b)
@@ -50,6 +55,11 @@ inline bool operator == (const CVector& a, const CVector& b)
 inline bool operator != (const CVector& a, const CVector& b)
 {
 	return (a.X != b.X || a.Y != b.Y);
+}
+
+inline Uint16 VectorLengthSq(const CVector& v)
+{
+	return v.LengthSq();
 }
 
 inline CVector operator + (const CVector& a, const CVector& b)
