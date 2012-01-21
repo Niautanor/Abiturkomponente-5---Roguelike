@@ -87,6 +87,18 @@ void CMessageQueue::AddMessage(const char* M)
 	Messages[MId].Lifetime = MessageLifetime; //Lebenszeit festlegen
 }
 
+void CMessageQueue::AddFMessage(const char *Format, ...)
+{
+	char Message[55];
+	va_list args;
+	va_start(args, Format);
+
+	vsprintf(Message, Format, args);
+	AddMessage(Message);
+
+	va_end(args);
+}
+
 bool CMessageQueue::PrintMessages(Screen* s, Uint16 StartX, Uint16 StartY, Uint16 MaxMessagesOnScreen, bool ArchiveMode)
 {
 	bool ret = true;

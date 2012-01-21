@@ -18,5 +18,9 @@ public:
 		: CEntity(T, Position, Flags) { }
 	virtual ~CMobEntity() {};
 
+	virtual Uint8 IsHostile(CEntity* pEntity);
+
+	virtual void Attack(CMap* pMap, CEntity* pEntity);
+
 	virtual void Tick(CMap* pMap);
 };

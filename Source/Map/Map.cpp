@@ -70,9 +70,10 @@ bool CMap::DrawTile(Screen* s, Uint16 X, Uint16 Y, Uint16 StartX, Uint16 StartY)
 PtrList<CEntity*> CMap::GetTileEntityList(CVector Pos)
 {
 	PtrList<CEntity*> ReturnList;
-	for(Uint32 i=0;i<EntityList.size();i++)
+	for(Uint32 i=0;i<EntityList.size();i++) {
 		if(EntityList[i] && EntityList[i]->Pos == Pos)
 			ReturnList.Push(EntityList[i]);
+	}
 	return ReturnList;
 }
 

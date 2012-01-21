@@ -9,6 +9,21 @@
 
 class CEntity;
 
+enum eEntityFlag
+{
+	EF_MOB = 0x01,
+	//MobFlags
+	EF_PLAYER = 0x02
+};
+
+enum eHostilityType
+{
+	HT_NONE,
+	HT_ITEM,//An Item doesn't hate anyone and neither anyone hates an item
+	HT_HOSTILE,
+	HT_FRIENDLY
+};
+
 #include "Main/Tile.h"
 
 #include "Map/Map.h"
@@ -16,13 +31,6 @@ class CEntity;
 #include "HelperAPI/FlagSet.h"
 
 #include "HelperAPI/CVector.h"
-
-enum eEntityFlag
-{
-	EF_MOB = 0x01,
-	//MobFlags
-	EF_PLAYER = 0x02
-};
 
 class CEntity
 {
@@ -38,6 +46,11 @@ public:
 	virtual ~CEntity();
 
 	virtual bool CanMove(CMap* pMap, CVector Direction);
+
+	//Checks if *this* entity is hostile to the Param-Entity (this should be only relevant in CMobEntity but is included here because of invalid type casts from base to derivate)
+	virtual Uint8 IsHostile(CEntity* pEntity);
+
+	virtual void Attack(CMap* pMap, CEntity* pTarget);
 
 	virtual Tile GetTile(CMap* pMap) { return default_tile; }
 

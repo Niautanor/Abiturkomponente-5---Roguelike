@@ -17,6 +17,8 @@ class CMap;
 #include "Map/MapTile.h"
 #include "Entities/Entity.h"
 
+#include "Entities/EntityListFilter.h"
+
 class CMap
 {
 private:

@@ -41,8 +41,28 @@ Uint16 Main::GetUserAction(SDL_Event* pEvent)
 
 void Main::HandleDirectionKey(CVector Dir)
 {
-	if(InputMode == IM_MAIN) //Movement or wait(5)
+	if(InputMode == IM_MAIN) //Movement/attack or wait(5)
 	{
+		if(Dir == CVector(0,0)) {
+			//Wait
+			PendingTicks++;
+			return;
+		}
+
+		PtrList<CEntity*> EntityList = Map.GetTileEntityList(Map.GetEntity(PlayerEntity)->Pos + Dir);
+		PtrList<CEntity*> HostileList = FilterHostility(EntityList, Map.GetEntity(PlayerEntity), HT_HOSTILE);
+		if(!HostileList.empty()) {
+			if(HostileList.size() == 1) {
+				if(Question("Willst du den Gegner auf diesem Feld angreifen?"))
+					Map.GetEntity(PlayerEntity)->Attack(&Map, HostileList[0]);
+			} else  {
+				Uint8 choice = ListQuestion("Was Angreifen?", HostileList);
+				Map.GetEntity(PlayerEntity)->Attack(&Map, HostileList[choice]);
+			}
+			PendingTicks++;
+			return;
+
+		}
 		if(Map.GetEntity(PlayerEntity)->CanMove(&Map, Dir)) {
 			Map.GetEntity(PlayerEntity)->Mov += Dir;
 			PendingTicks++;

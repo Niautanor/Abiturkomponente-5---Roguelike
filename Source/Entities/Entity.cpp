@@ -29,6 +29,15 @@ bool CEntity::CanMove(CMap* pMap, CVector Dir)
 	return false;
 }
 
+Uint8 CEntity::IsHostile(CEntity *pEntity)
+{
+	return HT_ITEM;
+}
+
+void CEntity::Attack(CMap *pMap, CEntity *pTarget)
+{//Purely virtual(Items dont attack
+}
+
 void CEntity::Tick(CMap* pMap)
 {
 	if(CanMove(pMap, Mov))

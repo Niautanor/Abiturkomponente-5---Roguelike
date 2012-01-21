@@ -28,6 +28,19 @@ void CMapTile::OnInteract(CVector Pos, CMap* pMap, CEntity* pActor)
 
 void CMapTile::OnExamine(CVector Pos, CMap* pMap, CEntity* pActor)
 {
+	PtrList<CEntity*> EntityList = pMap->GetTileEntityList(Pos);
+	if(!EntityList.empty()) {
+		if(EntityList.size() == 1) {
+			gMessages.AddFMessage("%s - %s", "MobsterNam", "MonsterBeschreibung");
+		} else {
+			gMessages.AddMessage("Es sind mehrere Objekte hier:");
+			for(Uint16 i=0;i<EntityList.size();i++) {
+				gMessages.AddFMessage(" %c - %s", 'a' + i, "Mobster");
+			}
+		}
+		return;
+	}
+
 	if(this == EmptyTile) {
 		gMessages.AddMessage("Du schaust in die Weiten des Weltraums WTF!");
 		return;

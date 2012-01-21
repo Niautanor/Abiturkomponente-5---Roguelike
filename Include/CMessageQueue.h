@@ -38,11 +38,14 @@ public:
 	//Löscht alle Nachrichten und entfernt sie vom Bildschirm
 	void Clear();
 
-	//Zeigt alle Nachrichten auf dem Bildschirm an ArchiveMode -> Alle Nachrichten Anzeigen
+	//Zeigt alle Nachrichten auf dem Bildschirm an | ArchiveMode -> Alle Nachrichten Anzeigen
 	bool PrintMessages(Screen* s, Uint16 StartX, Uint16 StartY, Uint16 MaxMessagesOnScreen, bool ArchiveMode = false);
 
 	//Fügt die Angegeben Nachricht dem Nachrichtenpuffer hinzu
 	void AddMessage(const char* M);
+
+	//Setzt eine Nachricht mit sprintf zusammen und fügt sie der Nachrichtenkette hinzu
+	void AddFMessage(const char* Format, ...);
 
 	//Prüft ob Nachrichten zu alt geworden sind um noch dargestellt zu werden
 	void Tick();

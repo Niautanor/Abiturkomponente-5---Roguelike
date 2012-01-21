@@ -27,8 +27,6 @@ int Main::OnExecute()
 	if(!OnInit())
 		return 0;//false
 
-	SDL_Event Event;
-
 	char c;//Zwischenspeicherung eines Tastendrucks
 
 	//Solange das Spiel nicht durch Benutzereingabe('q') oder Sieg/Vernichtung beendet wurde soll es weiterlaufen
@@ -53,6 +51,7 @@ bool Main::OnInit()
 {
 	TileHeight = 32;
 	TileWidth = TileHeight / 2;
+
 	NumCols = 50;
 	NumRows = 15;
 
@@ -158,6 +157,37 @@ void Main::Tick()
 	gMessages.Tick();
 	Map.Tick();
 	PendingTicks--;
+}
+
+/**
+ * @function: Stellt die Frage mit dem Text
+ *  @param QuestionText
+ *
+ * Gibt Ja zurück, wenn die Taste 'y' gedrückt wurde oder Nein bei 'n' oder wenn ein Fehler auftrat
+ **/
+bool Main::Question(const char* QuestionText)
+{
+	char c;
+	do {
+		gMessages.AddMessage(QuestionText);
+		OnRender();//Flush Screen
+
+		c = GetUserAction(&Event);
+
+		if(!c)//Fenster Geschlossen
+			return false;
+
+		if(c == 'n' || c == 'q')
+			return false;
+		else if(c == 'y')
+			return true;
+		else { //Fehlerhafte Eingabe
+			gMessages.AddMessage("Bitter entweder (y)es oder (n)o eingeben");
+		}
+
+	} while(true);
+
+	return false;//should never happen
 }
 
 int main(int argc, char** argv)

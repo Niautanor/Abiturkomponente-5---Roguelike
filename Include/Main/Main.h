@@ -40,6 +40,8 @@ private:
 	SDL_Surface* pDisplay;//Das Objekt, dass alle Daten zum Tatsächlichen Spielfenster enthält
 	TTF_Font* pFont;//Die Schriftart, die Verwendet wird um den Bildschirm anzuzeigen
 
+	SDL_Event Event;//Das SDL_Event, dass zum Empfangen von Tastendrücken u.ä verwendet wird
+
 	Uint16 TileWidth, TileHeight;//Asdf
 	Uint16 NumRows, NumCols;
 
@@ -68,11 +70,16 @@ public:
 	//Der Aufräumprozess gibt alle Belegten Speicherbereiche wieder Frei und kümmert sich unter Umständen auch um das Speichern von Statusinformationen
 	void OnExit();
 
-	//Mithilfe dieser Prozedur wird die Welt auf dem Bildschirm angezeigt
+	//Mithilfe dieser Prozedur wird die Welt auf dem Bildschirm angezeigt -> FlushScreen
 	void OnRender();
 
 	//Kümmert sich um alle Benutzeraktionen und beendet gegebenenfals das Spiel
 	Uint16 GetUserAction(SDL_Event* pEvent);
+
+	//Stellt dem Spieler eine Frage, die er mit Ja oder nein beantworten kann
+	bool Question(const char* QuestionText);
+
+	template<class P>Uint8 ListQuestion(const char* QuestionText, PtrList<P> List);
 
 	//Bewegt das Spiel
 	void Tick();
@@ -83,3 +90,37 @@ public:
 	//Reagiert auf den Druck einer Richtungstaste(1,2,3,4,6,7,8,9)
 	void HandleDirectionKey(CVector Dir);
 };
+
+template<class P> Uint8 Main::ListQuestion(const char* QuestionText, PtrList<P> List)
+{
+	if(List.empty())
+		return 0;
+
+	gMessages.AddMessage(QuestionText);
+	for(Uint16 i=0;i<List.size();i++){
+		gMessages.AddFMessage(" %c - %s", 'a' + i, "Mobster");
+	}
+
+	char c;
+	do {
+		OnRender();
+
+		c = GetUserAction(&Event);
+
+		if(c < 'a' || c > 'z') {
+			gMessages.AddMessage("kleinbuchstabe von a bis z eingeben");
+			continue;
+		} else {
+			if((Uint8)(c-'a') < List.size())
+				return c - 'a';
+			else {
+				gMessages.AddMessage("du kannst nur Elemente aus der Liste auswählen");
+				continue;
+			}
+		}
+	} while(c != '\0');
+
+	return 0;
+}
+
+
