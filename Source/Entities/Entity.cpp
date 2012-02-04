@@ -22,6 +22,11 @@ CEntity::~CEntity()
 {
 }
 
+const char* CEntity::GetName()
+{
+	return "Entity-Objekt";
+}
+
 bool CEntity::CanMove(CMap* pMap, CVector Dir)
 {
 	if(pMap->GetTile(Pos+Dir)->IsPassable(Pos+Dir,pMap,this))

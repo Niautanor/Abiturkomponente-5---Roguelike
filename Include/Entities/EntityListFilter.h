@@ -14,3 +14,5 @@
 PtrList<CEntity*> FilterMobEntities(PtrList<CEntity*>& EntityList);
 
 PtrList<CEntity*> FilterHostility(PtrList<CEntity*>& EntityList, CEntity* pPOVEntity, eHostilityType Hostility);
+
+void ExamineEntitieList(PtrList<CEntity*>& EntityList);

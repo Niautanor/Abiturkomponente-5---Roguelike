@@ -75,13 +75,13 @@ bool Main::OnInit()
 	if(!sMain.OnInit(TileHeight, TileWidth, NumRows, NumCols))
 		return false;
 
-	if(!sMap.OnInit(TileHeight, TileWidth, 5, 5))
+	if(!sMap.OnInit(TileHeight, TileWidth, 6, 6))
 		return false;
 
 	if(!gMessages.OnInit(40))
 		return false;
 
-	if(!Map.OnInit(5,5))
+	if(!Map.OnInit(6,6))
 		return false;
 
 	SDL_EnableUNICODE(1);
@@ -95,11 +95,18 @@ bool Main::OnInit()
 	Map.GetTile(CVector(2,1)) = CMapTile::DoorTile;
 	Map.GetTile(CVector(2,2)) = CMapTile::WallTile;
 	Map.GetTile(CVector(2,3)) = CMapTile::DoorTile;
+	Map.GetTile(CVector(2,4)) = CMapTile::WallTile;
+	Map.GetTile(CVector(3,2)) = CMapTile::WallTile;
+	Map.GetTile(CVector(4,2)) = CMapTile::WallTile;
+
+	Map.GetTile(CVector(4,4)) = CMapTile::FarmTile;
+	Map.GetTileData(CVector(4,4)).Clear();
+	Map.GetTileData(CVector(4,4)).Set(5 | FTD_PLUMPHELMET);
 
 
 	PlayerEntity = Map.AddEntity(new CMobEntity(Tile('@', CColor(255,0,255), CColor(0,0,0)), CVector(1,1), EF_MOB | EF_PLAYER));
 
-	PuschelEntity =	Map.AddEntity(new CMobEntity(Tile('&', CColor(255,0,0), CColor(0,0,0)), CVector(3,3), EF_MOB));
+	PuschelEntity =	Map.AddEntity(new CMobEntity(Tile('&', CColor(255,0,0), CColor(0,0,0)), CVector(3,1), EF_MOB));
 
 	return true;
 }

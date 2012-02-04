@@ -11,7 +11,7 @@
 
 enum eDoorTileData
 {
-	DTD_NONE = 0,
+	DTD_NONE = 0x00,
 	DTD_OPEN = 0x01
 };
 

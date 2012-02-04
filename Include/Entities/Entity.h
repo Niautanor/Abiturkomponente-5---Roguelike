@@ -45,6 +45,8 @@ public:
 	CEntity(Tile T = Tile('E', CColor(255,0,255), CColor(0,0,0)), CVector Position = CVector(1,1), Uint8 Flags = 0);
 	virtual ~CEntity();
 
+	virtual const char* GetName();
+
 	virtual bool CanMove(CMap* pMap, CVector Direction);
 
 	//Checks if *this* entity is hostile to the Param-Entity (this should be only relevant in CMobEntity but is included here because of invalid type casts from base to derivate)

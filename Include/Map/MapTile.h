@@ -46,6 +46,8 @@ public:
 
 	static CMapTile* DoorTile;
 
+	static CMapTile* FarmTile;
+
 	FlagSet<Uint16> Flags;
 
 	virtual void Tick(CVector Pos, CMap* pMap);
@@ -76,3 +78,4 @@ public:
 
 //somehow this needs to be at the end
 #include "Map/DoorTile.h"//Have all the Tiletypes in one spot(as static members of CMapTile)
+#include "Map/FarmTile.h"

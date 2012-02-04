@@ -13,6 +13,8 @@ CMapTile* CMapTile::GroundTile = new CMapTile(Tile('.', CColor(255,255,255), CCo
 
 CMapTile* CMapTile::DoorTile = new CDoorTile(Tile(',', CColor(0,255,0), CColor(0,0,0)), MTF_EXISTANT | MTF_VISIBLE | MTF_PASSABLE);
 
+CMapTile* CMapTile::FarmTile = new CFarmTile(Tile('~', CColor(128, 64, 0), CColor(0,0,0)), MTF_EXISTANT | MTF_VISIBLE | MTF_PASSABLE);
+
 CMapTile::CMapTile(Tile t, MapTileFlag Flagset)
 {
 	FloorTile = t;
@@ -30,14 +32,7 @@ void CMapTile::OnExamine(CVector Pos, CMap* pMap, CEntity* pActor)
 {
 	PtrList<CEntity*> EntityList = pMap->GetTileEntityList(Pos);
 	if(!EntityList.empty()) {
-		if(EntityList.size() == 1) {
-			gMessages.AddFMessage("%s - %s", "MobsterNam", "MonsterBeschreibung");
-		} else {
-			gMessages.AddMessage("Es sind mehrere Objekte hier:");
-			for(Uint16 i=0;i<EntityList.size();i++) {
-				gMessages.AddFMessage(" %c - %s", 'a' + i, "Mobster");
-			}
-		}
+		ExamineEntitieList(EntityList);
 		return;
 	}
 
