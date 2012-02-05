@@ -19,6 +19,7 @@ public:
 	virtual ~CMobEntity() {};
 
 	virtual const char* GetName();
+	virtual const char* GetDescription();
 
 	virtual Uint8 IsHostile(CEntity* pTarget);
 

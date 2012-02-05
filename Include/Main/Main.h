@@ -12,6 +12,8 @@
 
 #include "HelperAPI/Random.h"
 
+#include "HelperAPI/CNameable.h"
+
 #include "Main/Screen.h"
 
 #include "Map/Map.h"
@@ -57,6 +59,7 @@ private:
 
 	int PlayerEntity;
 	int PuschelEntity;
+	int ItemEntity;
 
 public:
 	Main();
@@ -79,7 +82,7 @@ public:
 	//Stellt dem Spieler eine Frage, die er mit Ja oder nein beantworten kann
 	bool Question(const char* QuestionText);
 
-	template<class P>Uint8 ListQuestion(const char* QuestionText, PtrList<P> List);
+	template<class P>Uint8 ListQuestion(const char* QuestionText, PtrList<P> List);//IMPORTANT: The Template Argument should be a derivat of CNameable*
 
 	//Bewegt das Spiel
 	void Tick();
@@ -91,14 +94,14 @@ public:
 	void HandleDirectionKey(CVector Dir);
 };
 
-template<class P> Uint8 Main::ListQuestion(const char* QuestionText, PtrList<P> List)
+template<class P>Uint8 Main::ListQuestion(const char* QuestionText, PtrList<P> List)
 {
 	if(List.empty())
 		return 0;
 
 	gMessages.AddMessage(QuestionText);
 	for(Uint16 i=0;i<List.size();i++){
-		gMessages.AddFMessage(" %c - %s", 'a' + i, "Mobster");
+		gMessages.AddFMessage(" %c - %s", 'a' + i, List[i]->GetName());
 	}
 
 	char c;
@@ -122,5 +125,3 @@ template<class P> Uint8 Main::ListQuestion(const char* QuestionText, PtrList<P> 
 
 	return 0;
 }
-
-

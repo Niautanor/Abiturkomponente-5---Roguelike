@@ -19,6 +19,7 @@ Main::Main()
 	//Testing Stuff
 	PlayerEntity = -1;
 	PuschelEntity = -1;
+	ItemEntity = -1;
 }
 
 int Main::OnExecute()
@@ -108,11 +109,14 @@ bool Main::OnInit()
 
 	PuschelEntity =	Map.AddEntity(new CMobEntity(Tile('&', CColor(255,0,0), CColor(0,0,0)), CVector(3,1), EF_MOB));
 
+	ItemEntity = Map.AddEntity(new CItemEntity(Tile('i', CColor(0,0,255), CColor(0,0,0)), CVector(1,2)));
+
 	return true;
 }
 
 void Main::OnExit()
 {
+	Map.RemoveEntity(ItemEntity);
 	Map.RemoveEntity(PuschelEntity);
 	//pPuschel = NULL;
 	Map.RemoveEntity(PlayerEntity);
@@ -209,5 +213,3 @@ int main(int argc, char** argv)
 	Main App;
 	return App.OnExecute();
 }
-
-

@@ -21,7 +21,7 @@ PtrList<CEntity*> FilterHostility(PtrList<CEntity*>& EntityList, CEntity* pPOVEn
 		{
 	PtrList<CEntity*> ReturnList;
 	for (Uint16 i = 0; i < EntityList.size(); i++) {
-		if (EntityList[i] && EntityList[i]->IsHostile(pPOVEntity))
+		if (EntityList[i] && (EntityList[i]->IsHostile(pPOVEntity) == Hostility))
 			ReturnList.Push(EntityList[i]);
 	}
 	return ReturnList;
@@ -31,12 +31,12 @@ void ExamineEntitieList(PtrList<CEntity*>& EntityList)
 {
 	if (!EntityList.empty()) {
 		if (EntityList.size() == 1) {
-			gMessages.AddFMessage("%s - %s", "MobsterNam",
-					"MonsterBeschreibung");
+			gMessages.AddFMessage("%s - %s", EntityList[0]->GetName(),
+					EntityList[0]->GetDescription());
 		} else {
 			gMessages.AddMessage("Es sind mehrere Objekte hier:");
 			for (Uint16 i = 0; i < EntityList.size(); i++) {
-				gMessages.AddFMessage(" %c - %s", 'a' + i, "Mobster");
+				gMessages.AddFMessage(" %c - %s", 'a' + i, EntityList[i]->GetName());
 			}
 		}
 	}

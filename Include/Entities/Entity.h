@@ -32,7 +32,9 @@ enum eHostilityType
 
 #include "HelperAPI/CVector.h"
 
-class CEntity
+#include "HelperAPI/CNameable.h"
+
+class CEntity : public CNameable
 {
 protected:
 	Tile default_tile;
@@ -46,6 +48,7 @@ public:
 	virtual ~CEntity();
 
 	virtual const char* GetName();
+	virtual const char* GetDescription();
 
 	virtual bool CanMove(CMap* pMap, CVector Direction);
 
@@ -62,3 +65,4 @@ public:
 };
 
 #include "Entities/MobEntity.h" //Its a good thing to have them all in one place
+#include "Entities/ItemEntity.h"

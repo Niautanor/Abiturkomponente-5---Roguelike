@@ -34,6 +34,13 @@ const char* CMobEntity::GetName()
 	return "Mobster";
 }
 
+const char* CMobEntity::GetDescription()
+{
+	if(EntityFlags.Is_Set(EF_PLAYER))
+		return "Du bist ein Geiler Abenteurer";
+	return "Dieses Monster versucht dich zu toeten";
+}
+
 void CMobEntity::Tick(CMap* pMap)
 {
 	if(!EntityFlags.Is_Set(EF_PLAYER))
