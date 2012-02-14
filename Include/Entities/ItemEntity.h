@@ -18,4 +18,7 @@ public:
 	virtual const char* GetDescription();
 
 	Uint8 IsHostile(CEntity* pEntity) { return HT_ITEM; };
+
+	eItemType GetItemType(CMap* pMap);
+	void SetItemType(eItemType Type);
 };

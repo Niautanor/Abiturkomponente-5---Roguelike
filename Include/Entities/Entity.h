@@ -13,8 +13,13 @@ enum eEntityFlag
 {
 	EF_MOB = 0x01,
 	//MobFlags
-	EF_PLAYER = 0x02
+	EF_PLAYER = 0x02,
+	//ItemFlags(0x01 is reserved for the MOB-Flag
+	EF_IT_WEAPON = 0x02,
+	EF_IT_SEED = 0x04
 };
+
+#include "Items/Item.h"
 
 enum eHostilityType
 {
@@ -55,6 +60,14 @@ public:
 	//Checks if *this* entity is hostile to the Param-Entity (this should be only relevant in CMobEntity but is included here because of invalid type casts from base to derivate)
 	virtual Uint8 IsHostile(CEntity* pEntity);
 
+	//Mobs Pick stuff up and stuff
+	virtual void PickUp(CMap* pMap, CEntity* pItem);
+	virtual void Drop(CMap* pMap);
+
+	//Used for picking up ItemEntities purely virtual in all other cases
+	virtual eItemType GetItemType(CMap* pMap);
+	virtual void SetItemType(eItemType Type);
+
 	virtual void Attack(CMap* pMap, CEntity* pTarget);
 
 	virtual Tile GetTile(CMap* pMap) { return default_tile; }
@@ -63,6 +76,11 @@ public:
 
 	FlagSet<Uint8> EntityFlags;
 };
+
+//Forward Declarations
+class CMobEntity;
+class CItemEntity;
+//Forward End
 
 #include "Entities/MobEntity.h" //Its a good thing to have them all in one place
 #include "Entities/ItemEntity.h"

@@ -17,5 +17,19 @@ const char* CItemEntity::GetDescription()
 	return "Item-Entity-Beschreibung";
 }
 
+eItemType CItemEntity::GetItemType(CMap *pMap)
+{
+	return IT_SEED;
+}
+
+void CItemEntity::SetItemType(eItemType Type)
+{
+	EntityFlags.Set(Type << 1);
+}
+
+
+
+
+
 
 

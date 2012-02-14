@@ -213,6 +213,11 @@ void CMap::RemoveEntity(int Id)
 		EntityList.Remove(Id);
 }
 
+int CMap::GetEntityId(CEntity* pEntity)
+{
+	return EntityList.GetId(pEntity);
+}
+
 CEntity* CMap::GetEntity(int Id)
 {
 	if(Id >= 0 && Id < (int)EntityList.size())

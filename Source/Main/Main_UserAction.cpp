@@ -135,6 +135,26 @@ void Main::HandleUserAction(Uint16 c)
 		InputMode = IM_EXAMINE;
 		gMessages.AddMessage("Untersuchungsmodus ('q' zum Beenden)");
 		break;
+	case 'g': {//Pick up
+		PtrList<CEntity*> ItemList = Map.GetTileEntityList(Map.GetEntity(PlayerEntity)->Pos);
+		switch(ItemList.size())
+		{
+		case 1:
+			return;
+		case 2:
+			ItemList[0]->PickUp(&Map, ItemList[1]);
+			break;
+		default:
+			ItemList[0] = NULL;//ignore the Player
+			Uint8 Choice = ListQuestion("Was willst du aufnehmen?", ItemList);
+			Map.GetEntity(PlayerEntity)->PickUp(&Map, ItemList[Choice + 1]);
+			break;
+		}
+		}
+		break;
+	case 'd':
+		Map.GetEntity(PlayerEntity)->Drop(&Map);
+		break;
 	case 'c':
 		gMessages.Clear();
 		break;

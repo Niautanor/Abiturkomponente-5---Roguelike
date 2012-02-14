@@ -39,6 +39,7 @@ public:
 	//Fügt eine Entity zur Liste hinzu und gibt ihre ID zurück
 	int AddEntity(CEntity* pEntity);
 	void RemoveEntity(int Id);
+	int GetEntityId(CEntity* pEntity);
 
 	CEntity* GetEntity(int Id);
 

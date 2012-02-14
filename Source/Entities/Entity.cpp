@@ -49,6 +49,23 @@ void CEntity::Attack(CMap *pMap, CEntity *pTarget)
 {//Purely virtual(Items dont attack
 }
 
+void CEntity::PickUp(CMap* pMap, CEntity* pItem)
+{
+}
+
+void CEntity::Drop(CMap* pMap)
+{
+}
+
+eItemType CEntity::GetItemType(CMap *pMap)
+{
+	return IT_NO_ITEM;
+}
+
+void CEntity::SetItemType(eItemType Type)
+{
+}
+
 void CEntity::Tick(CMap* pMap)
 {
 	if(CanMove(pMap, Mov))
