@@ -31,7 +31,8 @@ enum eInputMode
 	IM_NONE = 0,
 	IM_MAIN,
 	IM_INTERACT,
-	IM_EXAMINE
+	IM_EXAMINE,
+	IM_USE
 };
 
 class Main

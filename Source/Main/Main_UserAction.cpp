@@ -77,6 +77,10 @@ void Main::HandleDirectionKey(CVector Dir)
 		Map.GetTile(Map.GetEntity(PlayerEntity)->Pos + Dir)->OnInteract(Map.GetEntity(PlayerEntity)->Pos + Dir, &Map, Map.GetEntity(PlayerEntity));
 		InputMode = IM_MAIN;
 	}
+	else if(InputMode == IM_USE) {
+		Map.GetEntity(PlayerEntity)->UseItem(Dir,&Map);
+		InputMode = IM_MAIN;
+	}
 }
 
 void Main::HandleUserAction(Uint16 c)
@@ -134,6 +138,13 @@ void Main::HandleUserAction(Uint16 c)
 			break;
 		InputMode = IM_EXAMINE;
 		gMessages.AddMessage("Untersuchungsmodus ('q' zum Beenden)");
+		break;
+	case 'u':
+		if(InputMode != IM_MAIN || !Map.GetEntity(PlayerEntity)->WieldsItem()) {
+			gMessages.AddMessage("Du haelst nichts in der Hand was du benutzen könntest");
+			break;
+		}
+		InputMode = IM_USE;
 		break;
 	case 'g': {//Pick up
 		PtrList<CEntity*> ItemList = Map.GetTileEntityList(Map.GetEntity(PlayerEntity)->Pos);

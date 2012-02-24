@@ -35,5 +35,8 @@ public:
 
 	virtual void Attack(CMap* pMap, CEntity* pEntity);
 
+	virtual bool WieldsItem();
+	virtual void UseItem(CVector Dir, CMap* pMap);
+
 	virtual void Tick(CMap* pMap);
 };

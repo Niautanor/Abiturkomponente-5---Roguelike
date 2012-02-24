@@ -57,12 +57,21 @@ void CEntity::Drop(CMap* pMap)
 {
 }
 
-eItemType CEntity::GetItemType(CMap *pMap)
+eItemType CEntity::GetItemType(CMap* pMap)
 {
 	return IT_NO_ITEM;
 }
 
 void CEntity::SetItemType(eItemType Type)
+{
+}
+
+bool CEntity::WieldsItem()
+{
+	return false;
+}
+
+void CEntity::UseItem(CVector Direction, CMap* pMap)
 {
 }
 

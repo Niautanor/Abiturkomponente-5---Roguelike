@@ -19,7 +19,11 @@ enum eEntityFlag
 	EF_IT_SEED = 0x04
 };
 
-#include "Items/Item.h"
+enum eItemType {
+	IT_NO_ITEM = 0,
+	IT_WEAPON,
+	IT_SEED
+};
 
 enum eHostilityType
 {
@@ -32,6 +36,8 @@ enum eHostilityType
 #include "Main/Tile.h"
 
 #include "Map/Map.h"
+
+#include "Items/Item.h"
 
 #include "HelperAPI/FlagSet.h"
 
@@ -70,11 +76,16 @@ public:
 
 	virtual void Attack(CMap* pMap, CEntity* pTarget);
 
+	//Purely Virtual in non Mob-Classes
+	virtual bool WieldsItem();
+	virtual void UseItem(CVector Direction, CMap* pMap);
+
 	virtual Tile GetTile(CMap* pMap) { return default_tile; }
 
 	virtual void Tick(CMap* pMap);
 
 	FlagSet<Uint8> EntityFlags;
+	Uint8 ExtraData;//Mainly used for ItemEntities(Maybe i can squeeze Health information in it)
 };
 
 //Forward Declarations

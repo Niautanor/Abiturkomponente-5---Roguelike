@@ -14,17 +14,17 @@ enum eFarmTileData {
 	FTD_FULLY_GROWN = 0x10,
 
 	FTD_PLUMPHELMET = 0x20,
-	FTD_SPINECRAWLER = 0420,
+	FTD_SPINECRAWLER = 040,
 	FTD_BANELING = 0x60,
 	FTD_MOBSTERPLANT = 0x80,
 	FTD_CANCER_CURE = 0xA0
 };
 
-const Uint8 GrowTimeMask = 0x0F;
-const Uint8 PlantTypeMask = 0xE0;
+const Uint8 FT_GrowTimeMask = 0x0F;
+const Uint8 FT_PlantTypeMask = 0xE0;
 
-#define FT_GROW_TIME(tile_data) (tile_data & GrowTimeMask)
-#define FT_PLANT_TYPE(tile_data) (tile_data & PlantTypeMask)
+#define FT_GROW_TIME(tile_data) (tile_data & FT_GrowTimeMask)
+#define FT_PLANT_TYPE(tile_data) (tile_data & FT_PlantTypeMask)
 
 class CFarmTile : public CMapTile
 {

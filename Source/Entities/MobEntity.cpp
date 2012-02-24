@@ -63,6 +63,16 @@ void CMobEntity::Drop(CMap *pMap)
 	pMap->GetEntity(ItemEntity)->SetItemType(Type);
 }
 
+bool CMobEntity::WieldsItem()
+{
+	return (bool)WieldedItem;
+}
+
+void CMobEntity::UseItem(CVector Dir, CMap* pMap)
+{
+	WieldedItem->OnUse(Pos + Dir, this, pMap);
+}
+
 void CMobEntity::Tick(CMap* pMap)
 {
 	if(!EntityFlags.Is_Set(EF_PLAYER))

@@ -16,7 +16,7 @@ void CFarmTile::Tick(CVector Pos, CMap *pMap)
 	if(!TileData.Is_Set(FTD_FULLY_GROWN)) {
 		if(GrowTime != 0) {
 			GrowTime--;
-			TileData.Unset(GrowTimeMask);
+			TileData.Unset(FT_GrowTimeMask);
 			TileData.Set(GrowTime);
 		}
 		else TileData.Set(FTD_FULLY_GROWN);
