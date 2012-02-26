@@ -11,8 +11,10 @@
 
 class CItemEntity : public CEntity {
 public:
-	CItemEntity(Tile T = Tile('E', CColor(255,0,255), CColor(0,0,0)), CVector Position = CVector(1,1), Uint8 Flags = 0) : CEntity(T, Position, Flags) { }
+	CItemEntity(Tile T = Tile('E', CColor(255,0,255), CColor(0,0,0)), CVector Position = CVector(1,1), Uint8 Flags = 0) : CEntity(T, Position, Flags) { ItemExtraData = 0; }
 	virtual ~CItemEntity() { }
+
+	Uint8 ItemExtraData;
 
 	virtual const char* GetName();
 	virtual const char* GetDescription();
@@ -21,4 +23,7 @@ public:
 
 	eItemType GetItemType(CMap* pMap);
 	void SetItemType(eItemType Type);
+
+	Uint8 GetExtraData(CMap* pMap);
+	void SetExtraData(Uint8 ExtraData);
 };

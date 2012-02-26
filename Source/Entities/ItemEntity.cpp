@@ -27,6 +27,18 @@ void CItemEntity::SetItemType(eItemType Type)
 	EntityFlags.Set(Type << 1);
 }
 
+Uint8 CItemEntity::GetExtraData(CMap *pMap)
+{
+	return ItemExtraData;
+}
+
+void CItemEntity::SetExtraData(Uint8 ExtraData)
+{
+	ItemExtraData = ExtraData;
+}
+
+
+
 
 
 

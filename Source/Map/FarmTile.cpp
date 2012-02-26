@@ -52,10 +52,16 @@ Tile CFarmTile::GetTile(CVector Pos, CMap* pMap)
 	FlagSet<Uint8> TileData = pMap->GetTileData(Pos);
 
 	if(TileData.Is_Set(FTD_FULLY_GROWN)) {
-		Uint8 PlantType = FT_PLANT_TYPE(TileData.raw());
+		eFarmTileData PlantType = (eFarmTileData)FT_PLANT_TYPE(TileData.raw());
 		switch(PlantType) {
 		case FTD_PLUMPHELMET:
 			return Tile('$', CColor(227,128,182), CColor(0, 0, 0));
+		case FTD_BANELING:
+			return Tile('B', CColor(0,220,0), CColor(0, 0, 0));
+		case FTD_SPINECRAWLER:
+			return Tile('S', CColor(40,40,40), CColor(0, 0, 0));
+		default:
+			return Tile(' ', CColor(0,0,0), CColor(255,0,255));
 		}
 	}
 	return CMapTile::GetTile(Pos, pMap);

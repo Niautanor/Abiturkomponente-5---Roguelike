@@ -45,12 +45,16 @@ void CMobEntity::PickUp(CMap *pMap, CEntity *pItem)
 {
 	eItemType Type = pItem->GetItemType(pMap);
 	if(Type == IT_NO_ITEM) return;
+
+	Uint8 ExtraData = pItem->GetExtraData(pMap);
+
 	if(WieldedItem) Drop(pMap);
 
 	pMap->RemoveEntity(pMap->GetEntityId(pItem));
 
 	WieldedItem.New();
 	WieldedItem->Type = Type;
+	WieldedItem->ExtraData = ExtraData;
 }
 
 void CMobEntity::Drop(CMap *pMap)
@@ -58,9 +62,11 @@ void CMobEntity::Drop(CMap *pMap)
 	if(!WieldedItem) return;
 
 	eItemType Type = WieldedItem->Type;
+	Uint8 ExtraData = WieldedItem->ExtraData;
 	WieldedItem.Delete();
 	int ItemEntity = pMap->AddEntity(new CItemEntity(Tile('i', CColor(0,0,255), CColor(0,0,0)), Pos));
 	pMap->GetEntity(ItemEntity)->SetItemType(Type);
+	pMap->GetEntity(ItemEntity)->SetExtraData(ExtraData);
 }
 
 bool CMobEntity::WieldsItem()

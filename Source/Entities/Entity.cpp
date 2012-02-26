@@ -66,6 +66,15 @@ void CEntity::SetItemType(eItemType Type)
 {
 }
 
+Uint8 CEntity::GetExtraData(CMap *pMap)
+{
+	return 0;
+}
+
+void CEntity::SetExtraData(Uint8 ExtraData)
+{
+}
+
 bool CEntity::WieldsItem()
 {
 	return false;

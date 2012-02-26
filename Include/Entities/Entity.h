@@ -74,6 +74,10 @@ public:
 	virtual eItemType GetItemType(CMap* pMap);
 	virtual void SetItemType(eItemType Type);
 
+	//Currently only used for Items to store Seed-/Weapon type and so on
+	virtual Uint8 GetExtraData(CMap* pMap);
+	virtual void SetExtraData(Uint8 ExtraData);
+
 	virtual void Attack(CMap* pMap, CEntity* pTarget);
 
 	//Purely Virtual in non Mob-Classes
@@ -85,7 +89,7 @@ public:
 	virtual void Tick(CMap* pMap);
 
 	FlagSet<Uint8> EntityFlags;
-	Uint8 ExtraData;//Mainly used for ItemEntities(Maybe i can squeeze Health information in it)
+	//Uint8 ExtraData;//Mainly used for ItemEntities(Maybe i can squeeze Health information in it) TODO:Use It when Picking or droping Items
 };
 
 //Forward Declarations
