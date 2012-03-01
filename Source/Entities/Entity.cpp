@@ -57,7 +57,7 @@ void CEntity::Drop(CMap* pMap)
 {
 }
 
-eItemType CEntity::GetItemType(CMap* pMap)
+eItemType CEntity::GetItemType()
 {
 	return IT_NO_ITEM;
 }

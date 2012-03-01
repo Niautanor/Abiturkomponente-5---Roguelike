@@ -14,6 +14,8 @@
 
 #include "HelperAPI/CNameable.h"
 
+#include "HelperAPI/NameableList.h"
+
 #include "Main/Screen.h"
 
 #include "Map/Map.h"

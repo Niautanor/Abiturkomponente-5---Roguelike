@@ -10,18 +10,18 @@
 #include "Map/MapTile.h"
 
 enum eFarmTileData {
-	FTD_NO_PLANT = 0x00,
-	FTD_FULLY_GROWN = 0x10,
+	FTD_FULLY_GROWN = 0x80,
+	FTD_NO_PLANT = 0x10,
 
 	FTD_PLUMPHELMET = 0x20,
-	FTD_SPINECRAWLER = 0x40,
-	FTD_BANELING = 0x60,
-	FTD_MOBSTERPLANT = 0x80,
-	FTD_CANCER_CURE = 0xA0
+	FTD_SPINECRAWLER = 0x30,
+	FTD_BANELING = 0x40,
+	FTD_MOBSTERPLANT = 0x50,
+	FTD_CANCER_CURE = 0x60
 };
 
 const Uint8 FT_GrowTimeMask = 0x0F;
-const Uint8 FT_PlantTypeMask = 0xE0;
+const Uint8 FT_PlantTypeMask = 0x70;
 
 #define FT_GROW_TIME(tile_data) (tile_data & FT_GrowTimeMask)
 #define FT_PLANT_TYPE(tile_data) (tile_data & FT_PlantTypeMask)
@@ -32,7 +32,7 @@ private:
 public:
 	CFarmTile(Tile T, MapTileFlag Flags) : CMapTile(T, Flags) { }
 
-	//void OnInteract(CVector Pos, CMap* pMap, CEntity* pActor);//will never Happen <- Gets captured in Main_UserAction OnInteract
+	void OnInteract(CVector Pos, CMap* pMap, CEntity* pActor);
 	void OnExamine(CVector Pos, CMap* pMap, CEntity* pActor);
 
 	void Tick(CVector Pos, CMap* pMap);

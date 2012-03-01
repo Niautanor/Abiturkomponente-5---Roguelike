@@ -48,9 +48,12 @@ bool Tile::DrawTile(SDL_Surface* pDisplay, TTF_Font* pFont, Uint32 XOffset, Uint
 	SDL_SetColors(pTile, pGlyph->format->palette->colors, 0, pGlyph->format->palette->ncolors);//Die Farben von pGlyph importieren
 	SDL_FillRect(pTile, NULL, 0);//0 ist die Hintergrundfarbe von pGlyph
 
+	int minx,maxy;
+	TTF_GlyphMetrics(pFont, C, &minx, NULL, NULL, &maxy, NULL);
+
 	SDL_Rect TileRc; //Tile an der Mitte der Bodenlinie ausrichten
-	TileRc.x = (TileWidth / 2) - (pGlyph->w / 2);
-	TileRc.y = TileHeight - pGlyph->h;
+	TileRc.x = 2 + minx;
+	TileRc.y = 4 + TTF_FontAscent(pFont) - maxy;
 
 	SDL_BlitSurface(pGlyph, NULL, pTile, &TileRc);//Die Oberfläche pTile enthält jetzt den Glyph mit füllender Hintergrundfarbe
 

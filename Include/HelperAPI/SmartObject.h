@@ -14,6 +14,10 @@ public:
 	SmartObject() { pC = 0x00; }
 	~SmartObject() { Delete(); }
 
+	inline operator C* () {
+		return pC;
+	}
+
 	inline void New() {
 		Delete();
 		pC = new C();

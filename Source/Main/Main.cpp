@@ -102,16 +102,16 @@ bool Main::OnInit()
 
 	Map.GetTile(CVector(4,4)) = CMapTile::FarmTile;
 	Map.GetTileData(CVector(4,4)).Clear();
-	Map.GetTileData(CVector(4,4)).Set(5 | FTD_NO_PLANT);
+	Map.GetTileData(CVector(4,4)).Set(0 | FTD_NO_PLANT);
 
 
 	PlayerEntity = Map.AddEntity(new CMobEntity(Tile('@', CColor(255,0,255), CColor(0,0,0)), CVector(1,1), EF_MOB | EF_PLAYER));
 
 	PuschelEntity =	Map.AddEntity(new CMobEntity(Tile('&', CColor(255,0,0), CColor(0,0,0)), CVector(3,1), EF_MOB));
 
-	ItemEntity = Map.AddEntity(new CItemEntity(Tile('i', CColor(0,0,255), CColor(0,0,0)), CVector(1,2)));
-	Map.GetEntity(ItemEntity)->SetItemType(IT_SEED);
-	Map.GetEntity(ItemEntity)->SetExtraData(SIED_PLUMPHELMET);
+	CItem* pItem = new CItem(IT_SEED, SIED_PLUMPHELMET, 1);
+	ItemEntity = Map.AddEntity(new CItemEntity(pItem, CVector(1,2)));
+	delete pItem;
 
 	return true;
 }

@@ -43,7 +43,7 @@ const char* CMobEntity::GetDescription()
 
 void CMobEntity::PickUp(CMap *pMap, CEntity *pItem)
 {
-	eItemType Type = pItem->GetItemType(pMap);
+	eItemType Type = pItem->GetItemType();
 	if(Type == IT_NO_ITEM) return;
 
 	Uint8 ExtraData = pItem->GetExtraData(pMap);
@@ -61,12 +61,9 @@ void CMobEntity::Drop(CMap *pMap)
 {
 	if(!WieldedItem) return;
 
-	eItemType Type = WieldedItem->Type;
-	Uint8 ExtraData = WieldedItem->ExtraData;
+	pMap->AddEntity(new CItemEntity((CItem*)WieldedItem, Pos));
+
 	WieldedItem.Delete();
-	int ItemEntity = pMap->AddEntity(new CItemEntity(Tile('i', CColor(0,0,255), CColor(0,0,0)), Pos));
-	pMap->GetEntity(ItemEntity)->SetItemType(Type);
-	pMap->GetEntity(ItemEntity)->SetExtraData(ExtraData);
 }
 
 bool CMobEntity::WieldsItem()
@@ -77,6 +74,8 @@ bool CMobEntity::WieldsItem()
 void CMobEntity::UseItem(CVector Dir, CMap* pMap)
 {
 	WieldedItem->OnUse(Pos + Dir, this, pMap);
+	if(WieldedItem->Uses == 0)
+		WieldedItem.Delete();
 }
 
 void CMobEntity::Tick(CMap* pMap)
@@ -87,11 +86,17 @@ void CMobEntity::Tick(CMap* pMap)
 			Attack(pMap, pMap->GetPlayer());
 		} else {
 			Mov = pMap->GetPath(this, pMap->GetPlayer()->Pos);
+			Uint8 NumTries = 0;
 			if(Mov == CVector(0,0))
 			{
 				do {
+					if(NumTries > 8) {
+						Mov = CVector();
+						break;
+					}
 					Mov = RandomVector(-1,-1,1,1);
-				} while(Mov == CVector(0,0) || !CanMove(pMap, Mov)); //FIXME: Fix potential Problem with wich the entity could get Stuck in an endless loop if it can move nowhere
+					++NumTries;
+				} while(Mov == CVector(0,0) || !CanMove(pMap, Mov));
 			}
 		}
 	}

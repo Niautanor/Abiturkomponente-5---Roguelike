@@ -71,7 +71,7 @@ public:
 	virtual void Drop(CMap* pMap);
 
 	//Used for picking up ItemEntities purely virtual in all other cases
-	virtual eItemType GetItemType(CMap* pMap);
+	virtual eItemType GetItemType();
 	virtual void SetItemType(eItemType Type);
 
 	//Currently only used for Items to store Seed-/Weapon type and so on
@@ -89,7 +89,7 @@ public:
 	virtual void Tick(CMap* pMap);
 
 	FlagSet<Uint8> EntityFlags;
-	//Uint8 ExtraData;//Mainly used for ItemEntities(Maybe i can squeeze Health information in it) TODO:Use It when Picking or droping Items
+	//Uint8 ExtraData;//Mainly used for ItemEntities(Maybe i can squeeze Health information in it)
 };
 
 //Forward Declarations

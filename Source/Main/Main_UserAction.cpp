@@ -166,6 +166,25 @@ void Main::HandleUserAction(Uint16 c)
 	case 'd':
 		Map.GetEntity(PlayerEntity)->Drop(&Map);
 		break;
+	case 's': {//Spawn Seed
+		const char* Names[] = {"Plumphelmet", "Spinecrawler", "Banelingplant"};
+
+		eItemExtraData ExtraData;
+		Uint8 Choice = ListQuestion("ASDF?", CreateNameList(3, Names));
+
+		switch(Choice) {
+		case 0: ExtraData = SIED_PLUMPHELMET;
+			break;
+		case 1: ExtraData = SIED_SPINECRAWLER;
+			break;
+		case 2: ExtraData = SIED_BANELING;
+			break;
+		}
+		int SeedEntity = Map.AddEntity(new CItemEntity(Tile('i', CColor(0,0,255), CColor(255,0,255)), Map.GetEntity(PlayerEntity)->Pos));
+		Map.GetEntity(SeedEntity)->SetItemType(IT_SEED);
+		Map.GetEntity(SeedEntity)->SetExtraData(ExtraData);
+		break;
+	}
 	case 'c':
 		gMessages.Clear();
 		break;
