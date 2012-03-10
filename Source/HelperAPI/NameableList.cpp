@@ -5,7 +5,7 @@
  *      Author: Tim
  */
 
-#include "../../Include/HelperAPI/NameableList.h"
+#include "HelperAPI/NameableList.h"
 
 PtrList<CNameableList_Entry*> CreateNameList(int ammount, const char* Names[])
 {

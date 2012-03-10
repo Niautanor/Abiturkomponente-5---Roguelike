@@ -71,6 +71,19 @@ bool Screen::PutText(char* Text, CColor Fg, CColor Bg, Uint16 X, Uint16 Y)
 	return true;
 }
 
+bool Screen::PutFText(CColor Fg, CColor Bg, Uint16 X, Uint16 Y, Uint16 BufferSize, const char* Format, ...)
+{
+	char Buffer[BufferSize];
+	va_list args;
+	va_start(args, Format);
+
+	vsprintf(Buffer, Format, args);
+
+	va_end(args);
+
+	return PutText(Buffer, Fg, Bg, X, Y);
+}
+
 bool Screen::PutScreen(Screen* pSrc, Uint16 X, Uint16 Y, Uint16 SrcX, Uint16 SrcY, Uint16 W, Uint16 H)
 {
 	if(X > NumCols || Y > NumRows)

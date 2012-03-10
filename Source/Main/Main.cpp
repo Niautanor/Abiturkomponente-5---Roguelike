@@ -156,6 +156,9 @@ void Main::OnRender()
 		if(!gMessages.PrintMessages(&sMain, 0, 0, NumRows, true))
 			gMessages.AddMessage("PrintMessages schlug fehl");
 		break;
+	case GM_CRAFTING:
+		Crafting.Render(&sMain);
+		break;
 	default:
 		break;
 	}

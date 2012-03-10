@@ -18,10 +18,20 @@ PtrList<CEntity*> FilterMobEntities(PtrList<CEntity*>& EntityList)
 }
 
 PtrList<CEntity*> FilterHostility(PtrList<CEntity*>& EntityList, CEntity* pPOVEntity, eHostilityType Hostility)
-		{
+{
 	PtrList<CEntity*> ReturnList;
 	for (Uint16 i = 0; i < EntityList.size(); i++) {
 		if (EntityList[i] && (EntityList[i]->IsHostile(pPOVEntity) == Hostility))
+			ReturnList.Push(EntityList[i]);
+	}
+	return ReturnList;
+}
+
+PtrList<CEntity*> FilterItems(PtrList<CEntity*>& EntityList)
+{
+	PtrList<CEntity*> ReturnList;
+	for(Uint16 i = 0; i < EntityList.size();i++){
+		if(EntityList[i] && (EntityList[i]->GetItemType() != IT_NO_ITEM))
 			ReturnList.Push(EntityList[i]);
 	}
 	return ReturnList;

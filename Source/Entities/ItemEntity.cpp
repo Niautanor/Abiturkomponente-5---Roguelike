@@ -5,7 +5,7 @@
  *      Author: Tim
  */
 
-#include "../../Include/Entities/ItemEntity.h"
+#include "Entities/ItemEntity.h"
 
 CItemEntity::CItemEntity(CItem* pItem, CVector Position)
 {

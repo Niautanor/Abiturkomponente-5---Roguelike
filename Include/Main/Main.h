@@ -18,6 +18,8 @@
 
 #include "Main/Screen.h"
 
+#include "Main/CraftingInterface.h"
+
 #include "Map/Map.h"
 #include "CMessageQueue.h"
 
@@ -25,7 +27,8 @@ enum eGameMode
 {
 	GM_NONE = 0,
 	GM_MAIN,
-	GM_MESSAGE_ARCHIVE
+	GM_MESSAGE_ARCHIVE,
+	GM_CRAFTING
 };
 
 enum eInputMode
@@ -58,6 +61,8 @@ private:
 
 	CMap Map;
 
+	CraftingInterface Crafting;
+
 	Uint16 PendingTicks;//Die Anzahl der Spielschritte die ausgeführt werden muss bevor der Spieler wieder eine Entscheidung treffen kann
 
 	int PlayerEntity;
@@ -85,7 +90,7 @@ public:
 	//Stellt dem Spieler eine Frage, die er mit Ja oder nein beantworten kann
 	bool Question(const char* QuestionText);
 
-	template<class P>Uint8 ListQuestion(const char* QuestionText, PtrList<P> List);//IMPORTANT: The Template Argument should be a derivat of CNameable*
+	template<class P>Uint8 ListQuestion(const char* QuestionText, PtrList<P> List);//IMPORTANT: The Template Argument should be a derived from CNameable*
 
 	//Bewegt das Spiel
 	void Tick();

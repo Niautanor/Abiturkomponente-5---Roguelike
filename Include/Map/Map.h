@@ -53,6 +53,9 @@ public:
 	//Gibt eine Liste mit allen Entities auf einem Feld zurück
 	PtrList<CEntity*> GetTileEntityList(CVector Pos);
 
+	//Returns the combined TileEntityList of all Surrounding Tiles
+	PtrList<CEntity*> GetAllEntitiesInProximity(CVector Pos);
+
 	//Gibt eine Referenz auf die Tile-Daten eines Feldes zurück
 	FlagSet<Uint8>& GetTileData(CVector Pos);
 

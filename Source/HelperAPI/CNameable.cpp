@@ -5,7 +5,7 @@
  *      Author: Tim
  */
 
-#include "../../Include/HelperAPI/CNameable.h"
+#include "HelperAPI/CNameable.h"
 
 CNameable::CNameable()
 {

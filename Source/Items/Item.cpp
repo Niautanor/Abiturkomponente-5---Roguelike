@@ -5,7 +5,7 @@
  *      Author: Tim
  */
 
-#include "../../Include/Items/Item.h"
+#include "Items/Item.h"
 
 CItem::CItem(eItemType T, eItemExtraData ED, Uint8 Start_Uses) {
 	Type = T;

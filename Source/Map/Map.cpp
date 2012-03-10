@@ -79,6 +79,24 @@ PtrList<CEntity*> CMap::GetTileEntityList(CVector Pos)
 
 /**
  * @function:
+ * Gibt eine Liste mit allen Entities in den 8 Feldern um ein Bestimmtes
+ **/
+PtrList<CEntity*> CMap::GetAllEntitiesInProximity(CVector Pos)
+{
+	PtrList<CEntity*> ReturnList;
+	CVector D;
+	for(Uint32 i=0;i<EntityList.size();i++) {
+		if(!EntityList[i]) continue;
+
+		D = EntityList[i]->Pos - Pos;
+		if(D.LengthSq() < 2)
+			ReturnList.Push(EntityList[i]);
+	}
+	return ReturnList;
+}
+
+/**
+ * @function:
  * Extradaten eines Tiles
  **/
 FlagSet<Uint8>& CMap::GetTileData(CVector Pos)

@@ -35,6 +35,8 @@ public:
 	bool Put(Tile T, Uint16 X, Uint16 Y);
 	//Einen Text auf den Bildschirm Setzen
 	bool PutText(char* Text, CColor Fg, CColor Bg, Uint16 X, Uint16 Y);
+	//Setzt einen Vorformatierten Text auf den Bildschirm
+	bool PutFText(CColor Fg, CColor Bg, Uint16 X, Uint16 Y, Uint16 BufferSize, const char* Format, ...);
 	//Zeichnet eine anderen Bildschirm auf diesen
 	bool PutScreen(Screen* pScren, Uint16 X, Uint16 Y, Uint16 SrcX=0, Uint16 SrcY=0, Uint16 W=0, Uint16 H=0);
 
