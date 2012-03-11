@@ -202,9 +202,7 @@ void Main::HandleUserAction(Uint16 c)
 				ExtraData = SIED_BANELING;
 				break;
 			}
-			int SeedEntity = Map.AddEntity(new CItemEntity(Tile('i', CColor(0, 0, 255), CColor(255, 0, 255)), Map.GetEntity(PlayerEntity)->Pos));
-			Map.GetEntity(SeedEntity)->SetItemType(IT_SEED);
-			Map.GetEntity(SeedEntity)->SetExtraData(ExtraData);
+			Map.AddEntity(new CItemEntity(IT_SEED, ExtraData, Map.GetEntity(PlayerEntity)->Pos));
 			break;
 		}
 		case 'c':

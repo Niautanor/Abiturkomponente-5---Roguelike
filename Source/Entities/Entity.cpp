@@ -46,7 +46,16 @@ Uint8 CEntity::IsHostile(CEntity *pEntity)
 }
 
 void CEntity::Attack(CMap *pMap, CEntity *pTarget)
-{//Purely virtual(Items dont attack
+{//Purely virtual(Items don't attack
+}
+
+void CEntity::GetHurt(Uint8 Damage, CMap* pMap, CEntity* pAttacker)
+{//same counts for getting hurt
+}
+
+bool CEntity::IsAlive(CMap* pMap)
+{
+	return true;//Items aren't really alive but they can not be removed when they die... -.-
 }
 
 void CEntity::PickUp(CMap* pMap, CEntity* pItem)

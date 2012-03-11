@@ -7,11 +7,11 @@
 
 #include "Entities/ItemEntity.h"
 
-CItemEntity::CItemEntity(CItem* pItem, CVector Position)
+void CItemEntity::InitFromItemData(eItemType Type, Uint8 ItemExtraData, CVector Position)
 {
 	char Entity_c;
-	CColor Fg = CColor(255,255,255), Bg = CColor(0,0,0);
-	switch(pItem->GetType()) {
+	CColor Fg = CColor(255, 255, 255), Bg = CColor(0, 0, 0);
+	switch(Type) {
 	case IT_NO_ITEM:
 		Entity_c = '?';
 		Bg = CColor(255, 0, 255);
@@ -33,8 +33,18 @@ CItemEntity::CItemEntity(CItem* pItem, CVector Position)
 
 	Pos = Position;
 
-	SetItemType(pItem->GetType());
-	SetExtraData(pItem->ExtraData);
+	SetItemType(Type);
+	SetExtraData(ItemExtraData);
+}
+
+CItemEntity::CItemEntity(CItem* pItem, CVector Position)
+{
+	InitFromItemData(pItem->GetType(), pItem->ExtraData, Position);
+}
+
+CItemEntity::CItemEntity(eItemType Type, Uint8 ItemExtraData, CVector Position)
+{
+	InitFromItemData(Type, ItemExtraData, Position);
 }
 
 const char* CItemEntity::GetName()
@@ -59,7 +69,7 @@ const char* CItemEntity::GetDescription()
 
 eItemType CItemEntity::GetItemType()
 {
-	return (eItemType)((EntityFlags.raw() & 0xFE/*0xFE ist der Typspezifische Teil von EntityFlags*/) >> 1);
+	return (eItemType) ((EntityFlags.raw() & 0xFE/*0xFE ist der Typspezifische Teil von EntityFlags*/) >> 1);
 }
 
 void CItemEntity::SetItemType(eItemType Type)
@@ -76,12 +86,4 @@ void CItemEntity::SetExtraData(Uint8 ExtraData)
 {
 	ItemExtraData = ExtraData;
 }
-
-
-
-
-
-
-
-
 

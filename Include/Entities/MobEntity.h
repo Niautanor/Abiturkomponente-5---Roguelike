@@ -20,9 +20,11 @@ class CMobEntity : public CEntity
 protected:
 	SmartObject<CItem> WieldedItem;
 
+	Sint16 Health;
+
 public:
-	CMobEntity(Tile T = Tile('M', CColor(255,0,0), CColor(0,0,0)), CVector Position = CVector(1,1), Uint8 Flags = EF_MOB)
-		: CEntity(T, Position, Flags) { }
+	CMobEntity(Tile T = Tile('M', CColor(255,0,0), CColor(0,0,0)), CVector Position = CVector(1,1), Uint8 Flags = EF_MOB, Uint8 Initial_Health = 5)
+		: CEntity(T, Position, Flags), Health(Initial_Health) { }
 	virtual ~CMobEntity() {};
 
 	virtual const char* GetName();
@@ -34,6 +36,8 @@ public:
 	virtual void Drop(CMap* pMap);
 
 	virtual void Attack(CMap* pMap, CEntity* pEntity);
+	virtual void GetHurt(Uint8 Damage, CMap* pMap, CEntity* pAttacker);
+	virtual bool IsAlive(CMap* pMap);
 
 	virtual bool WieldsItem();
 	virtual void UseItem(CVector Dir, CMap* pMap);

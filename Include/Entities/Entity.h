@@ -79,6 +79,8 @@ public:
 	virtual void SetExtraData(Uint8 ExtraData);
 
 	virtual void Attack(CMap* pMap, CEntity* pTarget);
+	virtual void GetHurt(Uint8 Damage, CMap* pMap, CEntity* pAttacker);
+	virtual bool IsAlive(CMap* pMap);
 
 	//Purely Virtual in non Mob-Classes
 	virtual bool WieldsItem();

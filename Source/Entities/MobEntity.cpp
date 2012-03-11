@@ -22,11 +22,34 @@ void CMobEntity::Attack(CMap* pMap, CEntity* pTarget)
 {
 	if(EntityFlags.Is_Set(EF_PLAYER)) {
 		if(WieldedItem && WieldedItem->GetType() == IT_WEAPON)
-			gMessages.AddFMessage("DuAtackierst den %s mit deinem %s", pTarget->GetName(), WieldedItem->GetName());
-		else gMessages.AddFMessage("Du Attackierst den %s mit deinem Schwanz", pTarget->GetName());
+			pTarget->GetHurt(3, pMap, this);
+		else pTarget->GetHurt(1, pMap, this);
 	} else {
-		gMessages.AddFMessage("The %s glares at you", GetName());
+		pTarget->GetHurt(2, pMap, this);
 	}
+
+	if(!pTarget->EntityFlags.Is_Set(EF_PLAYER)) {
+		if(!pTarget->IsAlive(pMap)) {
+			gMessages.AddFMessage("Der %s stirbt", pTarget->GetName());
+			pMap->RemoveEntity(pMap->GetEntityId(pTarget));
+		}
+	}
+}
+
+bool CMobEntity::IsAlive(CMap* pMap)
+{
+	return (Health > 0);
+}
+
+void CMobEntity::GetHurt(Uint8 Damage, CMap* pMap, CEntity* pAttacker)
+{
+	Health -= Damage;
+	if(EntityFlags.Is_Set(EF_PLAYER))
+		gMessages.AddFMessage("Der %s atackiert dich mit %i Schadenspunkten", pAttacker->GetName(), Damage);
+	else if(pAttacker->EntityFlags.Is_Set(EF_PLAYER))
+		gMessages.AddFMessage("Du atackierst den %s mit %i Schadenspunkten", GetName(), Damage);
+	else
+		gMessages.AddFMessage("Der %s atackiert den %s mit %i Schadenspunkten", pAttacker->GetName(), GetName(), Damage);
 }
 
 const char* CMobEntity::GetName()

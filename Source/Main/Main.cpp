@@ -109,9 +109,7 @@ bool Main::OnInit()
 
 	PuschelEntity =	Map.AddEntity(new CMobEntity(Tile('&', CColor(255,0,0), CColor(0,0,0)), CVector(3,1), EF_MOB));
 
-	CItem* pItem = new CSeedItem(SIED_PLUMPHELMET);
-	ItemEntity = Map.AddEntity(new CItemEntity(pItem, CVector(1,2)));
-	delete pItem;
+	ItemEntity = Map.AddEntity(new CItemEntity(IT_SEED, SIED_PLUMPHELMET, CVector(1,2)));
 
 	return true;
 }
