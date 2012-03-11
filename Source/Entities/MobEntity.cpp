@@ -21,7 +21,9 @@ Uint8 CMobEntity::IsHostile(CEntity *pEntity)
 void CMobEntity::Attack(CMap* pMap, CEntity* pTarget)
 {
 	if(EntityFlags.Is_Set(EF_PLAYER)) {
-		gMessages.AddFMessage("Du Attackierst den %s", pTarget->GetName());
+		if(WieldedItem && WieldedItem->GetType() == IT_WEAPON)
+			gMessages.AddFMessage("DuAtackierst den %s mit deinem %s", pTarget->GetName(), WieldedItem->GetName());
+		else gMessages.AddFMessage("Du Attackierst den %s mit deinem Schwanz", pTarget->GetName());
 	} else {
 		gMessages.AddFMessage("The %s glares at you", GetName());
 	}
@@ -52,8 +54,7 @@ void CMobEntity::PickUp(CMap *pMap, CEntity *pItem)
 
 	pMap->RemoveEntity(pMap->GetEntityId(pItem));
 
-	WieldedItem.New();
-	WieldedItem->Type = Type;
+	WieldedItem.New(Type);
 	WieldedItem->ExtraData = ExtraData;
 }
 

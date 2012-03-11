@@ -17,12 +17,12 @@ CNameable::~CNameable()
 
 const char *CNameable::GetName()
 {
-	return "Name";
+	return "";
 }
 
 const char *CNameable::GetDescription()
 {
-	return "Beschreibung";
+	return "";
 }
 
 

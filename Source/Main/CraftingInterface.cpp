@@ -26,7 +26,6 @@ bool CraftingInterface::IsCombinable(CEntity* Item1, CEntity* Item2)
 
 bool CraftingInterface::Init(CVector UserPos, CMap* pMap)
 {
-	//TODO: Filter to display only Materials
 	MaterialList = pMap->GetAllEntitiesInProximity(UserPos);
 	MaterialList = FilterItems(MaterialList);
 

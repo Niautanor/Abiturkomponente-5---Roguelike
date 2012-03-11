@@ -86,7 +86,7 @@ void CEntity::UseItem(CVector Direction, CMap* pMap)
 
 void CEntity::Tick(CMap* pMap)
 {
-	if(CanMove(pMap, Mov))
+	if(Mov != CVector(0,0) && CanMove(pMap, Mov))
 		Pos += Mov;
 	Mov = CVector(0,0);
 }

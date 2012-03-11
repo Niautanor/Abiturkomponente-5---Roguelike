@@ -11,7 +11,7 @@ CItemEntity::CItemEntity(CItem* pItem, CVector Position)
 {
 	char Entity_c;
 	CColor Fg = CColor(255,255,255), Bg = CColor(0,0,0);
-	switch(pItem->Type) {
+	switch(pItem->GetType()) {
 	case IT_NO_ITEM:
 		Entity_c = '?';
 		Bg = CColor(255, 0, 255);
@@ -33,7 +33,7 @@ CItemEntity::CItemEntity(CItem* pItem, CVector Position)
 
 	Pos = Position;
 
-	SetItemType(pItem->Type);
+	SetItemType(pItem->GetType());
 	SetExtraData(pItem->ExtraData);
 }
 
@@ -59,7 +59,7 @@ const char* CItemEntity::GetDescription()
 
 eItemType CItemEntity::GetItemType()
 {
-	return IT_SEED;
+	return (eItemType)((EntityFlags.raw() & 0xFE/*0xFE ist der Typspezifische Teil von EntityFlags*/) >> 1);
 }
 
 void CItemEntity::SetItemType(eItemType Type)

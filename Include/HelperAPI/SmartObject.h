@@ -7,7 +7,9 @@
 
 #pragma once  /* SMARTOBJECT_H_ */
 
-template<class C> class SmartObject {
+#include "HelperAPI/CFactory.h"
+
+template<class C> class SmartObject { //IMPORTANT: C should be a Derived class of CFactory
 private:
 	C* pC;
 public:
@@ -18,9 +20,10 @@ public:
 		return pC;
 	}
 
-	inline void New() {
+	inline void New(Uint8 Type) {
 		Delete();
-		pC = new C();
+		pC = C::GenerateObject(Type);
+		if(!pC) throw "GenerateExeption of CFactory";
 	}
 	inline void Delete() {
 		if(pC)

@@ -25,13 +25,18 @@ void CFarmTile::Tick(CVector Pos, CMap *pMap)
 
 void CFarmTile::OnInteract(CVector Pos, CMap *pMap, CEntity *pActor)
 {
-	FlagSet<Uint8> TileData = pMap->GetTileData(Pos);
+	FlagSet<Uint8>& TileData = pMap->GetTileData(Pos);
 	if(!TileData.Is_Set(FTD_FULLY_GROWN))
 		gMessages.AddMessage("Dieses Stueck kannst du noch nicht ernten");
 	else { //Harvest
-		CVector Pos = RandomVector(-1,-1,1,1);
-		int PlantEntity = pMap->AddEntity(new CItemEntity(Tile('P', CColor(128,128,128), CColor(0,0,0)), Pos));
+		int PlantEntity = pMap->AddEntity(new CItemEntity(Tile('/', CColor(255,0,0), CColor(0,0,0)), Pos));
 		pMap->GetEntity(PlantEntity)->SetItemType(IT_WEAPON);
+
+		TileData.Unset(FTD_FULLY_GROWN);
+		TileData.Unset(FT_GrowTimeMask);
+		TileData.Unset(FT_PlantTypeMask);
+		TileData.Set(FTD_NO_PLANT);
+
 		gMessages.AddMessage("Farm abgeerntet");
 	}
 }

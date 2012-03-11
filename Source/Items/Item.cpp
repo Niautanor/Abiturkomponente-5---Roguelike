@@ -7,8 +7,7 @@
 
 #include "Items/Item.h"
 
-CItem::CItem(eItemType T, eItemExtraData ED, Uint8 Start_Uses) {
-	Type = T;
+CItem::CItem(eItemExtraData ED, Uint8 Start_Uses) {
 	ExtraData = ED;
 	Uses = Start_Uses;
 }
@@ -16,21 +15,27 @@ CItem::CItem(eItemType T, eItemExtraData ED, Uint8 Start_Uses) {
 CItem::~CItem() {
 }
 
+CItem* CItem::GenerateObject(Uint8 Type)
+{
+	switch(Type) {
+	case IT_NO_ITEM:
+		return NULL;
+	case IT_SEED:
+		return new CSeedItem(SIED_PLUMPHELMET);
+	case IT_WEAPON:
+		return new CWeaponItem(IED_NONE, 5);
+	default:
+		return NULL;
+	}
+}
+
+eItemType CItem::GetType()
+{
+	return IT_NO_ITEM;
+}
+
 void CItem::OnUse(CVector UsePos, CEntity *pUser, CMap *pMap)
 {
-	if(Type == IT_SEED) {
-		if(pMap->GetTile(UsePos) == CMapTile::FarmTile) {
-			pMap->GetTileData(UsePos).Unset(FTD_FULLY_GROWN);
-
-			pMap->GetTileData(UsePos).Unset(FT_GrowTimeMask);
-			pMap->GetTileData(UsePos).Set(5);
-
-			pMap->GetTileData(UsePos).Unset(FT_PlantTypeMask);
-			pMap->GetTileData(UsePos).Set(ExtraData);
-
-			--Uses;
-		} else gMessages.AddMessage("Du kannst Samen nur auf Farm-Feldern pflanzen");
-	}
 }
 
 
