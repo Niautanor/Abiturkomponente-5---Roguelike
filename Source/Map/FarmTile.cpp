@@ -29,8 +29,7 @@ void CFarmTile::OnInteract(CVector Pos, CMap *pMap, CEntity *pActor)
 	if(!TileData.Is_Set(FTD_FULLY_GROWN))
 		gMessages.AddMessage("Dieses Stueck kannst du noch nicht ernten");
 	else { //Harvest
-		int PlantEntity = pMap->AddEntity(new CItemEntity(Tile('/', CColor(255,0,0), CColor(0,0,0)), Pos));
-		pMap->GetEntity(PlantEntity)->SetItemType(IT_WEAPON);
+		pMap->AddEntity(new CItemEntity(IT_WEAPON, IED_NONE, Pos));
 
 		TileData.Unset(FTD_FULLY_GROWN);
 		TileData.Unset(FT_GrowTimeMask);
