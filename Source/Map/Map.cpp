@@ -89,7 +89,7 @@ PtrList<CEntity*> CMap::GetAllEntitiesInProximity(CVector Pos)
 		if(!EntityList[i]) continue;
 
 		D = EntityList[i]->Pos - Pos;
-		if(D.LengthSq() < 2)
+		if(D.LengthSq() <= 2)
 			ReturnList.Push(EntityList[i]);
 	}
 	return ReturnList;
