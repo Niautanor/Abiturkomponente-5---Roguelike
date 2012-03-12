@@ -105,7 +105,7 @@ bool Main::OnInit()
 	Map.GetTileData(CVector(4,4)).Set(0 | FTD_NO_PLANT);
 
 
-	PlayerEntity = Map.AddEntity(new CMobEntity(Tile('@', CColor(255,0,255), CColor(0,0,0)), CVector(1,1), EF_MOB | EF_PLAYER));
+	PlayerEntity = Map.AddEntity(new CPlayer(Tile('@', CColor(255,0,255), CColor(0,0,0)), CVector(1,1), EF_MOB));
 
 	PuschelEntity =	Map.AddEntity(new CMobEntity(Tile('&', CColor(255,0,0), CColor(0,0,0)), CVector(3,1), EF_MOB));
 
@@ -170,6 +170,10 @@ void Main::Tick()
 {
 	gMessages.Tick();
 	Map.Tick();
+
+	if(!Map.GetEntity(PlayerEntity)->IsAlive(&Map))
+		gMessages.AddMessage("Technisch gesehen bist du Tot");
+
 	PendingTicks--;
 }
 

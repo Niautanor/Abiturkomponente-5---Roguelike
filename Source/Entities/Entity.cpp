@@ -45,6 +45,11 @@ Uint8 CEntity::IsHostile(CEntity *pEntity)
 	return HT_ITEM;
 }
 
+bool CEntity::IsPlayer()
+{
+	return false;
+}
+
 void CEntity::Attack(CMap *pMap, CEntity *pTarget)
 {//Purely virtual(Items don't attack
 }

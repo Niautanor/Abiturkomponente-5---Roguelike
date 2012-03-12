@@ -11,7 +11,7 @@ Uint8 CMobEntity::IsHostile(CEntity *pEntity)
 {
 	if(pEntity == this)
 		return HT_NONE;
-	else if(pEntity->EntityFlags.Is_Set(EF_PLAYER))
+	else if(pEntity->IsPlayer())
 		return HT_HOSTILE;
 	else if(pEntity->EntityFlags.Is_Set(EF_MOB))
 		return HT_FRIENDLY;
@@ -20,15 +20,10 @@ Uint8 CMobEntity::IsHostile(CEntity *pEntity)
 
 void CMobEntity::Attack(CMap* pMap, CEntity* pTarget)
 {
-	if(EntityFlags.Is_Set(EF_PLAYER)) {
-		if(WieldedItem && WieldedItem->GetType() == IT_WEAPON)
-			pTarget->GetHurt(3, pMap, this);
-		else pTarget->GetHurt(1, pMap, this);
-	} else {
+	if(!IsPlayer())
 		pTarget->GetHurt(2, pMap, this);
-	}
 
-	if(!pTarget->EntityFlags.Is_Set(EF_PLAYER)) {
+	if(!pTarget->IsPlayer()) {
 		if(!pTarget->IsAlive(pMap)) {
 			gMessages.AddFMessage("Der %s stirbt", pTarget->GetName());
 			pMap->RemoveEntity(pMap->GetEntityId(pTarget));
@@ -44,9 +39,9 @@ bool CMobEntity::IsAlive(CMap* pMap)
 void CMobEntity::GetHurt(Uint8 Damage, CMap* pMap, CEntity* pAttacker)
 {
 	Health -= Damage;
-	if(EntityFlags.Is_Set(EF_PLAYER))
+	if(IsPlayer())
 		gMessages.AddFMessage("Der %s atackiert dich mit %i Schadenspunkten", pAttacker->GetName(), Damage);
-	else if(pAttacker->EntityFlags.Is_Set(EF_PLAYER))
+	else if(pAttacker->IsPlayer())
 		gMessages.AddFMessage("Du atackierst den %s mit %i Schadenspunkten", GetName(), Damage);
 	else
 		gMessages.AddFMessage("Der %s atackiert den %s mit %i Schadenspunkten", pAttacker->GetName(), GetName(), Damage);
@@ -54,15 +49,11 @@ void CMobEntity::GetHurt(Uint8 Damage, CMap* pMap, CEntity* pAttacker)
 
 const char* CMobEntity::GetName()
 {
-	if(EntityFlags.Is_Set(EF_PLAYER))
-		return "Du selbst";
 	return "Mobster";
 }
 
 const char* CMobEntity::GetDescription()
 {
-	if(EntityFlags.Is_Set(EF_PLAYER))
-		return "Du bist ein Geiler Abenteurer";
 	return "Dieses Monster versucht dich zu toeten";
 }
 
@@ -104,7 +95,7 @@ void CMobEntity::UseItem(CVector Dir, CMap* pMap)
 
 void CMobEntity::Tick(CMap* pMap)
 {
-	if(!EntityFlags.Is_Set(EF_PLAYER))
+	if(!IsPlayer())
 	{
 		if(VectorLengthSq(Pos - pMap->GetPlayer()->Pos) <= 2) {
 			Attack(pMap, pMap->GetPlayer());

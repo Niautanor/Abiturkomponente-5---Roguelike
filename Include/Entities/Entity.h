@@ -78,6 +78,9 @@ public:
 	virtual Uint8 GetExtraData(CMap* pMap);
 	virtual void SetExtraData(Uint8 ExtraData);
 
+	//Entity is Player
+	virtual bool IsPlayer();
+
 	virtual void Attack(CMap* pMap, CEntity* pTarget);
 	virtual void GetHurt(Uint8 Damage, CMap* pMap, CEntity* pAttacker);
 	virtual bool IsAlive(CMap* pMap);

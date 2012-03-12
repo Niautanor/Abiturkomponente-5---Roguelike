@@ -139,7 +139,7 @@ CEntity* CMap::GetPlayer()
 {
 	for(Uint32 i=0;i<EntityList.size();i++)
 	{
-		if(EntityList[i] && EntityList[i]->EntityFlags.Is_Set(EF_PLAYER))
+		if(EntityList[i] && EntityList[i]->IsPlayer())
 			return EntityList[i];
 	}
 	return NULL;
