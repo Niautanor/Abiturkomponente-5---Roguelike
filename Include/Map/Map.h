@@ -70,6 +70,6 @@ public:
 
 	/*Grundsätzliche Verwaltungsfunktionen*/
 	void ClearMap(CMapTile* ClearTile);
-	bool DrawMap(Screen* s, Uint16 StartX, Uint16 StartY);
+	bool DrawMap(Screen* s, Uint16 StartX, Uint16 StartY, Uint16 VP_X = 0, Uint16 VP_Y = 0, Uint16 VP_W = 0, Uint16 VP_H = 0);
 	void PutMapTile(CMapTile* T, Uint16 X, Uint16 Y);
 };

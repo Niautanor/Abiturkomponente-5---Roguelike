@@ -53,12 +53,12 @@ void CMap::OnExit()
  * @origin:
  * Ursprünglich aus der Funktion DrawMap()
  **/
-bool CMap::DrawTile(Screen* s, Uint16 X, Uint16 Y, Uint16 StartX, Uint16 StartY)
+bool CMap::DrawTile(Screen* s, Uint16 X, Uint16 Y, Uint16 RenderX, Uint16 RenderY)
 {
 	if(!(X < MapWidth || Y < MapHeight)) return false;
 
 	if(TileList[Y*MapWidth+X]->Flags.Is_Set(MTF_EXISTANT) && TileList[Y*MapWidth+X]->Flags.Is_Set(MTF_VISIBLE))
-		if(!(s->Put(TileList[Y*MapWidth+X]->GetTile(CVector(X, Y), this), StartX+X, StartY+Y)))
+		if(!(s->Put(TileList[Y*MapWidth+X]->GetTile(CVector(X, Y), this), RenderX, RenderY)))
 			return false;
 	return true;
 }
@@ -180,15 +180,27 @@ void CMap::ClearMap(CMapTile* ClearTile)
  * @StartX, StartY:
  * An diesen Koordinaten wird das Linke Obere Feld gezeichnet werden
  * (Alle anderen breiten sich nach Rechtsunten aus)
+ *
+ * @VP_X,Y,W,H:
+ * Viewport Koordinaten(X, Y, Width, Height)
+ * Geben den Ausschnitt der Karte an der gezeichnet werden soll
  **/
-bool CMap::DrawMap(Screen* s, Uint16 StartX, Uint16 StartY)
+bool CMap::DrawMap(Screen* s, Uint16 StartX, Uint16 StartY, Uint16 VP_X, Uint16 VP_Y, Uint16 VP_W, Uint16 VP_H)
 {
 	if(!s) return false;
 
+	if(VP_W == 0) VP_W = MapWidth;
+	if(VP_H == 0) VP_H = MapHeight;
+
+	/* There should be a more elegant way to do this(maybe with camera Center
+	if(VP_X + VP_W > MapWidth) VP_W = MapWidth - VP_X;
+	if(VP_Y + VP_H > MapHeight) VP_H = MapHeight - VP_Y;
+	*/
+
 	bool ret = true;
-	for(Uint16 Y=0;Y<MapHeight;Y++)
-		for(Uint16 X=0;X<MapWidth;X++)
-			if(!DrawTile(s,X,Y,StartX,StartY))
+	for(Uint16 Y=0;Y<VP_H;Y++)
+		for(Uint16 X=0;X<VP_W;X++)
+			if(!DrawTile(s,X + VP_X,Y + VP_Y,StartX + X,StartY + Y))
 				ret = false;
 	return ret;
 }

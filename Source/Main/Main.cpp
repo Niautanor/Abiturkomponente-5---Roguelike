@@ -85,6 +85,9 @@ bool Main::OnInit()
 	if(!Map.OnInit(6,6))
 		return false;
 
+	Camera.Init(5,5);
+	Camera.CenterCamera(CVector(0,0), Map.GetW(), Map.GetH());
+
 	SDL_EnableUNICODE(1);
 
 	//Testing Stuff
@@ -147,7 +150,7 @@ void Main::OnRender()
 		if(!gMessages.PrintMessages(&sMain, 0, 0, 5,  false))
 			gMessages.AddMessage("PrintMessages schlug fehl");
 
-		Map.DrawMap(&sMap, 0,0);
+		Map.DrawMap(&sMap, 0,0, Camera.GetX(), Camera.GetY(), Camera.GetW(), Camera.GetH());
 		sMain.PutScreen(&sMap, 2, 6);
 		break;
 	case GM_MESSAGE_ARCHIVE:
@@ -170,6 +173,8 @@ void Main::Tick()
 {
 	gMessages.Tick();
 	Map.Tick();
+
+	Camera.CenterCamera(Map.GetEntity(PlayerEntity)->Pos, Map.GetW(), Map.GetH());
 
 	if(!Map.GetEntity(PlayerEntity)->IsAlive(&Map))
 		gMessages.AddMessage("Technisch gesehen bist du Tot");

@@ -21,6 +21,7 @@
 #include "Main/CraftingInterface.h"
 
 #include "Map/Map.h"
+#include "Map/Camera.h"
 #include "CMessageQueue.h"
 
 enum eGameMode
@@ -58,6 +59,8 @@ private:
 
 	eGameMode GameMode;
 	eInputMode InputMode;
+
+	CCamera Camera;
 
 	CMap Map;
 
