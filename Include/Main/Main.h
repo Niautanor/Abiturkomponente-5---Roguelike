@@ -55,7 +55,6 @@ private:
 	Uint16 NumRows, NumCols;
 
 	Screen sMain;
-	Screen sMap;
 
 	eGameMode GameMode;
 	eInputMode InputMode;

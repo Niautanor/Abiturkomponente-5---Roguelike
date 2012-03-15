@@ -76,16 +76,13 @@ bool Main::OnInit()
 	if(!sMain.OnInit(TileHeight, TileWidth, NumRows, NumCols))
 		return false;
 
-	if(!sMap.OnInit(TileHeight, TileWidth, 7, 7))
-		return false;
-
 	if(!gMessages.OnInit(40))
 		return false;
 
-	if(!Map.InitWithGenerator(2,2,4,4))
+	if(!Map.InitWithGenerator(3,3,6,6))
 		return false;
 
-	Camera.Init(7,7);
+	Camera.Init(sMain.W(),sMain.H()-5);
 	Camera.CenterCamera(CVector(0,0), Map.GetW(), Map.GetH());
 
 	SDL_EnableUNICODE(1);
@@ -105,7 +102,6 @@ void Main::OnExit()
 	Map.OnExit();
 	gMessages.OnExit();
 
-	sMap.OnExit();
 	sMain.OnExit();
 
 	TTF_CloseFont(pFont);
@@ -127,10 +123,7 @@ void Main::OnRender()
 		if(!gMessages.PrintMessages(&sMain, 0, 0, 5,  false))
 			gMessages.AddMessage("PrintMessages schlug fehl");
 
-		sMap.ClearScreen();//Disables Glitches with small maps and big cameras
-		//TODO: figure out why the camera scrolls on maps with 5x5 resolution
-		Map.DrawMap(&sMap, 0,0, Camera.GetX(), Camera.GetY(), Camera.GetW(), Camera.GetH());
-		sMain.PutScreen(&sMap, 2, 6);
+		Map.DrawMap(&sMain, 0, 5, Camera.GetX(), Camera.GetY(), Camera.GetW(), Camera.GetH());
 		break;
 	case GM_MESSAGE_ARCHIVE:
 		if(!gMessages.PrintMessages(&sMain, 0, 0, NumRows, true))
