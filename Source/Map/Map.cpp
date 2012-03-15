@@ -39,52 +39,40 @@ bool CMap::InitWithGenerator(Uint16 MinW, Uint16 MinH, Uint16 MaxW, Uint16 MaxH)
 	if(!Generator.Init(MinW, MaxW, MinH, MaxH))
 		return false;
 
-	if(!OnInit(Generator.MapW * 4 + 1, Generator.MapH * 4 + 1))//Jeder Raum besteht aus 3x3 Feldern mit umgebenden Randfeldern. Die Randfelder werden von zwei nebeneinanderliegenden Räumen geteilt
+	if(!OnInit(Generator.W(), Generator.H()))
 		return false;
 
 	ClearMap(CMapTile::WallTile);//Fill Map with Wall (this only affects the rightmost and downmost rows/colums of tiles
 
-	for(Uint16 Y=0;Y<Generator.MapH;Y++) {
-		for(Uint16 X=0;X<Generator.MapW;X++) {
-
-			for(Uint8 Yp=0;Yp<4;Yp++) {
-				for(Uint8 Xp=0;Xp<4;Xp++) {
-					Uint16 Yr = Y * 4 + Yp;//Rendered Y coordinate
-					Uint16 Xr = X * 4 + Xp;//Rendered X
-
-					CMapTile* TileToBePlaced = CMapTile::GroundTile;
-
-					if(Yp == 0 || Xp == 0) { //Wall or Door
-						if(Xp == 2 && Generator.GetRoom(X, Y)->Doors[1]) //N/S Door & Doors[1] -> TopDoor
-							TileToBePlaced = CMapTile::DoorTile;
-						else if(Yp == 2 && Generator.GetRoom(X, Y)->Doors[0])//W/E Door & Doors[0] -> Left Door
-							TileToBePlaced = CMapTile::DoorTile;
-						else //Wall
-							TileToBePlaced = CMapTile::WallTile;
-					} else if(Yp == 2 && Xp == 2) {//Room Center -> Room Content
-						switch(Generator.GetRoom(X, Y)->Content) {
-						case RC_FARMLAND:
-							TileToBePlaced = CMapTile::FarmTile;
-							GetTileData(CVector(Xr, Yr)).Set(0 | FTD_NO_PLANT);
-							break;
-						case RC_LOOT:
-							TileToBePlaced = CMapTile::GroundTile;
-							AddEntity(new CItemEntity(IT_SEED, SIED_BANELING, CVector(Xr, Yr)));
-							break;
-						case RC_MONSTER:
-							TileToBePlaced = CMapTile::GroundTile;
-							AddEntity(new CMobEntity(Tile('&', CColor(200,0,0), CColor(0,0,0)), CVector(Xr, Yr), EF_MOB, 5));
-							break;
-						default:
-							TileToBePlaced = CMapTile::GroundTile;
-							break;
-						}
-					}
-
-					GetTile(CVector(Xr, Yr)) = TileToBePlaced;
-				}
+	for(Uint16 Y = 0; Y < Generator.H(); Y++) {
+		for(Uint16 X=0;X<Generator.W();X++) {
+			CMapTile* TileToBePlaced = CMapTile::EmptyTile;
+			switch(Generator.GetTile(X, Y)) {
+			case '#':
+				TileToBePlaced = CMapTile::WallTile;
+				break;
+			case '.':
+				TileToBePlaced = CMapTile::GroundTile;
+				break;
+			case '+':
+				TileToBePlaced = CMapTile::DoorTile;
+				break;
+			case '~':
+				TileToBePlaced = CMapTile::FarmTile;
+				GetTileData(CVector(X, Y)).Set(0 | FTD_NO_PLANT);
+				break;
+			case ':':
+				TileToBePlaced = CMapTile::GroundTile;
+				AddEntity(new CItemEntity(IT_SEED, SIED_SPINECRAWLER, CVector(X, Y)));
+				break;
+			case '&':
+				TileToBePlaced = CMapTile::GroundTile;
+				AddEntity(new CMobEntity(Tile('&', CColor(200, 0,0), CColor(0,0,0)), CVector(X, Y), EF_MOB, 3));
+				break;
+			default:
+				break;
 			}
-
+			GetTile(CVector(X, Y)) = TileToBePlaced;
 		}
 	}
 

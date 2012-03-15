@@ -7,36 +7,42 @@
 
 #include "Map/Generator/Generator.h"
 
-MapGenerator::MapGenerator() {
+MapGenerator::MapGenerator()
+{
 	// TODO Auto-generated constructor stub
 
 }
 
-MapGenerator::~MapGenerator() {
+MapGenerator::~MapGenerator()
+{
 	// TODO Auto-generated destructor stub
 }
 
-bool MapGenerator::Init(Uint16  MinW, Uint16  MaxW, Uint16  MinH, Uint16  MaxH)
+bool MapGenerator::Init(Uint16 MinW, Uint16 MaxW, Uint16 MinH, Uint16 MaxH)
 {
 	//TODO: Maybe srand should be called from within Main::OnInit()
 	srand(time(NULL));
 
-	MapW = rand() % (MaxW - MinW + 1) + MinW;
-	MapH = rand() % (MaxH - MinH + 1) + MinH;
+	NumRoomsX = rand() % (MaxW - MinW + 1) + MinW;
+	NumRoomsY = rand() % (MaxH - MinH + 1) + MinH;
 
-	Rooms = new MG_Room[MapH * MapW];
+	Rooms = new MG_Room[NumRoomsY * NumRoomsX];
 
-	for(Uint16 Y=0;Y<MapH;Y++) {
-		for(Uint16 X=0;X<MapW;X++) {
+	for(Uint16 Y = 0; Y < NumRoomsY; Y++) {
+		for(Uint16 X = 0; X < NumRoomsX; X++) {
 			unsigned char PossibleDoors = D_NONE;
 
-			if(Y != 0) PossibleDoors |= D_TOP;
-			if(Y != MapH - 1) PossibleDoors |= D_BOTTOM;
-			if(X != 0) PossibleDoors |= D_LEFT;
-			if(X != MapW - 1) PossibleDoors |= D_RIGHT;
+			if(Y != 0)
+				PossibleDoors |= D_TOP;
+			if(Y != NumRoomsY - 1)
+				PossibleDoors |= D_BOTTOM;
+			if(X != 0)
+				PossibleDoors |= D_LEFT;
+			if(X != NumRoomsX - 1)
+				PossibleDoors |= D_RIGHT;
 
-			if(Rooms[Y * MapW + X].NumDoors() == 0 && PossibleDoors != 0) { //Doors can only be placed if there is a place for them to be
-				eDirection Dir = Rooms[Y * MapW + X].GenerateDoors(PossibleDoors);
+			if(GetRoom(X, Y)->NumDoors() == 0 && PossibleDoors != 0) { //Doors can only be placed if there is a place for them to be
+				eDirection Dir = GetRoom(X, Y)->GenerateDoors(PossibleDoors);
 
 				Uint16 NextX = X;
 				Uint16 NextY = Y;
@@ -55,13 +61,13 @@ bool MapGenerator::Init(Uint16  MinW, Uint16  MaxW, Uint16  MinH, Uint16  MaxH)
 					NextY += 1;
 				}
 
-				Rooms[NextY * MapW + NextX].GenerateDoors(Dir);
+				GetRoom(NextX, NextY)->GenerateDoors(Dir);
 			}
 
-			if(Rooms[Y * MapW + X].NumDoors() < 2 && Rooms[Y * MapW + X].CanPlaceDoor(PossibleDoors)) {
+			if(GetRoom(X, Y)->NumDoors() < 2 && GetRoom(X, Y)->CanPlaceDoor(PossibleDoors)) {
 				float P = (rand() % 1000) / 1000.0f;
 				if(P > 0.60f) {
-					eDirection Dir = Rooms[Y * MapW + X].GenerateDoors(PossibleDoors);
+					eDirection Dir = GetRoom(X, Y)->GenerateDoors(PossibleDoors);
 
 					Uint16 NextX = X;
 					Uint16 NextY = Y;
@@ -80,14 +86,14 @@ bool MapGenerator::Init(Uint16  MinW, Uint16  MaxW, Uint16  MinH, Uint16  MaxH)
 						NextY += 1;
 					}
 
-					Rooms[NextY * MapW + NextX].GenerateDoors(Dir);
+					GetRoom(NextX, NextY)->GenerateDoors(Dir);
 				}
 			}
 
-			if(Rooms[Y * MapW + X].NumDoors() < 3 && Rooms[Y * MapW + X].CanPlaceDoor(PossibleDoors)) {
+			if(GetRoom(X, Y)->NumDoors() < 3 && GetRoom(X, Y)->CanPlaceDoor(PossibleDoors)) {
 				float P = (rand() % 1000) / 1000.0f;
 				if(P > 0.80f) {
-					eDirection Dir = Rooms[Y * MapW + X].GenerateDoors(PossibleDoors);
+					eDirection Dir = GetRoom(X, Y)->GenerateDoors(PossibleDoors);
 
 					Uint16 NextX = X;
 					Uint16 NextY = Y;
@@ -106,25 +112,79 @@ bool MapGenerator::Init(Uint16  MinW, Uint16  MaxW, Uint16  MinH, Uint16  MaxH)
 						NextY += 1;
 					}
 
-					Rooms[NextY * MapW + NextX].GenerateDoors(Dir);
+					GetRoom(NextX, NextY)->GenerateDoors(Dir);
 				}
 			}
 
 			//Generate Room Content
 			float P = (rand() % 1000) / 1000.0f;
 			if(P > 0.90f) {
-				Rooms[Y * MapW + X].Content = RC_FARMLAND;
+				GetRoom(X, Y)->Content = RC_FARMLAND;
 			} else if(P > 0.650f) {
-				Rooms[Y * MapW + X].Content = RC_MONSTER;
+				GetRoom(X, Y)->Content = RC_MONSTER;
 			} else if(P > 0.40f) {
-				Rooms[Y * MapW + X].Content = RC_LOOT;
+				GetRoom(X, Y)->Content = RC_LOOT;
 			}
 		}
 	}
+
+	//Map the Rooms to Tiles
+	MapW = NumRoomsX * 4 + 1;
+	MapH = NumRoomsY * 4 + 1;
+
+	Tiles = new char[MapW * MapH];
+
+	for(Uint16 X = 0;X<MapW;X++)
+		GetTile(X, MapH - 1) = '#';
+	for(Uint16 Y = 0;Y<MapH;Y++)
+		GetTile(MapW - 1, Y) = '#';
+
+	for(Uint16 Y = 0; Y < NumRoomsY; Y++) {
+		for(Uint16 X = 0; X < NumRoomsX; X++) {
+
+			for(Uint8 Yp = 0; Yp < 4; Yp++) {
+				for(Uint8 Xp = 0; Xp < 4; Xp++) {
+					Uint16 Yr = Y * 4 + Yp; //Rendered Y coordinate
+					Uint16 Xr = X * 4 + Xp; //Rendered X
+
+					char TileToBePlaced = '.';
+
+					if(Yp == 0 || Xp == 0) { //Wall or Door
+						if(Xp == 2 && GetRoom(X, Y)->Doors[1]) //N/S Door & Doors[1] -> TopDoor
+							TileToBePlaced = '+';
+						else if(Yp == 2 && GetRoom(X, Y)->Doors[0]) //W/E Door & Doors[0] -> Left Door
+							TileToBePlaced = '+';
+						else //Wall
+						TileToBePlaced = '#';
+					} else if(Yp == 2 && Xp == 2) { //Room Center -> Room Content
+						switch(GetRoom(X, Y)->Content) {
+						case RC_FARMLAND:
+							TileToBePlaced = '~';
+							break;
+						case RC_LOOT:
+							TileToBePlaced = ':';
+							break;
+						case RC_MONSTER:
+							TileToBePlaced = '&';
+							break;
+						default:
+							TileToBePlaced = '.';
+							break;
+						}
+					}
+
+					GetTile(Xr, Yr) = TileToBePlaced;
+				}
+			}
+
+		}
+	}
+
 	return true;
 }
 
 void MapGenerator::Exit()
 {
 	delete[] Rooms;
+	delete[] Tiles;
 }
