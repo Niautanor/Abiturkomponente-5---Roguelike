@@ -253,11 +253,6 @@ bool CMap::DrawMap(Screen* s, Uint16 StartX, Uint16 StartY, Uint16 VP_X, Uint16 
 	if(VP_W == 0) VP_W = MapWidth;
 	if(VP_H == 0) VP_H = MapHeight;
 
-	/* There should be a more elegant way to do this(maybe with camera Center
-	if(VP_X + VP_W > MapWidth) VP_W = MapWidth - VP_X;
-	if(VP_Y + VP_H > MapHeight) VP_H = MapHeight - VP_Y;
-	*/
-
 	bool ret = true;
 	for(Uint16 Y=0;Y<VP_H;Y++)
 		for(Uint16 X=0;X<VP_W;X++)

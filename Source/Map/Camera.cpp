@@ -39,13 +39,17 @@ void CCamera::Init(Uint16 VP_W, Uint16 VP_H)
 void CCamera::CenterCamera(const CVector& Pos, Uint16 MaxXpos, Uint16 MaxYpos)
 {
 	if(ScrW / 2 + Pos.X >= MaxXpos)
-		X = MaxXpos - ScrW;
+		if(ScrW > MaxXpos)
+			X = 0;
+		else X = MaxXpos - ScrW;
 	else if(ScrW / 2 < Pos.X)
 		X = Pos.X - ScrW / 2;
 	else X = 0;
 
 	if(ScrH / 2 + Pos.Y >= MaxYpos)
-		Y = MaxYpos - ScrH;
+		if(ScrH > MaxYpos)
+			Y = 0;
+		else Y = MaxYpos - ScrH;
 	else if(ScrH / 2 < Pos.Y)
 		Y = Pos.Y - ScrH / 2;
 	else Y = 0;
