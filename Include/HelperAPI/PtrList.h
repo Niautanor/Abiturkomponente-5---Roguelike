@@ -19,12 +19,12 @@ public:
 	PtrList(bool cleanup_on_delete = false) : DeleteOnDestruct(cleanup_on_delete) { }
 	~PtrList() { if(DeleteOnDestruct) OnExit(); }
 
-	size_t size()
+	size_t size() const
 	{
 		return List.size();
 	}
 
-	bool empty()
+	bool empty() const
 	{
 		return List.empty();
 	}
@@ -35,6 +35,11 @@ public:
 	}
 
 	P& operator [](Uint32 i)
+	{
+		return List[i];
+	}
+
+	const P& operator [](Uint32 i) const
 	{
 		return List[i];
 	}

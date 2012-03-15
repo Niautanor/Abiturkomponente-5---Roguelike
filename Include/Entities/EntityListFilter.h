@@ -11,16 +11,16 @@
 
 #include "HelperAPI/PtrList.h"
 
-bool ContainsPlayer(PtrList<CEntity*>& EntityList);
+bool ContainsPlayer(const PtrList<CEntity*>& EntityList);
 
-bool ContainsMobs(PtrList<CEntity*>& EntityList);
+bool ContainsMobs(const PtrList<CEntity*>& EntityList);
 
-bool ContainsItems(PtrList<CEntity*>& EntityList);
+bool ContainsItems(const PtrList<CEntity*>& EntityList);
 
-PtrList<CEntity*> FilterMobEntities(PtrList<CEntity*>& EntityList);
+PtrList<CEntity*> FilterMobEntities(const PtrList<CEntity*>& EntityList);
 
-PtrList<CEntity*> FilterHostility(PtrList<CEntity*>& EntityList, CEntity* pPOVEntity, eHostilityType Hostility);
+PtrList<CEntity*> FilterHostility(const PtrList<CEntity*>& EntityList, CEntity* pPOVEntity, eHostilityType Hostility);
 
-PtrList<CEntity*> FilterItems(PtrList<CEntity*>& EntityList);
+PtrList<CEntity*> FilterItems(const PtrList<CEntity*>& EntityList);
 
-void ExamineEntitieList(PtrList<CEntity*>& EntityList);
+void ExamineEntitieList(const PtrList<CEntity*>& EntityList);

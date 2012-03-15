@@ -7,7 +7,7 @@
 
 #include "Entities/EntityListFilter.h"
 
-bool ContainsPlayer(PtrList<CEntity*>& EntityList)
+bool ContainsPlayer(const PtrList<CEntity*>& EntityList)
 {
 	for(Uint16 i = 0; i < EntityList.size(); i++)
 		if(EntityList[i] && EntityList[i]->IsPlayer())
@@ -15,7 +15,7 @@ bool ContainsPlayer(PtrList<CEntity*>& EntityList)
 	return false;
 }
 
-bool ContainsMobs(PtrList<CEntity*>& EntityList)
+bool ContainsMobs(const PtrList<CEntity*>& EntityList)
 {
 	for(Uint16 i = 0; i < EntityList.size(); i++)
 		if(EntityList[i] && EntityList[i]->EntityFlags.Is_Set(EF_MOB))
@@ -23,7 +23,7 @@ bool ContainsMobs(PtrList<CEntity*>& EntityList)
 	return false;
 }
 
-bool ContainsItems(PtrList<CEntity*>& EntityList)
+bool ContainsItems(const PtrList<CEntity*>& EntityList)
 {
 	for(Uint16 i = 0; i < EntityList.size(); i++)
 		if(EntityList[i] && EntityList[i]->GetItemType() != IT_NO_ITEM)
@@ -31,7 +31,7 @@ bool ContainsItems(PtrList<CEntity*>& EntityList)
 	return false;
 }
 
-PtrList<CEntity*> FilterMobEntities(PtrList<CEntity*>& EntityList)
+PtrList<CEntity*> FilterMobEntities(const PtrList<CEntity*>& EntityList)
 {
 	PtrList<CEntity*> ReturnList;
 	for(Uint16 i = 0; i < EntityList.size(); i++) {
@@ -41,7 +41,7 @@ PtrList<CEntity*> FilterMobEntities(PtrList<CEntity*>& EntityList)
 	return ReturnList;
 }
 
-PtrList<CEntity*> FilterHostility(PtrList<CEntity*>& EntityList, CEntity* pPOVEntity, eHostilityType Hostility)
+PtrList<CEntity*> FilterHostility(const PtrList<CEntity*>& EntityList, CEntity* pPOVEntity, eHostilityType Hostility)
 {
 	PtrList<CEntity*> ReturnList;
 	for(Uint16 i = 0; i < EntityList.size(); i++) {
@@ -51,7 +51,7 @@ PtrList<CEntity*> FilterHostility(PtrList<CEntity*>& EntityList, CEntity* pPOVEn
 	return ReturnList;
 }
 
-PtrList<CEntity*> FilterItems(PtrList<CEntity*>& EntityList)
+PtrList<CEntity*> FilterItems(const PtrList<CEntity*>& EntityList)
 {
 	PtrList<CEntity*> ReturnList;
 	for(Uint16 i = 0; i < EntityList.size(); i++) {
@@ -61,7 +61,7 @@ PtrList<CEntity*> FilterItems(PtrList<CEntity*>& EntityList)
 	return ReturnList;
 }
 
-void ExamineEntitieList(PtrList<CEntity*>& EntityList)
+void ExamineEntitieList(const PtrList<CEntity*>& EntityList)
 {
 	if(!EntityList.empty()) {
 		if(EntityList.size() == 1) {

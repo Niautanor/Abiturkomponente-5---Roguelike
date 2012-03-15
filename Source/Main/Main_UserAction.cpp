@@ -165,17 +165,16 @@ void Main::HandleUserAction(Uint16 c)
 			}
 			break;
 		case 'g': { //Pick up
-			PtrList<CEntity*> ItemList = Map.GetTileEntityList(Map.GetEntity(PlayerEntity)->Pos);
+			PtrList<CEntity*> ItemList = FilterItems(Map.GetTileEntityList(Map.GetEntity(PlayerEntity)->Pos));
 			switch(ItemList.size()) {
-			case 1:
+			case 0:
 				return;
-			case 2:
-				ItemList[0]->PickUp(&Map, ItemList[1]);
+			case 1:
+				Map.GetEntity(PlayerEntity)->PickUp(&Map, ItemList[0]);
 				break;
 			default:
-				ItemList[0] = NULL; //ignore the Player
 				Uint8 Choice = ListQuestion("Was willst du aufnehmen?", ItemList);
-				Map.GetEntity(PlayerEntity)->PickUp(&Map, ItemList[Choice + 1]);
+				Map.GetEntity(PlayerEntity)->PickUp(&Map, ItemList[Choice]);
 				break;
 			}
 			break;
