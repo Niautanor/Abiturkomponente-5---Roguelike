@@ -76,54 +76,31 @@ bool Main::OnInit()
 	if(!sMain.OnInit(TileHeight, TileWidth, NumRows, NumCols))
 		return false;
 
-	if(!sMap.OnInit(TileHeight, TileWidth, 6, 6))
+	if(!sMap.OnInit(TileHeight, TileWidth, 7, 7))
 		return false;
 
 	if(!gMessages.OnInit(40))
 		return false;
 
-	if(!Map.OnInit(6,6))
+	if(!Map.InitWithGenerator(2,2,4,4))
 		return false;
 
-	Camera.Init(5,5);
+	Camera.Init(7,7);
 	Camera.CenterCamera(CVector(0,0), Map.GetW(), Map.GetH());
 
 	SDL_EnableUNICODE(1);
 
 	//Testing Stuff
-	Map.ClearMap(CMapTile::WallTile);
-	for(Uint32 Y=1;Y<(Map.GetH()-1);Y++)
-		for(Uint32 X=1;X<(Map.GetW()-1);X++)
-			Map.GetTile(CVector(X, Y)) = CMapTile::GroundTile;
-
-	Map.GetTile(CVector(2,1)) = CMapTile::DoorTile;
-	Map.GetTile(CVector(2,2)) = CMapTile::WallTile;
-	Map.GetTile(CVector(2,3)) = CMapTile::DoorTile;
-	Map.GetTile(CVector(2,4)) = CMapTile::WallTile;
-	Map.GetTile(CVector(3,2)) = CMapTile::WallTile;
-	Map.GetTile(CVector(4,2)) = CMapTile::WallTile;
-
-	Map.GetTile(CVector(4,4)) = CMapTile::FarmTile;
-	Map.GetTileData(CVector(4,4)).Clear();
-	Map.GetTileData(CVector(4,4)).Set(0 | FTD_NO_PLANT);
-
 
 	PlayerEntity = Map.AddEntity(new CPlayer(Tile('@', CColor(255,0,255), CColor(0,0,0)), CVector(1,1), EF_MOB));
 
-	PuschelEntity =	Map.AddEntity(new CMobEntity(Tile('&', CColor(255,0,0), CColor(0,0,0)), CVector(3,1), EF_MOB));
-
-	ItemEntity = Map.AddEntity(new CItemEntity(IT_SEED, SIED_PLUMPHELMET, CVector(1,2)));
 
 	return true;
 }
 
 void Main::OnExit()
 {
-	Map.RemoveEntity(ItemEntity);
-	Map.RemoveEntity(PuschelEntity);
-	//pPuschel = NULL;
 	Map.RemoveEntity(PlayerEntity);
-	//pPlayer = NULL;
 
 	Map.OnExit();
 	gMessages.OnExit();
@@ -150,6 +127,8 @@ void Main::OnRender()
 		if(!gMessages.PrintMessages(&sMain, 0, 0, 5,  false))
 			gMessages.AddMessage("PrintMessages schlug fehl");
 
+		sMap.ClearScreen();//Disables Glitches with small maps and big cameras
+		//TODO: figure out why the camera scrolls on maps with 5x5 resolution
 		Map.DrawMap(&sMap, 0,0, Camera.GetX(), Camera.GetY(), Camera.GetW(), Camera.GetH());
 		sMain.PutScreen(&sMap, 2, 6);
 		break;

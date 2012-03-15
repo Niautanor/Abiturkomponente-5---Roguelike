@@ -9,6 +9,8 @@
 
 class CMap;
 
+#include "Map/Generator/Generator.h"
+
 #include "Main/Screen.h"
 #include "HelperAPI/CVector.h"
 
@@ -48,6 +50,7 @@ public:
 
 	/*Init und Exit*/
 	bool OnInit(Uint16 Width, Uint16 Height);
+	bool InitWithGenerator(Uint16 MinW, Uint16 MinH, Uint16 MaxW, Uint16 MaxH);
 	void OnExit();
 
 	//Gibt eine Liste mit allen Entities auf einem Feld zurück

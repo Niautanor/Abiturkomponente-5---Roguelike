@@ -136,9 +136,7 @@ void Main::HandleUserAction(Uint16 c)
 	case GM_MAIN:
 		switch(c) {
 		case 'm':
-			if(GameMode == GM_MESSAGE_ARCHIVE)
-				GameMode = GM_MAIN;
-			else GameMode = GM_MESSAGE_ARCHIVE;
+			GameMode = GM_MESSAGE_ARCHIVE;
 			break;
 		case 'i':
 			if(InputMode != IM_MAIN)
@@ -224,6 +222,7 @@ void Main::HandleUserAction(Uint16 c)
 		}
 		break;
 	case GM_MESSAGE_ARCHIVE:
+		GameMode = GM_MAIN;
 		break;
 	default:
 		break;

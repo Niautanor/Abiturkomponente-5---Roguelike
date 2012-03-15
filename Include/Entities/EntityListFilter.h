@@ -11,6 +11,12 @@
 
 #include "HelperAPI/PtrList.h"
 
+bool ContainsPlayer(PtrList<CEntity*>& EntityList);
+
+bool ContainsMobs(PtrList<CEntity*>& EntityList);
+
+bool ContainsItems(PtrList<CEntity*>& EntityList);
+
 PtrList<CEntity*> FilterMobEntities(PtrList<CEntity*>& EntityList);
 
 PtrList<CEntity*> FilterHostility(PtrList<CEntity*>& EntityList, CEntity* pPOVEntity, eHostilityType Hostility);

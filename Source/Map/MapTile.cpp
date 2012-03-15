@@ -69,7 +69,14 @@ bool CMapTile::IsPassable(CVector Pos, CMap* pMap, CEntity* pTrespasser)
 Tile CMapTile::GetTile(CVector Pos, CMap* pMap)
 {
 	PtrList<CEntity*> EntityList = pMap->GetTileEntityList(Pos);
-	if(!EntityList.empty())
-		return EntityList[0]->GetTile(pMap);
+	if(!EntityList.empty()) {
+		if(ContainsPlayer(EntityList))
+			return pMap->GetPlayer()->GetTile(pMap);
+		else if(ContainsMobs(EntityList)) {
+			PtrList<CEntity*> MobList = FilterMobEntities(EntityList);
+			return MobList[0]->GetTile(pMap);
+		} else
+			return EntityList[0]->GetTile(pMap);
+	}
 	else return FloorTile;
 }

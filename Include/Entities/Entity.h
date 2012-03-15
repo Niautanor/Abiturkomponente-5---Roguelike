@@ -13,7 +13,7 @@ enum eEntityFlag
 {
 	EF_MOB = 0x01,
 	//MobFlags
-	EF_PLAYER = 0x02,
+	//EF_PLAYER = 0x02, useless because of CEntity::IsPlayer()
 	//ItemFlags(0x01 is reserved for the MOB-Flag
 	EF_IT_WEAPON = 0x02,
 	EF_IT_SEED = 0x04
