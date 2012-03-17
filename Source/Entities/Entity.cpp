@@ -58,6 +58,11 @@ void CEntity::GetHurt(Uint8 Damage, CMap* pMap, CEntity* pAttacker)
 {//same counts for getting hurt
 }
 
+Sint16 CEntity::GetHealth()
+{
+	return 0;
+}
+
 bool CEntity::IsAlive(CMap* pMap)
 {
 	return true;//Items aren't really alive but they can not be removed when they die... -.-

@@ -51,7 +51,7 @@ bool Screen::Put(Tile T, Uint16 X, Uint16 Y)
 	return true;
 }
 
-bool Screen::PutText(char* Text, CColor Fg, CColor Bg, Uint16 X, Uint16 Y)
+bool Screen::PutText(const char* Text, CColor Fg, CColor Bg, Uint16 X, Uint16 Y)
 {
 	int i = 0;
 	Uint16 RenderY = 0, RenderX = 0;

@@ -31,6 +31,11 @@ void CMobEntity::Attack(CMap* pMap, CEntity* pTarget)
 	}
 }
 
+Sint16 CMobEntity::GetHealth()
+{
+	return Health;
+}
+
 bool CMobEntity::IsAlive(CMap* pMap)
 {
 	return (Health > 0);

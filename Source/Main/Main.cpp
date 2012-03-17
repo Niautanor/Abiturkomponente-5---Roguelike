@@ -79,10 +79,10 @@ bool Main::OnInit()
 	if(!gMessages.OnInit(40))
 		return false;
 
-	if(!Map.InitWithGenerator(3,3,6,6))
+	if(!Map.InitWithGenerator(4,4,8,8))
 		return false;
 
-	Camera.Init(sMain.W(),sMain.H()-5);
+	Camera.Init(sMain.W()-8,sMain.H()-5);
 	Camera.CenterCamera(CVector(0,0), Map.GetW(), Map.GetH());
 
 	SDL_EnableUNICODE(1);
@@ -124,14 +124,28 @@ void Main::OnRender()
 			gMessages.AddMessage("PrintMessages schlug fehl");
 
 		Map.DrawMap(&sMain, 0, 5, Camera.GetX(), Camera.GetY(), Camera.GetW(), Camera.GetH());
+
+		sMain.PutFText(CColor(255,255,255), CColor(0,0,0), sMain.W() - 8, 5, 16, "HP: %d", Map.GetEntity(PlayerEntity)->GetHealth());
 		break;
+
+	case GM_DEAD:
+		if(!gMessages.PrintMessages(&sMain, 0, 0, 5,  false))
+			gMessages.AddMessage("PrintMessages schlug fehl");
+
+		Map.DrawMap(&sMain, 0, 5, Camera.GetX(), Camera.GetY(), Camera.GetW(), Camera.GetH());
+		sMain.PutText("Du bist Tot", CColor(220,20,20), CColor(0,0,0), sMain.W() / 2 - 5, sMain.H() / 2);//strlen("du ...") / 2 -> 5
+		sMain.PutText("Druecke Enter um neu zu beginnen", CColor(220, 200, 200), CColor(0,0,0), sMain.W() / 2 - 16, sMain.H() / 2 + 1);
+		break;
+
 	case GM_MESSAGE_ARCHIVE:
 		if(!gMessages.PrintMessages(&sMain, 0, 0, NumRows, true))
 			gMessages.AddMessage("PrintMessages schlug fehl");
 		break;
+
 	case GM_CRAFTING:
 		Crafting.Render(&sMain);
 		break;
+
 	default:
 		break;
 	}
@@ -148,8 +162,10 @@ void Main::Tick()
 
 	Camera.CenterCamera(Map.GetEntity(PlayerEntity)->Pos, Map.GetW(), Map.GetH());
 
-	if(!Map.GetEntity(PlayerEntity)->IsAlive(&Map))
-		gMessages.AddMessage("Technisch gesehen bist du Tot");
+	if(!Map.GetEntity(PlayerEntity)->IsAlive(&Map)) {
+		gMessages.AddMessage("Du stirbst");
+		GameMode = GM_DEAD;
+	}
 
 	PendingTicks--;
 }
@@ -187,12 +203,7 @@ bool Main::Question(const char* QuestionText)
 
 int main(int argc, char** argv)
 {
-	setvbuf(stdout, NULL, _IONBF, 0);
-	setvbuf(stderr, NULL, _IONBF, 0);
-
 	Init_Random();
-
-	std::cout << "HOHOHOHO!" << std::endl;
 
 	Main App;
 	return App.OnExecute();

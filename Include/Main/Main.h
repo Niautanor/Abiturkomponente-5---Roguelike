@@ -29,6 +29,7 @@ enum eGameMode
 	GM_NONE = 0,
 	GM_MAIN,
 	GM_MESSAGE_ARCHIVE,
+	GM_DEAD,
 	GM_CRAFTING
 };
 

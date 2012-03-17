@@ -213,6 +213,14 @@ void Main::HandleUserAction(Uint16 c)
 			break;
 		}
 		break;
+	case GM_DEAD:
+		if(c == 'y') {
+			Map.OnExit();
+			Map.InitWithGenerator(4,4,8,8);
+			PlayerEntity = Map.AddEntity(new CPlayer(Tile('@', CColor(200,0,200), CColor(0,0,0)), CVector(1,1), EF_MOB, 5));
+			GameMode = GM_MAIN;
+		}
+		break;
 	case GM_CRAFTING:
 		Crafting.HandleKey(c);
 		if(Crafting.HasFinished()) {
