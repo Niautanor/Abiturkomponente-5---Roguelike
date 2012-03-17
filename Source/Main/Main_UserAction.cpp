@@ -12,8 +12,7 @@ Uint16 Main::GetUserAction(SDL_Event* pEvent)
 	while(SDL_WaitEvent(pEvent)) {
 		switch(pEvent->type) {
 		case SDL_QUIT:
-			Finished = true;
-			return 0;
+			return 'Q';
 		case SDL_KEYDOWN:
 			switch(pEvent->key.keysym.sym) {
 			case SDLK_RSHIFT:
@@ -180,7 +179,7 @@ void Main::HandleUserAction(Uint16 c)
 			break;
 		}
 		case 'd':
-			Map.GetEntity(PlayerEntity)->Drop(&Map);
+			Map.GetEntity(PlayerEntity)->Drop(&Map, ListQuestion("Was willst du wegwerfen?", Map.GetEntity(PlayerEntity)->GetInventory()));
 			break;
 		case 's': { //Spawn Seed
 			const char* Names[] = { "Plumphelmet", "Spinecrawler", "Banelingplant" };

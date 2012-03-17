@@ -15,12 +15,12 @@ CNameable::~CNameable()
 {
 }
 
-const char *CNameable::GetName()
+const char *CNameable::GetName() const
 {
 	return "";
 }
 
-const char *CNameable::GetDescription()
+const char *CNameable::GetDescription() const
 {
 	return "";
 }

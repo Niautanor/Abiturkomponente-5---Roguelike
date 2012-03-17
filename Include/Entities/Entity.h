@@ -45,6 +45,8 @@ enum eHostilityType
 
 #include "HelperAPI/CNameable.h"
 
+#include "HelperAPI/SmartObjectList.h"
+
 class CEntity : public CNameable
 {
 protected:
@@ -58,8 +60,10 @@ public:
 	CEntity(Tile T = Tile('E', CColor(255,0,255), CColor(0,0,0)), CVector Position = CVector(1,1), Uint8 Flags = 0);
 	virtual ~CEntity();
 
-	virtual const char* GetName();
-	virtual const char* GetDescription();
+	virtual const SmartObjectList<CItem>& GetInventory();
+
+	virtual const char* GetName() const;
+	virtual const char* GetDescription() const;
 
 	virtual bool CanMove(CMap* pMap, CVector Direction);
 
@@ -68,10 +72,12 @@ public:
 
 	//Mobs Pick stuff up and stuff
 	virtual void PickUp(CMap* pMap, CEntity* pItem);
-	virtual void Drop(CMap* pMap);
+	virtual void Drop(CMap* pMap, Uint8 InventoryId);
+	virtual void WieldItem(CMap* pMap, Uint8 InventoryId);
+	virtual void UnwieldItem(CMap* pMap);
 
 	//Used for picking up ItemEntities purely virtual in all other cases
-	virtual eItemType GetItemType();
+	virtual eItemType GetItemType() const;
 	virtual void SetItemType(eItemType Type);
 
 	//Currently only used for Items to store Seed-/Weapon type and so on

@@ -47,7 +47,7 @@ CItemEntity::CItemEntity(eItemType Type, Uint8 ItemExtraData, CVector Position)
 	InitFromItemData(Type, ItemExtraData, Position);
 }
 
-const char* CItemEntity::GetName()
+const char* CItemEntity::GetName() const
 {
 	switch(GetItemType()) {
 	case IT_NO_ITEM:
@@ -61,13 +61,13 @@ const char* CItemEntity::GetName()
 	}
 }
 
-const char* CItemEntity::GetDescription()
+const char* CItemEntity::GetDescription() const
 {
 	//TODO: GetName auf GetDescription Anwenden
 	return "Item-Entity-Beschreibung";
 }
 
-eItemType CItemEntity::GetItemType()
+eItemType CItemEntity::GetItemType() const
 {
 	return (eItemType) ((EntityFlags.raw() & 0xFE/*0xFE ist der Typspezifische Teil von EntityFlags*/) >> 1);
 }

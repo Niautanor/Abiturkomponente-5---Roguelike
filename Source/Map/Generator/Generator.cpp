@@ -9,13 +9,10 @@
 
 MapGenerator::MapGenerator()
 {
-	// TODO Auto-generated constructor stub
-
 }
 
 MapGenerator::~MapGenerator()
 {
-	// TODO Auto-generated destructor stub
 }
 
 bool MapGenerator::Init(Uint16 MinW, Uint16 MaxW, Uint16 MinH, Uint16 MaxH)

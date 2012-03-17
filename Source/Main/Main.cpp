@@ -26,14 +26,13 @@ int Main::OnExecute()
 {
 	//Wenn die Initialisierung Fehlschlägt, kann das Programm nicht laufen
 	if(!OnInit())
-		return 0;//false
+		return 0; //false
 
-	char c;//Zwischenspeicherung eines Tastendrucks
+	char c; //Zwischenspeicherung eines Tastendrucks
 
 	//Solange das Spiel nicht durch Benutzereingabe('q') oder Sieg/Vernichtung beendet wurde soll es weiterlaufen
-	while(!Finished)
-	{
-		OnRender();//Anzeige des Spielbildschirms
+	while(!Finished) {
+		OnRender(); //Anzeige des Spielbildschirms
 
 		c = GetUserAction(&Event);
 		HandleUserAction(c);
@@ -45,7 +44,7 @@ int Main::OnExecute()
 	//Zum Schluss werden Alle Ressourcen wieder Freigegeben, die möglicherweise verwendet wurden
 	OnExit();
 
-	return 1;//true
+	return 1; //true
 }
 
 bool Main::OnInit()
@@ -65,7 +64,7 @@ bool Main::OnInit()
 	if(TTF_Init())
 		return false;
 
-	if((pDisplay = SDL_SetVideoMode(TileWidth * NumCols, TileHeight * NumRows,32, SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL)
+	if((pDisplay = SDL_SetVideoMode(TileWidth * NumCols, TileHeight * NumRows, 32, SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL)
 		return false;
 
 	SDL_WM_SetCaption("Abiturkomponente 5 - Roguelike", NULL);
@@ -79,18 +78,17 @@ bool Main::OnInit()
 	if(!gMessages.OnInit(40))
 		return false;
 
-	if(!Map.InitWithGenerator(3,3,6,6))
+	if(!Map.InitWithGenerator(3, 3, 6, 6))
 		return false;
 
-	Camera.Init(sMain.W(),sMain.H()-5);
-	Camera.CenterCamera(CVector(0,0), Map.GetW(), Map.GetH());
+	Camera.Init(sMain.W(), sMain.H() - 5);
+	Camera.CenterCamera(CVector(0, 0), Map.GetW(), Map.GetH());
 
 	SDL_EnableUNICODE(1);
 
 	//Testing Stuff
 
-	PlayerEntity = Map.AddEntity(new CPlayer(Tile('@', CColor(255,0,255), CColor(0,0,0)), CVector(1,1), EF_MOB));
-
+	PlayerEntity = Map.AddEntity(new CPlayer(Tile('@', CColor(255, 0, 255), CColor(0, 0, 0)), CVector(1, 1), EF_MOB));
 
 	return true;
 }
@@ -113,14 +111,13 @@ void Main::OnExit()
 
 void Main::OnRender()
 {
-	SDL_FillRect(pDisplay, NULL, SDL_MapRGB(pDisplay->format, 0,0,0));
+	SDL_FillRect(pDisplay, NULL, SDL_MapRGB(pDisplay->format, 0, 0, 0));
 
 	sMain.ClearScreen();
 
-	switch(GameMode)
-	{
+	switch(GameMode) {
 	case GM_MAIN:
-		if(!gMessages.PrintMessages(&sMain, 0, 0, 5,  false))
+		if(!gMessages.PrintMessages(&sMain, 0, 0, 5, false))
 			gMessages.AddMessage("PrintMessages schlug fehl");
 
 		Map.DrawMap(&sMain, 0, 5, Camera.GetX(), Camera.GetY(), Camera.GetW(), Camera.GetH());
@@ -165,11 +162,11 @@ bool Main::Question(const char* QuestionText)
 	char c;
 	do {
 		gMessages.AddMessage(QuestionText);
-		OnRender();//Flush Screen
+		OnRender(); //Flush Screen
 
 		c = GetUserAction(&Event);
 
-		if(!c)//Fenster Geschlossen
+		if(!c) //Fenster Geschlossen
 			return false;
 
 		if(c == 'n' || c == 'q')
@@ -182,17 +179,12 @@ bool Main::Question(const char* QuestionText)
 
 	} while(true);
 
-	return false;//should never happen
+	return false; //should never happen
 }
 
 int main(int argc, char** argv)
 {
-	setvbuf(stdout, NULL, _IONBF, 0);
-	setvbuf(stderr, NULL, _IONBF, 0);
-
 	Init_Random();
-
-	std::cout << "HOHOHOHO!" << std::endl;
 
 	Main App;
 	return App.OnExecute();

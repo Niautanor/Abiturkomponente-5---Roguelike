@@ -24,16 +24,14 @@
 #include "Map/Camera.h"
 #include "CMessageQueue.h"
 
-enum eGameMode
-{
+enum eGameMode {
 	GM_NONE = 0,
 	GM_MAIN,
 	GM_MESSAGE_ARCHIVE,
 	GM_CRAFTING
 };
 
-enum eInputMode
-{
+enum eInputMode {
 	IM_NONE = 0,
 	IM_MAIN,
 	IM_INTERACT,
@@ -41,17 +39,16 @@ enum eInputMode
 	IM_USE
 };
 
-class Main
-{
+class Main {
 private:
-	bool Finished;//Diese Variable gibt an, ob das Spiel noch läuft(true) oder nicht(false)
+	bool Finished; //Diese Variable gibt an, ob das Spiel noch läuft(true) oder nicht(false)
 
-	SDL_Surface* pDisplay;//Das Objekt, dass alle Daten zum Tatsächlichen Spielfenster enthält
-	TTF_Font* pFont;//Die Schriftart, die Verwendet wird um den Bildschirm anzuzeigen
+	SDL_Surface* pDisplay; //Das Objekt, dass alle Daten zum Tatsächlichen Spielfenster enthält
+	TTF_Font* pFont; //Die Schriftart, die Verwendet wird um den Bildschirm anzuzeigen
 
-	SDL_Event Event;//Das SDL_Event, dass zum Empfangen von Tastendrücken u.ä verwendet wird
+	SDL_Event Event; //Das SDL_Event, dass zum Empfangen von Tastendrücken u.ä verwendet wird
 
-	Uint16 TileWidth, TileHeight;//Asdf
+	Uint16 TileWidth, TileHeight; //Asdf
 	Uint16 NumRows, NumCols;
 
 	Screen sMain;
@@ -65,7 +62,7 @@ private:
 
 	CraftingInterface Crafting;
 
-	Uint16 PendingTicks;//Die Anzahl der Spielschritte die ausgeführt werden muss bevor der Spieler wieder eine Entscheidung treffen kann
+	Uint16 PendingTicks; //Die Anzahl der Spielschritte die ausgeführt werden muss bevor der Spieler wieder eine Entscheidung treffen kann
 
 	int PlayerEntity;
 	int PuschelEntity;
@@ -92,7 +89,8 @@ public:
 	//Stellt dem Spieler eine Frage, die er mit Ja oder nein beantworten kann
 	bool Question(const char* QuestionText);
 
-	template<class P>Uint8 ListQuestion(const char* QuestionText, PtrList<P> List);//IMPORTANT: The Template Argument should be a derived from CNameable*
+	template<class P> Uint8 ListQuestion(const char* QuestionText, const PtrList<P>& List); //IMPORTANT: The Template Argument should be a derived from CNameable*
+	template<class C> Uint8 ListQuestion(const char* QuestionText, const SmartObjectList<C>& List); //Same as above has to be CNameable*
 
 	//Bewegt das Spiel
 	void Tick();
@@ -104,13 +102,14 @@ public:
 	void HandleDirectionKey(CVector Dir);
 };
 
-template<class P>Uint8 Main::ListQuestion(const char* QuestionText, PtrList<P> List)
+template<class P> Uint8 Main::ListQuestion(const char* QuestionText, const PtrList<P>& List)
 {
 	if(List.empty())
 		return 0;
 
 	gMessages.AddMessage(QuestionText);
-	for(Uint16 i=0;i<List.size();i++){
+	for(Uint16 i = 0; i < List.size(); i++) {
+		if(!List[i]) continue;
 		gMessages.AddFMessage(" %c - %s", 'a' + i, List[i]->GetName());
 	}
 
@@ -124,7 +123,40 @@ template<class P>Uint8 Main::ListQuestion(const char* QuestionText, PtrList<P> L
 			gMessages.AddMessage("kleinbuchstabe von a bis z eingeben");
 			continue;
 		} else {
-			if((Uint8)(c-'a') < List.size())
+			if((Uint8) (c - 'a') < List.size())
+				return c - 'a';
+			else {
+				gMessages.AddMessage("du kannst nur Elemente aus der Liste auswählen");
+				continue;
+			}
+		}
+	} while(c != '\0');
+
+	return 0;
+}
+
+template<class C> Uint8 Main::ListQuestion(const char* QuestionText, const SmartObjectList<C>& List)
+{
+	if(List.empty())
+		return 0;
+
+	gMessages.AddMessage(QuestionText);
+	for(Uint16 i = 0; i < List.size(); i++) {
+		if(!List[i]) continue;
+		gMessages.AddFMessage(" %c - %s", 'a' + i, List[i]->GetName());
+	}
+
+	char c;
+	do {
+		OnRender();
+
+		c = GetUserAction(&Event);
+
+		if(c < 'a' || c > 'z') {
+			gMessages.AddMessage("kleinbuchstabe von a bis z eingeben");
+			continue;
+		} else {
+			if((Uint8) (c - 'a') < List.size())
 				return c - 'a';
 			else {
 				gMessages.AddMessage("du kannst nur Elemente aus der Liste auswählen");

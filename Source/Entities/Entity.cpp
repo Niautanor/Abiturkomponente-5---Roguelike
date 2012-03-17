@@ -22,13 +22,19 @@ CEntity::~CEntity()
 {
 }
 
-const char* CEntity::GetName()
+//This should NEVER ever Hapen
+const SmartObjectList<CItem>& CEntity::GetInventory()
+{
+	throw "Ich bin kein Mob du Idiot";
+}
+
+const char* CEntity::GetName() const
 {
 	return "Entity-Objekt";
 }
 
 
-const char *CEntity::GetDescription()
+const char *CEntity::GetDescription() const
 {
 	return "Entity-Beschreibung";
 }
@@ -67,11 +73,19 @@ void CEntity::PickUp(CMap* pMap, CEntity* pItem)
 {
 }
 
-void CEntity::Drop(CMap* pMap)
+void CEntity::Drop(CMap* pMap, Uint8 InventoryId)
 {
 }
 
-eItemType CEntity::GetItemType()
+void CEntity::WieldItem(CMap* pMap, Uint8 InventoryId)
+{
+}
+
+void CEntity::UnwieldItem(CMap* pMap)
+{
+}
+
+eItemType CEntity::GetItemType() const
 {
 	return IT_NO_ITEM;
 }

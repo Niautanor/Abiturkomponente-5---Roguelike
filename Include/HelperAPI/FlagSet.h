@@ -17,12 +17,12 @@ public:
 
 	void Clear();
 
-	bool Is_Set(T Flag);
+	bool Is_Set(T Flag) const;
 
 	void Set(T Flag);
 	void Unset(T Flag);
 
-	T raw() { return Flags; }//returns the Raw Flagset as an integral type
+	T raw() const { return Flags; }//returns the Raw Flagset as an integral type
 };
 
 #include "HelperAPI/FlagSet.cpp.inc"

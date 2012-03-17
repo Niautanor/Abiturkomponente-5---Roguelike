@@ -13,11 +13,13 @@
 
 #include "HelperAPI/Random.h"
 
-#include "HelperAPI/SmartObject.h"
+//TODO: Inventory as SmartObjectList
+//IMPORTANT: Very IMPORTANT
 
 class CMobEntity : public CEntity
 {
 protected:
+	SmartObjectList<CItem> Inventory;
 	SmartObject<CItem> WieldedItem;
 
 	Sint16 Health;
@@ -27,13 +29,18 @@ public:
 		: CEntity(T, Position, Flags), Health(Initial_Health) { }
 	virtual ~CMobEntity() { }
 
-	virtual const char* GetName();
-	virtual const char* GetDescription();
+	//TERRIBLE
+	const SmartObjectList<CItem>& GetInventory();
+
+	virtual const char* GetName() const;
+	virtual const char* GetDescription() const;
 
 	virtual Uint8 IsHostile(CEntity* pTarget);
 
 	virtual void PickUp(CMap* pMap, CEntity* pItem);
-	virtual void Drop(CMap* pMap);
+	virtual void Drop(CMap* pMap, Uint8 InventoryId);
+	virtual void WieldItem(CMap* pMap, Uint8 InventoryId);
+	virtual void UnwieldItem(CMap* pMap);
 
 	virtual void Attack(CMap* pMap, CEntity* pTarget);
 	virtual void GetHurt(Uint8 Damage, CMap* pMap, CEntity* pAttacker);

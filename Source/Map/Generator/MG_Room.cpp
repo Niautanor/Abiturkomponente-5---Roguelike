@@ -16,7 +16,6 @@ MG_Room::MG_Room()
 
 MG_Room::~MG_Room()
 {
-	// TODO Auto-generated destructor stub
 }
 
 eDirection MG_Room::GenerateDoors(unsigned char PossibleDoors)

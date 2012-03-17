@@ -22,12 +22,12 @@ public:
 
 	Uint8 ItemExtraData;
 
-	virtual const char* GetName();
-	virtual const char* GetDescription();
+	virtual const char* GetName() const;
+	virtual const char* GetDescription() const;
 
 	Uint8 IsHostile(CEntity* pEntity) { return HT_ITEM; };
 
-	eItemType GetItemType();
+	eItemType GetItemType() const;
 	void SetItemType(eItemType Type);
 
 	Uint8 GetExtraData(CMap* pMap);

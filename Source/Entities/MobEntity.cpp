@@ -7,6 +7,11 @@
 
 #include "Entities/MobEntity.h"
 
+const SmartObjectList<CItem>& CMobEntity::GetInventory()
+{
+	return Inventory;
+}
+
 Uint8 CMobEntity::IsHostile(CEntity *pEntity)
 {
 	if(pEntity == this)
@@ -43,47 +48,73 @@ void CMobEntity::GetHurt(Uint8 Damage, CMap* pMap, CEntity* pAttacker)
 		gMessages.AddFMessage("Der %s atackiert dich mit %i Schadenspunkten", pAttacker->GetName(), Damage);
 	else if(pAttacker->IsPlayer())
 		gMessages.AddFMessage("Du atackierst den %s mit %i Schadenspunkten", GetName(), Damage);
-	else
-		gMessages.AddFMessage("Der %s atackiert den %s mit %i Schadenspunkten", pAttacker->GetName(), GetName(), Damage);
+	else gMessages.AddFMessage("Der %s atackiert den %s mit %i Schadenspunkten", pAttacker->GetName(), GetName(), Damage);
 }
 
-const char* CMobEntity::GetName()
+const char* CMobEntity::GetName() const
 {
 	return "Mobster";
 }
 
-const char* CMobEntity::GetDescription()
+const char* CMobEntity::GetDescription() const
 {
 	return "Dieses Monster versucht dich zu toeten";
 }
 
-void CMobEntity::PickUp(CMap *pMap, CEntity *pItem)
+void CMobEntity::PickUp(CMap* pMap, CEntity* pItem)
 {
 	eItemType Type = pItem->GetItemType();
-	if(Type == IT_NO_ITEM) return;
+	if(Type == IT_NO_ITEM)
+		return;
 
 	Uint8 ExtraData = pItem->GetExtraData(pMap);
 
-	if(WieldedItem) Drop(pMap);
-
 	pMap->RemoveEntity(pMap->GetEntityId(pItem));
 
-	WieldedItem.New(Type);
-	WieldedItem->ExtraData = ExtraData;
+	Inventory[Inventory.Push(Type)]->ExtraData = ExtraData; //l33t h4x
+	//equals: Uint32 Id = Inventory.Push(Type); Inventory[Id]->ExtraData = ExtraData
 }
 
-void CMobEntity::Drop(CMap *pMap)
+void CMobEntity::Drop(CMap* pMap, Uint8 InventoryId)
 {
-	if(!WieldedItem) return;
+	if(InventoryId >= Inventory.size() || !Inventory[InventoryId])
+		return;
 
-	pMap->AddEntity(new CItemEntity((CItem*)WieldedItem, Pos));
+	pMap->AddEntity(new CItemEntity(Inventory[InventoryId], Pos));
 
+	Inventory.Delete(InventoryId);
+}
+
+void CMobEntity::WieldItem(CMap* pMap, Uint8 InventoryId)
+{
+	if(InventoryId >= Inventory.size() || !Inventory[InventoryId]) {
+		gMessages.AddMessage("Du besitzt diesen Gegenstand nicht");
+		return;
+	}
+
+	if(WieldsItem())
+		UnwieldItem(pMap);
+
+	WieldedItem.New(Inventory[InventoryId]->GetType());
+	WieldedItem->ExtraData = Inventory[InventoryId]->ExtraData;
+
+	Inventory.Delete(InventoryId);
+}
+
+void CMobEntity::UnwieldItem(CMap* pMap)
+{
+	if(!WieldedItem) {
+		gMessages.AddMessage("Du hälst nichts in der Hand");
+		return;
+	}
+
+	Inventory[Inventory.Push(WieldedItem->GetType())]->ExtraData = WieldedItem->ExtraData;	//3v3n m0r3 h4x
 	WieldedItem.Delete();
 }
 
 bool CMobEntity::WieldsItem()
 {
-	return (bool)WieldedItem;
+	return WieldedItem;
 }
 
 void CMobEntity::UseItem(CVector Dir, CMap* pMap)
@@ -95,23 +126,21 @@ void CMobEntity::UseItem(CVector Dir, CMap* pMap)
 
 void CMobEntity::Tick(CMap* pMap)
 {
-	if(!IsPlayer())
-	{
+	if(!IsPlayer()) {
 		if(VectorLengthSq(Pos - pMap->GetPlayer()->Pos) <= 2) {
 			Attack(pMap, pMap->GetPlayer());
 		} else {
 			Mov = pMap->GetPath(this, pMap->GetPlayer()->Pos);
 			Uint8 NumTries = 0;
-			if(Mov == CVector(0,0))
-			{
+			if(Mov == CVector(0, 0)) {
 				do {
 					if(NumTries > 8) {
 						Mov = CVector();
 						break;
 					}
-					Mov = RandomVector(-1,-1,1,1);
+					Mov = RandomVector(-1, -1, 1, 1);
 					++NumTries;
-				} while(Mov == CVector(0,0) || !CanMove(pMap, Mov));
+				} while(Mov == CVector(0, 0) || !CanMove(pMap, Mov));
 			}
 		}
 	}

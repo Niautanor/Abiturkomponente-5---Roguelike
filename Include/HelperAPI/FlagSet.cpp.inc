@@ -17,7 +17,7 @@ template<class T> void FlagSet<T>::Clear()
 	Flags = 0;
 }
 
-template<class T> bool FlagSet<T>::Is_Set(T Flag)
+template<class T> bool FlagSet<T>::Is_Set(T Flag) const
 {
 	return (Flags & Flag);
 }

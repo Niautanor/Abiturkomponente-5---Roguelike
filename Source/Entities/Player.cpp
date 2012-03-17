@@ -7,12 +7,12 @@
 
 #include "Entities/Player.h"
 
-const char* CPlayer::GetName()
+const char* CPlayer::GetName() const
 {
 	return "Du selbst";
 }
 
-const char* CPlayer::GetDescription()
+const char* CPlayer::GetDescription() const
 {
 	return "Du bist ein Geiler Abenteurer";
 }
@@ -24,7 +24,7 @@ bool CPlayer::IsPlayer()
 
 void CPlayer::Attack(CMap* pMap, CEntity* pTarget)
 {
-	if(WieldedItem && WieldedItem->GetType() == IT_WEAPON)
+	if(WieldsItem() && Inventory[0]->GetType() == IT_WEAPON)
 		pTarget->GetHurt(3, pMap, this);
 	else pTarget->GetHurt(1, pMap, this);
 

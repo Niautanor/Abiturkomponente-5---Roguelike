@@ -34,12 +34,12 @@ public:
 		List.clear();
 	}
 
-	P& operator [](Uint32 i)
+	P& operator [] (Uint32 i)
 	{
 		return List[i];
 	}
 
-	const P& operator [](Uint32 i) const
+	const P& operator [] (Uint32 i) const
 	{
 		return List[i];
 	}

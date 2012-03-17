@@ -14,6 +14,6 @@ public:
 	CNameable();
 	virtual ~CNameable();
 
-	virtual const char* GetName();
-	virtual const char* GetDescription();
+	virtual const char* GetName() const;
+	virtual const char* GetDescription() const;
 };
