@@ -20,9 +20,6 @@ MapGenerator::~MapGenerator()
 
 bool MapGenerator::Init(Uint16 MinW, Uint16 MaxW, Uint16 MinH, Uint16 MaxH)
 {
-	//TODO: Maybe srand should be called from within Main::OnInit()
-	srand(time(NULL));
-
 	NumRoomsX = rand() % (MaxW - MinW + 1) + MinW;
 	NumRoomsY = rand() % (MaxH - MinH + 1) + MinH;
 
@@ -134,9 +131,9 @@ bool MapGenerator::Init(Uint16 MinW, Uint16 MaxW, Uint16 MinH, Uint16 MaxH)
 
 	Tiles = new char[MapW * MapH];
 
-	for(Uint16 X = 0;X<MapW;X++)
+	for(Uint16 X = 0; X < MapW; X++)
 		GetTile(X, MapH - 1) = '#';
-	for(Uint16 Y = 0;Y<MapH;Y++)
+	for(Uint16 Y = 0; Y < MapH; Y++)
 		GetTile(MapW - 1, Y) = '#';
 
 	for(Uint16 Y = 0; Y < NumRoomsY; Y++) {
@@ -156,25 +153,26 @@ bool MapGenerator::Init(Uint16 MinW, Uint16 MaxW, Uint16 MinH, Uint16 MaxH)
 							TileToBePlaced = '+';
 						else //Wall
 						TileToBePlaced = '#';
-					} else if(Yp == 2 && Xp == 2) { //Room Center -> Room Content
-						switch(GetRoom(X, Y)->Content) {
-						case RC_FARMLAND:
-							TileToBePlaced = '~';
-							break;
-						case RC_LOOT:
-							TileToBePlaced = ':';
-							break;
-						case RC_MONSTER:
-							TileToBePlaced = '&';
-							break;
-						default:
-							TileToBePlaced = '.';
-							break;
-						}
 					}
 
 					GetTile(Xr, Yr) = TileToBePlaced;
 				}
+			}
+
+			CVector ContentPos = RandomVector(X * 4 + 1, Y * 4 + 1, X * 4 + 3, Y * 4 + 3); //The Floor Tiles of the Room
+			switch(GetRoom(X, Y)->Content) {
+			case RC_FARMLAND:
+				GetTile(ContentPos.X, ContentPos.Y) = '~';
+				break;
+			case RC_LOOT:
+				GetTile(ContentPos.X, ContentPos.Y) = ':';
+				break;
+			case RC_MONSTER:
+				GetTile(ContentPos.X, ContentPos.Y) = '&';
+				break;
+			default:
+				//GetTile(ContentPos.X, ContentPos.Y) = '.';
+				break;
 			}
 
 		}

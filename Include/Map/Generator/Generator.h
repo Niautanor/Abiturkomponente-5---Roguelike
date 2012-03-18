@@ -8,12 +8,11 @@
 #pragma once /* MAPGENERATOR_H_ */
 
 #include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <iostream>
-#include <time.h>
 #include <math.h>
 #include <SDL/SDL_types.h>
+
+#include "HelperAPI/CVector.h"
+#include "HelperAPI/Random.h"
 
 #include "Map/Generator/MG_Room.h"
 

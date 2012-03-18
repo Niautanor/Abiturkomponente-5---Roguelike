@@ -79,7 +79,7 @@ bool Main::OnInit()
 	if(!gMessages.OnInit(40))
 		return false;
 
-	if(!Map.InitWithGenerator(4,4,8,8))
+	if(!Map.InitWithGenerator(6,4,12,8))
 		return false;
 
 	Camera.Init(sMain.W()-8,sMain.H()-5);

@@ -216,7 +216,7 @@ void Main::HandleUserAction(Uint16 c)
 	case GM_DEAD:
 		if(c == 'y') {
 			Map.OnExit();
-			Map.InitWithGenerator(4,4,8,8);
+			Map.InitWithGenerator(6,4,12,8);
 			PlayerEntity = Map.AddEntity(new CPlayer(Tile('@', CColor(200,0,200), CColor(0,0,0)), CVector(1,1), EF_MOB, 5));
 			GameMode = GM_MAIN;
 		}
