@@ -67,6 +67,11 @@ Sint16 CEntity::GetHealth()
 	return 0;
 }
 
+Sint16 CEntity::GetMaxHealth()
+{
+	return 0;
+}
+
 bool CEntity::IsAlive(CMap* pMap)
 {
 	return true;//Items aren't really alive but they can not be removed when they die... -.-

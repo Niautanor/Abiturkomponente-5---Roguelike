@@ -1,5 +1,5 @@
 Map
--Mental Note: Culling is completely useless, as I don't intend to make the map scrollable
+-Mental Note: Culling is completely useless, as I don't intend to make the map scrollable (Surprise! It is scrollable)
 
 
 TODO: Stacking Entities???
@@ -7,6 +7,7 @@ TODO: Stacking Entities???
 Main:
 New Mode -> Crafting
 
-Make Map a little bit Bigger so that the camera isn't all that confusing
-
 Item Types
+
+
+Decide on the Purpose of Crafting and Farming

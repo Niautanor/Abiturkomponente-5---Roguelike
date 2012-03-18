@@ -75,7 +75,7 @@ bool CMap::InitWithGenerator(Uint16 MinW, Uint16 MinH, Uint16 MaxW, Uint16 MaxH)
 				break;
 			case '&':
 				TileToBePlaced = CMapTile::GroundTile;
-				AddEntity(new CMobEntity(Tile('&', CColor(200, 0,0), CColor(0,0,0)), CVector(X, Y), EF_MOB, 3));
+				AddEntity(new CMobEntity(Tile('&', CColor(200, 0,0), CColor(0,0,0)), CVector(X, Y), EF_MOB, 6));
 				break;
 			default:
 				break;

@@ -82,7 +82,7 @@ bool Main::OnInit()
 	if(!Map.InitWithGenerator(6,4,12,8))
 		return false;
 
-	Camera.Init(sMain.W()-8,sMain.H()-5);
+	Camera.Init(sMain.W()-10,sMain.H()-5);
 	Camera.CenterCamera(CVector(0,0), Map.GetW(), Map.GetH());
 
 	SDL_EnableUNICODE(1);
@@ -127,7 +127,7 @@ void Main::OnRender()
 
 		Map.DrawMap(&sMain, 0, 5, Camera.GetX(), Camera.GetY(), Camera.GetW(), Camera.GetH());
 
-		sMain.PutFText(CColor(255,255,255), CColor(0,0,0), sMain.W() - 8, 5, 16, "HP: %d", Map.GetEntity(PlayerEntity)->GetHealth());
+		sMain.PutFText(CColor(255,255,255), CColor(0,0,0), sMain.W() - 10, 5, 16, "HP: %d(%d)", Map.GetEntity(PlayerEntity)->GetHealth(), Map.GetEntity(PlayerEntity)->GetMaxHealth());
 		break;
 
 	case GM_DEAD:

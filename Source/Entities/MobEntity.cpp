@@ -36,6 +36,11 @@ Sint16 CMobEntity::GetHealth()
 	return Health;
 }
 
+Sint16 CMobEntity::GetMaxHealth()
+{
+	return MaxHealth;
+}
+
 bool CMobEntity::IsAlive(CMap* pMap)
 {
 	return (Health > 0);
@@ -54,7 +59,11 @@ void CMobEntity::GetHurt(Uint8 Damage, CMap* pMap, CEntity* pAttacker)
 
 void CMobEntity::GetHealed(Uint8 Heal)
 {
-	Health += Heal;
+	if(Health < MaxHealth) {
+		Health += Heal;
+		if(Health > MaxHealth)
+			Health = MaxHealth;
+	}
 }
 
 const char* CMobEntity::GetName()

@@ -11,7 +11,7 @@ CMapTile* CMapTile::EmptyTile = new CMapTile(Tile(' ', CL_BLACK, CL_BLACK), 0);
 CMapTile* CMapTile::WallTile = new CMapTile(Tile('#', CL_GREEN, CL_BLACK), MTF_EXISTANT | MTF_VISIBLE);
 CMapTile* CMapTile::GroundTile = new CMapTile(Tile('.', CL_WHITE, CL_BLACK), MTF_EXISTANT | MTF_VISIBLE | MTF_PASSABLE);
 
-CMapTile* CMapTile::DoorTile = new CDoorTile(Tile(',', CL_GREEN, CL_BLACK), MTF_EXISTANT | MTF_VISIBLE | MTF_PASSABLE);
+CMapTile* CMapTile::DoorTile = new CDoorTile(Tile(',', CColor(200,140,60), CL_BLACK), MTF_EXISTANT | MTF_VISIBLE | MTF_PASSABLE);
 
 CMapTile* CMapTile::FarmTile = new CFarmTile(Tile('~', CColor(128, 64, 0), CL_BLACK), MTF_EXISTANT | MTF_VISIBLE | MTF_PASSABLE);
 

@@ -86,6 +86,7 @@ public:
 	virtual void GetHurt(Uint8 Damage, CMap* pMap, CEntity* pAttacker);
 	virtual void GetHealed(Uint8 Heal);
 	virtual Sint16 GetHealth();
+	virtual Sint16 GetMaxHealth();
 	virtual bool IsAlive(CMap* pMap);
 
 	//Purely Virtual in non Mob-Classes
