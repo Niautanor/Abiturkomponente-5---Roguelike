@@ -24,6 +24,10 @@ bool CMap::OnInit(Uint16 Width, Uint16 Height)
 	for(Uint32 i=0;i<(MapHeight*MapWidth);i++)
 		TileList.Push(CMapTile::EmptyTile);
 
+	FOV_Map = new bool[MapHeight * MapWidth];
+	for(Uint16 i=0;i<MapHeight*MapWidth;i++)
+		FOV_Map[i] = false;
+
 	TileDataList = new FlagSet<Uint8>[MapWidth * MapHeight];
 	for(Uint16 i=0;i<(MapWidth*MapHeight);i++)
 		TileDataList[i].Clear();
@@ -94,6 +98,8 @@ void CMap::OnExit()
 
 	delete[] TileDataList;
 
+	delete[] FOV_Map;
+
 	for(Uint32 i=0;i<TileList.size();i++)
 		TileList[i] = NULL;//Tiles sind keine eigenständigen Objekte und können deshalb nich gelöscht werden
 	TileList.clear();
@@ -110,7 +116,7 @@ bool CMap::DrawTile(Screen* s, Uint16 X, Uint16 Y, Uint16 RenderX, Uint16 Render
 {
 	if(!(X < MapWidth && Y < MapHeight)) return false;
 
-	if(TileList[Y*MapWidth+X]->Flags.Is_Set(MTF_EXISTANT) && TileList[Y*MapWidth+X]->Flags.Is_Set(MTF_VISIBLE))
+	if(TileList[Y*MapWidth+X]->Flags.Is_Set(MTF_EXISTANT) && TileList[Y*MapWidth+X]->Flags.Is_Set(MTF_VISIBLE) && IsInFOV(CVector(X, Y)))
 		if(!(s->Put(TileList[Y*MapWidth+X]->GetTile(CVector(X, Y), this), RenderX, RenderY)))
 			return false;
 	return true;
@@ -211,6 +217,26 @@ void CMap::Tick()
 		for(Uint32 X=0;X<MapWidth;X++)
 			if(TileList[Y*MapWidth+X])
 				TileList[Y*MapWidth+X]->Tick(CVector(X,Y), this);
+}
+
+/**
+ * @function: Berechnet FOV (Field of View) des Spielers und legt fest, welche Räume sichtbar sind
+ **/
+void CMap::Recalculate_FOV(CVector PlayerPos)
+{
+	CVector RoomCenter = CVector(PlayerPos.X - PlayerPos.X % 4 + 2, PlayerPos.Y - PlayerPos.Y % 4 + 2);//The Coordinates of the Current Rooms Center
+
+	for(Uint16 Y=RoomCenter.Y-2;Y<RoomCenter.Y+3;Y++)
+		for(Uint16 X=RoomCenter.X-2;X<RoomCenter.X+3;X++)
+			FOV_Map[Y*MapWidth+X] = true;
+}
+
+/**
+ * @function: Gibt an ob eine gegebene Position im Sichtfeld des Spielers ist
+ **/
+bool CMap::IsInFOV(CVector Pos)
+{
+	return FOV_Map[Pos.Y*MapWidth+Pos.X];
 }
 
 /**

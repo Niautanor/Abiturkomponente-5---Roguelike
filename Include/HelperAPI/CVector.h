@@ -71,3 +71,13 @@ inline CVector operator - (const CVector& a, const CVector& b)
 {
 	return CVector(a.X-b.X, a.Y-b.Y);
 }
+
+inline CVector operator * (const CVector& v, const Sint16& i)
+{
+	return CVector(v.X * i, v.Y * i);
+}
+
+inline CVector operator * (const Sint16& i, const CVector& v)
+{
+	return CVector(v.X * i, v.Y * i);
+}

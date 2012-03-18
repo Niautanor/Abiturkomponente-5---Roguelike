@@ -91,6 +91,8 @@ bool Main::OnInit()
 
 	PlayerEntity = Map.AddEntity(new CPlayer(Tile('@', CColor(255,0,255), CColor(0,0,0)), CVector(1,1), EF_MOB));
 
+	Map.Recalculate_FOV(Map.GetEntity(PlayerEntity)->Pos);
+
 
 	return true;
 }

@@ -30,6 +30,8 @@ private:
 	PtrList<CEntity*> EntityList;
 	FlagSet<Uint8>* TileDataList;//Enthält Informationen zu Positionsspezifischen Tile-Eigenschaften(offene Türen, versteckte Fallen, usw)
 
+	bool* FOV_Map;
+
 	/*Refractored from DrawMap*/
 	bool DrawTile(Screen* s, Uint16 X, Uint16 Y, Uint16 StartX, Uint16 StartY);
 
@@ -70,6 +72,9 @@ public:
 
 	//Bewegt alle Tiles und Entities
 	void Tick();
+
+	void Recalculate_FOV(CVector PlayerPos);
+	bool IsInFOV(CVector Pos);
 
 	/*Grundsätzliche Verwaltungsfunktionen*/
 	void ClearMap(CMapTile* ClearTile);

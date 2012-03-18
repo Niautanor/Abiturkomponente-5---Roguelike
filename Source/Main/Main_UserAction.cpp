@@ -76,6 +76,10 @@ void Main::HandleDirectionKey(CVector Dir)
 			InputMode = IM_MAIN;
 		} else if(InputMode == IM_INTERACT) {
 			Map.GetTile(Map.GetEntity(PlayerEntity)->Pos + Dir)->OnInteract(Map.GetEntity(PlayerEntity)->Pos + Dir, &Map, Map.GetEntity(PlayerEntity));
+
+			if(Map.GetTile(Map.GetEntity(PlayerEntity)->Pos + Dir) == CMapTile::DoorTile)//A door was opened
+				Map.Recalculate_FOV(Map.GetEntity(PlayerEntity)->Pos + Dir*2);
+
 			InputMode = IM_MAIN;
 		} else if(InputMode == IM_USE) {
 			Map.GetEntity(PlayerEntity)->UseItem(Dir, &Map);
@@ -220,6 +224,8 @@ void Main::HandleUserAction(Uint16 c)
 			Map.OnExit();
 			Map.InitWithGenerator(6,4,12,8);
 			PlayerEntity = Map.AddEntity(new CPlayer(Tile('@', CColor(200,0,200), CColor(0,0,0)), CVector(1,1), EF_MOB, 5));
+			Camera.CenterCamera(Map.GetEntity(PlayerEntity)->Pos, Map.GetW(), Map.GetH());
+			Map.Recalculate_FOV(Map.GetEntity(PlayerEntity)->Pos);
 			GameMode = GM_MAIN;
 		}
 		break;
