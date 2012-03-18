@@ -24,4 +24,11 @@ CVector RandomVector(Sint16 MinX, Sint16 MinY, Sint16 MaxX, Sint16 MaxY)
 	return CVector(X, Y);
 }
 
+bool Chance(Uint8 Percentage)
+{
+	if(rand() % 100 > Percentage) {
+		return false;
+	} else return true;
+}
+
 

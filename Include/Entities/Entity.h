@@ -22,7 +22,8 @@ enum eEntityFlag
 enum eItemType {
 	IT_NO_ITEM = 0,
 	IT_WEAPON,
-	IT_SEED
+	IT_SEED,
+	IT_POTION
 };
 
 enum eHostilityType
@@ -83,6 +84,7 @@ public:
 
 	virtual void Attack(CMap* pMap, CEntity* pTarget);
 	virtual void GetHurt(Uint8 Damage, CMap* pMap, CEntity* pAttacker);
+	virtual void GetHealed(Uint8 Heal);
 	virtual Sint16 GetHealth();
 	virtual bool IsAlive(CMap* pMap);
 

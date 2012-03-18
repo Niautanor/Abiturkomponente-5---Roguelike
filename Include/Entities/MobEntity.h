@@ -18,14 +18,14 @@
 class CMobEntity : public CEntity
 {
 protected:
-	SmartObject<CItem> WieldedItem;
-
 	Sint16 Health;
 
 public:
 	CMobEntity(Tile T = Tile('M', CColor(255,0,0), CColor(0,0,0)), CVector Position = CVector(1,1), Uint8 Flags = EF_MOB, Uint8 Initial_Health = 5)
 		: CEntity(T, Position, Flags), Health(Initial_Health) { }
 	virtual ~CMobEntity() { }
+
+	SmartObject<CItem> WieldedItem;
 
 	virtual const char* GetName();
 	virtual const char* GetDescription();
@@ -37,6 +37,7 @@ public:
 
 	virtual void Attack(CMap* pMap, CEntity* pTarget);
 	virtual void GetHurt(Uint8 Damage, CMap* pMap, CEntity* pAttacker);
+	virtual void GetHealed(Uint8 Heal);
 	virtual Sint16 GetHealth();
 	virtual bool IsAlive(CMap* pMap);
 

@@ -65,6 +65,10 @@ bool CMap::InitWithGenerator(Uint16 MinW, Uint16 MinH, Uint16 MaxW, Uint16 MaxH)
 				TileToBePlaced = CMapTile::GroundTile;
 				AddEntity(new CItemEntity(IT_SEED, SIED_SPINECRAWLER, CVector(X, Y)));
 				break;
+			case '!':
+				TileToBePlaced = CMapTile::GroundTile;
+				AddEntity(new CItemEntity(IT_POTION, IED_NONE, CVector(X, Y)));
+				break;
 			case '&':
 				TileToBePlaced = CMapTile::GroundTile;
 				AddEntity(new CMobEntity(Tile('&', CColor(200, 0,0), CColor(0,0,0)), CVector(X, Y), EF_MOB, 3));
@@ -196,13 +200,17 @@ CEntity* CMap::GetPlayer()
 
 void CMap::Tick()
 {
+	//Let the player Tick first
+	GetPlayer()->Tick(this);
+
+	for(Uint32 i=0;i<EntityList.size();i++)
+			if(EntityList[i] && !EntityList[i]->IsPlayer())//The player has allready taken his turn
+				EntityList[i]->Tick(this);
+
 	for(Uint32 Y=0;Y<MapHeight;Y++)
 		for(Uint32 X=0;X<MapWidth;X++)
 			if(TileList[Y*MapWidth+X])
 				TileList[Y*MapWidth+X]->Tick(CVector(X,Y), this);
-	for(Uint32 i=0;i<EntityList.size();i++)
-		if(EntityList[i])
-			EntityList[i]->Tick(this);
 }
 
 /**

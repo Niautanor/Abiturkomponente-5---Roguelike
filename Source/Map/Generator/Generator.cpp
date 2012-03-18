@@ -165,7 +165,8 @@ bool MapGenerator::Init(Uint16 MinW, Uint16 MaxW, Uint16 MinH, Uint16 MaxH)
 				GetTile(ContentPos.X, ContentPos.Y) = '~';
 				break;
 			case RC_LOOT:
-				GetTile(ContentPos.X, ContentPos.Y) = ':';
+				if(Chance(15)) GetTile(ContentPos.X, ContentPos.Y) = ':';
+				else GetTile(ContentPos.X, ContentPos.Y) = '!';
 				break;
 			case RC_MONSTER:
 				GetTile(ContentPos.X, ContentPos.Y) = '&';

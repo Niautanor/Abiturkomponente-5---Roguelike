@@ -18,11 +18,15 @@ void CItemEntity::InitFromItemData(eItemType Type, Uint8 ItemExtraData, CVector 
 		break;
 	case IT_WEAPON:
 		Entity_c = '/';
-		Fg = CColor(255, 0, 0);
+		Fg = CL_RED;
 		break;
 	case IT_SEED:
 		Entity_c = ':';
 		Fg = CColor(20, 230, 20);
+		break;
+	case IT_POTION:
+		Entity_c = '!';
+		Fg = CL_RED;
 		break;
 	default:
 		Entity_c = ' ';

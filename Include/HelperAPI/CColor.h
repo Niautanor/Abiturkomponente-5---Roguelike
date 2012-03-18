@@ -28,3 +28,9 @@ public:
 		return ret;
 	}
 };
+
+const CColor CL_BLACK = CColor(0,0,0);
+const CColor CL_WHITE = CColor(255,255,255);
+const CColor CL_RED = CColor(255,0,0);
+const CColor CL_GREEN = CColor(15,235,15);
+const CColor CL_BLUE = CColor(0,0,255);

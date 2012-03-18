@@ -24,6 +24,8 @@ CItem* CItem::GenerateObject(Uint8 Type)
 		return new CSeedItem(SIED_PLUMPHELMET);
 	case IT_WEAPON:
 		return new CWeaponItem(IED_NONE, 5);
+	case IT_POTION:
+		return new CPotionItem();
 	default:
 		return NULL;
 	}
@@ -34,8 +36,14 @@ eItemType CItem::GetType()
 	return IT_NO_ITEM;
 }
 
+bool CItem::RequiresDirection()
+{
+	return false;
+}
+
 void CItem::OnUse(CVector UsePos, CEntity *pUser, CMap *pMap)
 {
+	--Uses;
 }
 
 

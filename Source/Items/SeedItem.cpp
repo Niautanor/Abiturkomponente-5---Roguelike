@@ -22,6 +22,11 @@ eItemType CSeedItem::GetType()
 	return IT_SEED;
 }
 
+bool CSeedItem::RequiresDirection()
+{
+	return true;
+}
+
 void CSeedItem::OnUse(CVector UsePos, CEntity* pUser, CMap* pMap)
 {
 	if(pMap->GetTile(UsePos) == CMapTile::FarmTile) {
@@ -33,7 +38,7 @@ void CSeedItem::OnUse(CVector UsePos, CEntity* pUser, CMap* pMap)
 		pMap->GetTileData(UsePos).Unset(FT_PlantTypeMask);
 		pMap->GetTileData(UsePos).Set(ExtraData);
 
-		--Uses;
+		CItem::OnUse(UsePos, pUser, pMap);
 	} else gMessages.AddMessage("Du kannst Samen nur auf Farm-Feldern pflanzen");
 
 }

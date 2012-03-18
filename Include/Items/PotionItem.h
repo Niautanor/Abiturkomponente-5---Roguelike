@@ -1,18 +1,18 @@
 /*
- * CSeedItem.h
+ * Potion.h
  *
- *  Created on: 11.03.2012
+ *  Created on: 18.03.2012
  *      Author: Tim
  */
 
-#pragma once  /* CSEEDITEM_H_ */
+#pragma once  /* POTION_H_ */
 
 #include "Items/Item.h"
 
-class CSeedItem : public CItem {
+class CPotionItem : public CItem {
 public:
-	CSeedItem(eItemExtraData ExtraData) : CItem(ExtraData, 1) { }
-	~CSeedItem() { }
+	CPotionItem() : CItem(IED_NONE, 1) { }
+	~CPotionItem() { }
 
 	const char* GetName();
 	const char* GetDescription();

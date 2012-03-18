@@ -17,3 +17,5 @@
 bool Init_Random();
 
 CVector RandomVector(Sint16 MinX, Sint16 MinY, Sint16 MaxX, Sint16 MaxY);
+
+bool Chance(Uint8 Percentage);

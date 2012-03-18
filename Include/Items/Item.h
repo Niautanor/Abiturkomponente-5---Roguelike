@@ -40,8 +40,10 @@ public:
 	Uint8 /*eItemExtraData*/ ExtraData;
 	Uint8 Uses;//Number of remaining uses
 
+	virtual bool RequiresDirection();
 	virtual void OnUse(CVector UsePos, CEntity* pUser, CMap* pMap);
 };
 
 #include "Items/SeedItem.h"
 #include "Items/WeaponItem.h"
+#include "Items/PotionItem.h"

@@ -155,7 +155,9 @@ void Main::HandleUserAction(Uint16 c)
 				gMessages.AddMessage("Du haelst nichts in der Hand was du benutzen könntest");
 				break;
 			}
-			InputMode = IM_USE;
+			if(!((CPlayer*)Map.GetEntity(PlayerEntity))->WieldedItem->RequiresDirection())
+				Map.GetEntity(PlayerEntity)->UseItem(CVector(0,0), &Map);
+			else InputMode = IM_USE;
 			break;
 		case '&':
 			GameMode = GM_CRAFTING;

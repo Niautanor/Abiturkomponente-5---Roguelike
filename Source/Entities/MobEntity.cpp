@@ -52,6 +52,11 @@ void CMobEntity::GetHurt(Uint8 Damage, CMap* pMap, CEntity* pAttacker)
 		gMessages.AddFMessage("Der %s atackiert den %s mit %i Schadenspunkten", pAttacker->GetName(), GetName(), Damage);
 }
 
+void CMobEntity::GetHealed(Uint8 Heal)
+{
+	Health += Heal;
+}
+
 const char* CMobEntity::GetName()
 {
 	return "Mobster";

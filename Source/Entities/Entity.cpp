@@ -58,6 +58,10 @@ void CEntity::GetHurt(Uint8 Damage, CMap* pMap, CEntity* pAttacker)
 {//same counts for getting hurt
 }
 
+void CEntity::GetHealed(Uint8 Heal)
+{
+}
+
 Sint16 CEntity::GetHealth()
 {
 	return 0;
