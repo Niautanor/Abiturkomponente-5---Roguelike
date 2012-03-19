@@ -68,9 +68,7 @@ bool Main::OnInit()
 	if((pDisplay = SDL_SetVideoMode(TileWidth * NumCols, TileHeight * NumRows,32, SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL)
 		return false;
 
-	SDL_WM_SetCaption("Abiturkomponente 5 - Roguelike", NULL);
-
-	if((pFont = TTF_OpenFont("Font/video_terminal_screen_regular.ttf", TileHeight)) == NULL)
+	SDL_WM_SetCaption("Abiturkomponente 5 - Roguelike", NULL);if((pFont = TTF_OpenFont("Font/video_terminal_screen_regular.ttf", TileHeight)) == NULL)
 		return false;
 
 	if(!sMain.OnInit(TileHeight, TileWidth, NumRows, NumCols))
@@ -79,10 +77,13 @@ bool Main::OnInit()
 	if(!gMessages.OnInit(40))
 		return false;
 
+	if(!CItemTypeList::InitTypes())
+		return false;
+
 	if(!Map.InitWithGenerator(6,4,12,8))
 		return false;
 
-	Camera.Init(sMain.W()-10,sMain.H()-5);
+	Camera.Init(sMain.W()-16,sMain.H()-5);
 	Camera.CenterCamera(CVector(0,0), Map.GetW(), Map.GetH());
 
 	SDL_EnableUNICODE(1);
@@ -102,6 +103,9 @@ void Main::OnExit()
 	Map.RemoveEntity(PlayerEntity);
 
 	Map.OnExit();
+
+	CItemTypeList::ExitTypes();
+
 	gMessages.OnExit();
 
 	sMain.OnExit();
@@ -122,21 +126,19 @@ void Main::OnRender()
 	switch(GameMode)
 	{
 	case GM_MAIN:
-		if(!gMessages.PrintMessages(&sMain, 0, 0, 5,  false))
-			gMessages.AddMessage("PrintMessages schlug fehl");
-
-		Map.DrawMap(&sMain, 0, 5, Camera.GetX(), Camera.GetY(), Camera.GetW(), Camera.GetH());
-
-		sMain.PutFText(CColor(255,255,255), CColor(0,0,0), sMain.W() - 10, 5, 16, "HP: %d(%d)", Map.GetEntity(PlayerEntity)->GetHealth(), Map.GetEntity(PlayerEntity)->GetMaxHealth());
-		break;
-
 	case GM_DEAD:
 		if(!gMessages.PrintMessages(&sMain, 0, 0, 5,  false))
 			gMessages.AddMessage("PrintMessages schlug fehl");
 
 		Map.DrawMap(&sMain, 0, 5, Camera.GetX(), Camera.GetY(), Camera.GetW(), Camera.GetH());
-		sMain.PutText("Du bist Tot", CColor(220,20,20), CColor(0,0,0), sMain.W() / 2 - 5, sMain.H() / 2);//strlen("du ...") / 2 -> 5
-		sMain.PutText("Druecke Enter um neu zu beginnen", CColor(220, 200, 200), CColor(0,0,0), sMain.W() / 2 - 16, sMain.H() / 2 + 1);
+
+		sMain.PutFText(CL_WHITE, CL_BLACK, sMain.W() - 16, 5, 16, "HP: %d(%d)", Map.GetEntity(PlayerEntity)->GetHealth(), Map.GetEntity(PlayerEntity)->GetMaxHealth());
+		sMain.PutFText(CL_WHITE, CL_BLACK, sMain.W() - 16, 6, 32, "Item:\n%s", Map.GetEntity(PlayerEntity)->WieldsItem() ? ((CPlayer*)Map.GetEntity(PlayerEntity))->WieldedItem->GetName() : "Nichts");
+
+		if(GameMode == GM_DEAD) {
+			sMain.PutText("Du bist Tot", CColor(220,20,20), CColor(0,0,0), sMain.W() / 2 - 5, sMain.H() / 2);//strlen("du ...") / 2 -> 5
+			sMain.PutText("Druecke Enter um neu zu beginnen", CColor(220, 200, 200), CColor(0,0,0), sMain.W() / 2 - 16, sMain.H() / 2 + 1);
+		}
 		break;
 
 	case GM_MESSAGE_ARCHIVE:

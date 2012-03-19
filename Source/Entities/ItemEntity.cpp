@@ -7,7 +7,7 @@
 
 #include "Entities/ItemEntity.h"
 
-void CItemEntity::InitFromItemData(eItemType Type, Uint8 ItemExtraData, CVector Position)
+void CItemEntity::InitFromItemData(eItemType Type, eItemTypeList ItemTypeId, CVector Position)
 {
 	char Entity_c;
 	CColor Fg = CColor(255, 255, 255), Bg = CColor(0, 0, 0);
@@ -38,37 +38,27 @@ void CItemEntity::InitFromItemData(eItemType Type, Uint8 ItemExtraData, CVector 
 	Pos = Position;
 
 	SetItemType(Type);
-	SetExtraData(ItemExtraData);
+	SetItemTypeId(ItemTypeId);
 }
 
 CItemEntity::CItemEntity(CItem* pItem, CVector Position)
 {
-	InitFromItemData(pItem->GetType(), pItem->ExtraData, Position);
+	InitFromItemData(pItem->GetType(), pItem->TypeId, Position);
 }
 
-CItemEntity::CItemEntity(eItemType Type, Uint8 ItemExtraData, CVector Position)
+CItemEntity::CItemEntity(eItemType Type, eItemTypeList ItemTypeId, CVector Position)
 {
-	InitFromItemData(Type, ItemExtraData, Position);
+	InitFromItemData(Type, ItemTypeId, Position);
 }
 
 const char* CItemEntity::GetName()
 {
-	switch(GetItemType()) {
-	case IT_NO_ITEM:
-		return "Mysterious Blob";
-	case IT_WEAPON:
-		return "Waffe";
-	case IT_SEED:
-		return "Samen";
-	default:
-		return "Generic Item Text";
-	}
+	return CItemTypeList::GetType(TypeId)->Name.c_str();
 }
 
 const char* CItemEntity::GetDescription()
 {
-	//TODO: GetName auf GetDescription Anwenden
-	return "Item-Entity-Beschreibung";
+	return CItemTypeList::GetType(TypeId)->Description.c_str();
 }
 
 eItemType CItemEntity::GetItemType()
@@ -81,13 +71,13 @@ void CItemEntity::SetItemType(eItemType Type)
 	EntityFlags.Set(Type << 1);
 }
 
-Uint8 CItemEntity::GetExtraData(CMap *pMap)
+eItemTypeList CItemEntity::GetItemTypeId(CMap *pMap)
 {
-	return ItemExtraData;
+	return TypeId;
 }
 
-void CItemEntity::SetExtraData(Uint8 ExtraData)
+void CItemEntity::SetItemTypeId(eItemTypeList ItemTypeId)
 {
-	ItemExtraData = ExtraData;
+	TypeId = ItemTypeId;
 }
 

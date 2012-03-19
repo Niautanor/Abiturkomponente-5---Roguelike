@@ -7,16 +7,6 @@
 
 #include "Items/SeedItem.h"
 
-const char* CSeedItem::GetName()
-{
-	return "Samen";
-}
-
-const char* CSeedItem::GetDescription()
-{
-	return "Das ist ein Samen, den du in den Boden stecken kannst";
-}
-
 eItemType CSeedItem::GetType()
 {
 	return IT_SEED;
@@ -36,9 +26,9 @@ void CSeedItem::OnUse(CVector UsePos, CEntity* pUser, CMap* pMap)
 		pMap->GetTileData(UsePos).Set(5);
 
 		pMap->GetTileData(UsePos).Unset(FT_PlantTypeMask);
-		pMap->GetTileData(UsePos).Set(ExtraData);
+		pMap->GetTileData(UsePos).Set(((CSeedType*)CItemTypeList::GetType(TypeId))->SeedType);
 
-		CItem::OnUse(UsePos, pUser, pMap);
+		CUseableItem::OnUse(UsePos, pUser, pMap);
 	} else gMessages.AddMessage("Du kannst Samen nur auf Farm-Feldern pflanzen");
 
 }

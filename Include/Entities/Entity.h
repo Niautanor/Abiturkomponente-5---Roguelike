@@ -19,13 +19,6 @@ enum eEntityFlag
 	EF_IT_SEED = 0x04
 };
 
-enum eItemType {
-	IT_NO_ITEM = 0,
-	IT_WEAPON,
-	IT_SEED,
-	IT_POTION
-};
-
 enum eHostilityType
 {
 	HT_NONE,
@@ -75,9 +68,9 @@ public:
 	virtual eItemType GetItemType();
 	virtual void SetItemType(eItemType Type);
 
-	//Currently only used for Items to store Seed-/Weapon type and so on
-	virtual Uint8 GetExtraData(CMap* pMap);
-	virtual void SetExtraData(Uint8 ExtraData);
+	//Set or Get the Item Type Id
+	virtual eItemTypeList GetItemTypeId(CMap* pMap);
+	virtual void SetItemTypeId(eItemTypeList ExtraData);
 
 	//Entity is Player
 	virtual bool IsPlayer();

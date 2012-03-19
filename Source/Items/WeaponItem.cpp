@@ -7,16 +7,6 @@
 
 #include "Items/WeaponItem.h"
 
-const char* CWeaponItem::GetName()
-{
-	return "Waffe";
-}
-
-const char* CWeaponItem::GetDescription()
-{
-	return "Es ist scharf spitz und spritzig";
-}
-
 eItemType CWeaponItem::GetType()
 {
 	return IT_WEAPON;

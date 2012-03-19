@@ -24,9 +24,16 @@ bool CPlayer::IsPlayer()
 
 void CPlayer::Attack(CMap* pMap, CEntity* pTarget)
 {
-	if(WieldedItem && WieldedItem->GetType() == IT_WEAPON)
-		pTarget->GetHurt(3, pMap, this);
-	else pTarget->GetHurt(1, pMap, this);
+	CWeaponType* pWeaponType;
+	if(WieldedItem && WieldedItem->GetType() == IT_WEAPON) {
+		pWeaponType = (CWeaponType*) CItemTypeList::GetType(WieldedItem->TypeId);
+	} else {
+		pWeaponType = (CWeaponType*)CItemTypeList::GetType(ITL_FIST_WEAPON);
+	}
+
+	if(Chance(pWeaponType->HitPercentage)) {
+		pTarget->GetHurt(pWeaponType->Damage, pMap, this);
+	} else gMessages.AddFMessage("Du verfehlst den %s", pTarget->GetName());
 
 	CMobEntity::Attack(pMap, pTarget);
 }

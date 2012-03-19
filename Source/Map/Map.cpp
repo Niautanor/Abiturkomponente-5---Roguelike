@@ -67,11 +67,11 @@ bool CMap::InitWithGenerator(Uint16 MinW, Uint16 MinH, Uint16 MaxW, Uint16 MaxH)
 				break;
 			case ':':
 				TileToBePlaced = CMapTile::GroundTile;
-				AddEntity(new CItemEntity(IT_SEED, SIED_SPINECRAWLER, CVector(X, Y)));
+				AddEntity(new CItemEntity(IT_SEED, ITL_SPINECRAWLER_SEED, CVector(X, Y)));
 				break;
 			case '!':
 				TileToBePlaced = CMapTile::GroundTile;
-				AddEntity(new CItemEntity(IT_POTION, IED_NONE, CVector(X, Y)));
+				AddEntity(new CItemEntity(IT_POTION, ITL_SMALL_POTION, CVector(X, Y)));
 				break;
 			case '&':
 				TileToBePlaced = CMapTile::GroundTile;

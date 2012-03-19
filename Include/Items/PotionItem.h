@@ -7,15 +7,12 @@
 
 #pragma once  /* POTION_H_ */
 
-#include "Items/Item.h"
+#include "Items/UseableItem.h"
 
-class CPotionItem : public CItem {
+class CPotionItem : public CUseableItem {
 public:
-	CPotionItem() : CItem(IED_NONE, 1) { }
+	CPotionItem(eItemTypeList ItemTypeId) : CUseableItem(ItemTypeId) { }
 	~CPotionItem() { }
-
-	const char* GetName();
-	const char* GetDescription();
 
 	eItemType GetType();
 

@@ -7,9 +7,8 @@
 
 #include "Items/Item.h"
 
-CItem::CItem(eItemExtraData ED, Uint8 Start_Uses) {
-	ExtraData = ED;
-	Uses = Start_Uses;
+CItem::CItem(eItemTypeList ItemTypeId) {
+	TypeId = ItemTypeId;
 }
 
 CItem::~CItem() {
@@ -21,19 +20,34 @@ CItem* CItem::GenerateObject(Uint8 Type)
 	case IT_NO_ITEM:
 		return NULL;
 	case IT_SEED:
-		return new CSeedItem(SIED_PLUMPHELMET);
+		return new CSeedItem(ITL_PLUMPHELMET_SEED);
 	case IT_WEAPON:
-		return new CWeaponItem(IED_NONE, 5);
+		return new CWeaponItem(ITL_SHARP_SWORD_WEAPON);
 	case IT_POTION:
-		return new CPotionItem();
+		return new CPotionItem(ITL_SMALL_POTION);
 	default:
 		return NULL;
 	}
 }
 
+const char* CItem::GetName()
+{
+	return CItemTypeList::GetType(TypeId)->Name.c_str();
+}
+
+const char* CItem::GetDescription()
+{
+	return CItemTypeList::GetType(TypeId)->Description.c_str();
+}
+
 eItemType CItem::GetType()
 {
 	return IT_NO_ITEM;
+}
+
+bool CItem::IsUseable()
+{
+	return CItemTypeList::GetType(TypeId)->IsUsable();
 }
 
 bool CItem::RequiresDirection()
@@ -43,7 +57,6 @@ bool CItem::RequiresDirection()
 
 void CItem::OnUse(CVector UsePos, CEntity *pUser, CMap *pMap)
 {
-	--Uses;
 }
 
 

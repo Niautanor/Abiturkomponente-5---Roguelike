@@ -191,21 +191,21 @@ void Main::HandleUserAction(Uint16 c)
 		case 's': { //Spawn Seed
 			const char* Names[] = { "Plumphelmet", "Spinecrawler", "Banelingplant" };
 
-			eItemExtraData ExtraData;
+			eItemTypeList ItemTypeId;
 			Uint8 Choice = ListQuestion("ASDF?", CreateNameList(3, Names));
 
 			switch(Choice) {
 			case 0:
-				ExtraData = SIED_PLUMPHELMET;
+				ItemTypeId = ITL_PLUMPHELMET_SEED;
 				break;
 			case 1:
-				ExtraData = SIED_SPINECRAWLER;
+				ItemTypeId = ITL_SPINECRAWLER_SEED;
 				break;
 			case 2:
-				ExtraData = SIED_BANELING;
+				ItemTypeId = ITL_BANELING_SEED;
 				break;
 			}
-			Map.AddEntity(new CItemEntity(IT_SEED, ExtraData, Map.GetEntity(PlayerEntity)->Pos));
+			Map.AddEntity(new CItemEntity(IT_SEED, ItemTypeId, Map.GetEntity(PlayerEntity)->Pos));
 			break;
 		}
 		case 'c':

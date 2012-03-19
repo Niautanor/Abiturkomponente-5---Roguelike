@@ -20,8 +20,12 @@ Uint8 CMobEntity::IsHostile(CEntity *pEntity)
 
 void CMobEntity::Attack(CMap* pMap, CEntity* pTarget)
 {
-	if(!IsPlayer())
-		pTarget->GetHurt(2, pMap, this);
+	if(!IsPlayer()) {
+		CWeaponType* pWeaponType = (CWeaponType*)CItemTypeList::GetType(ITL_MOBSTER_CLAW_WEAPON);
+		if(Chance(pWeaponType->HitPercentage))
+			pTarget->GetHurt(pWeaponType->Damage, pMap, this);
+		else gMessages.AddFMessage("Der %s verfehlt dich", GetName());
+	}
 
 	if(!pTarget->IsPlayer()) {
 		if(!pTarget->IsAlive(pMap)) {
@@ -81,14 +85,14 @@ void CMobEntity::PickUp(CMap *pMap, CEntity *pItem)
 	eItemType Type = pItem->GetItemType();
 	if(Type == IT_NO_ITEM) return;
 
-	Uint8 ExtraData = pItem->GetExtraData(pMap);
+	eItemTypeList TypeId = pItem->GetItemTypeId(pMap);
 
 	if(WieldedItem) Drop(pMap);
 
 	pMap->RemoveEntity(pMap->GetEntityId(pItem));
 
 	WieldedItem.New(Type);
-	WieldedItem->ExtraData = ExtraData;
+	WieldedItem->TypeId = TypeId;
 }
 
 void CMobEntity::Drop(CMap *pMap)
@@ -108,7 +112,7 @@ bool CMobEntity::WieldsItem()
 void CMobEntity::UseItem(CVector Dir, CMap* pMap)
 {
 	WieldedItem->OnUse(Pos + Dir, this, pMap);
-	if(WieldedItem->Uses == 0)
+	if(WieldedItem->IsUseable() && ((CUseableItem*)(CItem*)WieldedItem)->Uses == 0)
 		WieldedItem.Delete();
 }
 

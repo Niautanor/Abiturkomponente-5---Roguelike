@@ -11,11 +11,8 @@
 
 class CWeaponItem : public CItem {
 public:
-	CWeaponItem(eItemExtraData ExtraData = IED_NONE, Uint8 RemainingUses = 5) : CItem(ExtraData, RemainingUses) { }
+	CWeaponItem(eItemTypeList ItemTypeId) : CItem(ItemTypeId) { }
 	~CWeaponItem() { }
-
-	const char* GetName();
-	const char* GetDescription();
 
 	eItemType GetType();
 

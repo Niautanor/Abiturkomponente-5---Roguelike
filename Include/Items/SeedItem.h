@@ -7,15 +7,12 @@
 
 #pragma once  /* CSEEDITEM_H_ */
 
-#include "Items/Item.h"
+#include "Items/UseableItem.h"
 
-class CSeedItem : public CItem {
+class CSeedItem : public CUseableItem {
 public:
-	CSeedItem(eItemExtraData ExtraData) : CItem(ExtraData, 1) { }
+	CSeedItem(eItemTypeList ItemTypeId) : CUseableItem(ItemTypeId) { }
 	~CSeedItem() { }
-
-	const char* GetName();
-	const char* GetDescription();
 
 	eItemType GetType();
 

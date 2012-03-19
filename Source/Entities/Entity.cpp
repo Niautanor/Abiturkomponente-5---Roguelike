@@ -94,12 +94,12 @@ void CEntity::SetItemType(eItemType Type)
 {
 }
 
-Uint8 CEntity::GetExtraData(CMap *pMap)
+eItemTypeList CEntity::GetItemTypeId(CMap *pMap)
 {
-	return 0;
+	return ITL_NONE;
 }
 
-void CEntity::SetExtraData(Uint8 ExtraData)
+void CEntity::SetItemTypeId(eItemTypeList ItemTypeId)
 {
 }
 
