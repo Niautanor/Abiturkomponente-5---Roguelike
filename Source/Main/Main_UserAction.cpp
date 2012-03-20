@@ -223,7 +223,7 @@ void Main::HandleUserAction(Uint16 c)
 			Map.OnExit();
 			gMessages.Clear();
 			Map.InitWithGenerator(6,4,12,8);
-			PlayerEntity = Map.AddEntity(new CPlayer(Tile('@', CColor(200,0,200), CColor(0,0,0)), CVector(1,1), EF_MOB, 5));
+			PlayerEntity = Map.AddEntity(new CPlayer(Tile('@', CColor(200,0,200), CColor(0,0,0)), CVector(1,1), EF_MOB, 15, 25));
 			Camera.CenterCamera(Map.GetEntity(PlayerEntity)->Pos, Map.GetW(), Map.GetH());
 			Map.Recalculate_FOV(Map.GetEntity(PlayerEntity)->Pos);
 			GameMode = GM_MAIN;

@@ -68,7 +68,9 @@ bool Main::OnInit()
 	if((pDisplay = SDL_SetVideoMode(TileWidth * NumCols, TileHeight * NumRows,32, SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL)
 		return false;
 
-	SDL_WM_SetCaption("Abiturkomponente 5 - Roguelike", NULL);if((pFont = TTF_OpenFont("Font/video_terminal_screen_regular.ttf", TileHeight)) == NULL)
+	SDL_WM_SetCaption("Abiturkomponente 5 - Roguelike", NULL);
+
+	if((pFont = TTF_OpenFont("Font/video_terminal_screen_regular.ttf", TileHeight)) == NULL)
 		return false;
 
 	if(!sMain.OnInit(TileHeight, TileWidth, NumRows, NumCols))
@@ -94,6 +96,9 @@ bool Main::OnInit()
 
 	Map.Recalculate_FOV(Map.GetEntity(PlayerEntity)->Pos);
 
+	gMessages.AddMessage("Du erwachst in einem Dunklen Verlies");
+	gMessages.AddMessage("Du weist nicht wie du hier hingekommen bist");
+	gMessages.AddMessage("DU MUSST VON HIER ENTKOMMEN!");
 
 	return true;
 }

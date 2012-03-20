@@ -228,7 +228,7 @@ void MapGenerator::Exit()
 
 Uint16 MapGenerator::NumConnectedRooms()
 {
-	Uint16 Ret;
+	Uint16 Ret = 0;
 	for(Uint16 Y = 0; Y < NumRoomsY; Y++)
 		for(Uint16 X = 0; X < NumRoomsX; X++)
 			if(GetRoom(X, Y)->ConnectedToStart)
