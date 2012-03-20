@@ -18,7 +18,7 @@
 
 #include "Main/Screen.h"
 
-#include "Main/CraftingInterface.h"
+//#include "Main/CraftingInterface.h"
 
 #include "Map/Map.h"
 #include "Map/Camera.h"
@@ -31,7 +31,7 @@ enum eGameMode
 	GM_MESSAGE_ARCHIVE,
 	GM_DEAD,
 	GM_EXIT,
-	GM_CRAFTING
+	//GM_CRAFTING
 };
 
 enum eInputMode
@@ -65,7 +65,7 @@ private:
 
 	CMap Map;
 
-	CraftingInterface Crafting;
+	//CraftingInterface Crafting;
 
 	Uint16 PendingTicks;//Die Anzahl der Spielschritte die ausgeführt werden muss bevor der Spieler wieder eine Entscheidung treffen kann
 

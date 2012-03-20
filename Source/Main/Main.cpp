@@ -90,8 +90,7 @@ bool Main::OnInit()
 
 	//Testing Stuff
 
-	PlayerEntity = Map.AddEntity(new CPlayer(Tile('@', CColor(255,0,255), CColor(0,0,0)), CVector(1,1), EF_MOB));
-	Map.AddEntity(new CItemEntity(IT_SEED, ITL_BANELING_SEED, CVector (1,1)));
+	PlayerEntity = Map.AddEntity(new CPlayer(Tile('@', CColor(255,0,255), CColor(0,0,0)), CVector(1,1), EF_MOB, 15, 25));
 
 	Map.Recalculate_FOV(Map.GetEntity(PlayerEntity)->Pos);
 
@@ -151,9 +150,9 @@ void Main::OnRender()
 			gMessages.AddMessage("PrintMessages schlug fehl");
 		break;
 
-	case GM_CRAFTING:
+	/*case GM_CRAFTING:
 		Crafting.Render(&sMain);
-		break;
+		break;*/
 
 	default:
 		break;

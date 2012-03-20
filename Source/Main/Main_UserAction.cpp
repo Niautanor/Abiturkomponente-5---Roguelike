@@ -91,9 +91,9 @@ void Main::HandleDirectionKey(CVector Dir)
 		break;
 	case GM_MESSAGE_ARCHIVE:
 		break;
-	case GM_CRAFTING:
+	/*case GM_CRAFTING:
 		Crafting.HandleDirectionKey(Dir);
-		break;
+		break;*/
 	default:
 		break;
 	}
@@ -155,20 +155,20 @@ void Main::HandleUserAction(Uint16 c)
 			break;
 		case 'u':
 			if(!Map.GetEntity(PlayerEntity)->WieldsItem()) {
-				gMessages.AddMessage("Du haelst nichts in der Hand was du benutzen könntest");
+				gMessages.AddMessage("Du haeltst nichts in der Hand");
 				break;
 			}
 			if(!((CPlayer*)Map.GetEntity(PlayerEntity))->WieldedItem->RequiresDirection())
 				Map.GetEntity(PlayerEntity)->UseItem(CVector(0,0), &Map);
 			else InputMode = IM_USE;
 			break;
-		case '&':
+		/*case '&':
 			GameMode = GM_CRAFTING;
 			if(!Crafting.Init(Map.GetEntity(PlayerEntity)->Pos, &Map)) {
 				gMessages.AddMessage("Crafting.Init schlug fehl");
 				GameMode = GM_MAIN;
 			}
-			break;
+			break;*/
 		case 'g': { //Pick up
 			PtrList<CEntity*> ItemList = FilterItems(Map.GetTileEntityList(Map.GetEntity(PlayerEntity)->Pos));
 			switch(ItemList.size()) {
@@ -184,7 +184,7 @@ void Main::HandleUserAction(Uint16 c)
 			}
 			break;
 		}
-		case 'd':
+		/*case 'd':
 			Map.GetEntity(PlayerEntity)->Drop(&Map);
 			break;
 		case 's': { //Spawn Seed
@@ -206,21 +206,22 @@ void Main::HandleUserAction(Uint16 c)
 			}
 			Map.AddEntity(new CItemEntity(IT_SEED, ItemTypeId, Map.GetEntity(PlayerEntity)->Pos));
 			break;
-		}
+		}*/
 		case 'c':
 			gMessages.Clear();
 			break;
 		case 't':
 			PendingTicks++;
 			break;
-		case 'h':
+		/*case 'h':
 			gMessages.AddMessage("TASTE FUER HALLO GEDRUECKT! ASDFL");
-			break;
+			break;*/
 		}
 		break;
 	case GM_DEAD:
 		if(c == 'y') {
 			Map.OnExit();
+			gMessages.Clear();
 			Map.InitWithGenerator(6,4,12,8);
 			PlayerEntity = Map.AddEntity(new CPlayer(Tile('@', CColor(200,0,200), CColor(0,0,0)), CVector(1,1), EF_MOB, 5));
 			Camera.CenterCamera(Map.GetEntity(PlayerEntity)->Pos, Map.GetW(), Map.GetH());
@@ -228,13 +229,13 @@ void Main::HandleUserAction(Uint16 c)
 			GameMode = GM_MAIN;
 		}
 		break;
-	case GM_CRAFTING:
+	/*case GM_CRAFTING:
 		Crafting.HandleKey(c);
 		if(Crafting.HasFinished()) {
 			Crafting.Exit();
 			GameMode = GM_MAIN;
 		}
-		break;
+		break;*/
 	case GM_MESSAGE_ARCHIVE:
 		GameMode = GM_MAIN;
 		break;
