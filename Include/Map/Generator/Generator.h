@@ -8,6 +8,7 @@
 #pragma once /* MAPGENERATOR_H_ */
 
 #include <stdlib.h>
+#include <algorithm>
 #include <math.h>
 #include <SDL/SDL_types.h>
 
@@ -35,6 +36,8 @@ public:
 
 	Uint16 W() { return MapW; }
 	Uint16 H() { return MapH; }
+
+	Uint16 NumConnectedRooms();
 
 	char& GetTile(Uint16 X, Uint16 Y) { return Tiles[Y * MapW + X]; }
 	MG_Room* GetRoom(Uint16 X, Uint16 Y) { return &(Rooms[Y * NumRoomsX + X]); }

@@ -65,7 +65,10 @@ void ExamineEntitieList(const PtrList<CEntity*>& EntityList)
 {
 	if(!EntityList.empty()) {
 		if(EntityList.size() == 1) {
-			gMessages.AddFMessage("%s - %s", EntityList[0]->GetName(), EntityList[0]->GetDescription());
+			CEntity* pEntity = EntityList[0];
+			const char* Name = pEntity->GetName();
+			const char* Description = pEntity->GetDescription();
+			gMessages.AddFMessage("%s - %s", Name, Description);
 		} else {
 			gMessages.AddMessage("Es sind mehrere Objekte hier:");
 			for(Uint16 i = 0; i < EntityList.size(); i++) {

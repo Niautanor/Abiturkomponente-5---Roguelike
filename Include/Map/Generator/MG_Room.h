@@ -24,7 +24,8 @@ enum eRoomContent {
 	RC_NONE = 0x00,
 	RC_MONSTER,
 	RC_LOOT,
-	RC_FARMLAND
+	RC_FARMLAND,
+	RC_EXIT
 };
 
 inline int eDirToInt(eDirection D) {
@@ -51,6 +52,7 @@ class MG_Room {
 public:
 	bool Doors[4];
 	eRoomContent Content;
+	bool ConnectedToStart;
 
 	//Returns the Direction in which the door is placed
 	eDirection GenerateDoors(unsigned char PossibleDoors);

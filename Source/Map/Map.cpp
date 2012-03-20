@@ -61,14 +61,22 @@ bool CMap::InitWithGenerator(Uint16 MinW, Uint16 MinH, Uint16 MaxW, Uint16 MaxH)
 			case '+':
 				TileToBePlaced = CMapTile::DoorTile;
 				break;
+			case '<':
+				TileToBePlaced = CMapTile::ExitTile;
+				break;
 			case '~':
 				TileToBePlaced = CMapTile::FarmTile;
 				GetTileData(CVector(X, Y)).Set(0 | FTD_NO_PLANT);
 				break;
-			case ':':
+			case ':': {
 				TileToBePlaced = CMapTile::GroundTile;
-				AddEntity(new CItemEntity(IT_SEED, ITL_SPINECRAWLER_SEED, CVector(X, Y)));
-				break;
+				Uint8 r = rand() % 100;
+				if(r > 85)
+					AddEntity(new CItemEntity(IT_SEED, ITL_SPINECRAWLER_SEED, CVector(X, Y)));
+				else if(r > 20)
+					AddEntity(new CItemEntity(IT_SEED, ITL_PLUMPHELMET_SEED, CVector(X, Y)));
+				else AddEntity(new CItemEntity(IT_SEED, ITL_BANELING_SEED, CVector(X, Y)));
+				break; }
 			case '!':
 				TileToBePlaced = CMapTile::GroundTile;
 				AddEntity(new CItemEntity(IT_POTION, ITL_SMALL_POTION, CVector(X, Y)));
@@ -303,9 +311,9 @@ void CMap::PutMapTile(CMapTile* T, Uint16 X, Uint16 Y)
 
 CMapTile*& CMap::GetTile(CVector Pos)
 {
-		if(Pos.X < MapWidth && Pos.Y < MapHeight)
-			return TileList[Pos.Y*MapWidth+Pos.X];
-		else return CMapTile::EmptyTile;
+	if(Pos.X < MapWidth && Pos.Y < MapHeight)
+		return TileList[Pos.Y*MapWidth+Pos.X];
+	else return CMapTile::EmptyTile;
 }
 
 int CMap::AddEntity(CEntity* pEntity)

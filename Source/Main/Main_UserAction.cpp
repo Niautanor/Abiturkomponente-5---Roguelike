@@ -57,16 +57,19 @@ void Main::HandleDirectionKey(CVector Dir)
 			PtrList<CEntity*> HostileList = FilterHostility(EntityList, Map.GetEntity(PlayerEntity), HT_HOSTILE);
 			if(!HostileList.empty()) {
 				if(HostileList.size() == 1) {
-					if(Question("Willst du den Gegner auf diesem Feld angreifen?"))
+					if(Question("Willst du den Gegner auf diesem Feld angreifen?")) {
 						Map.GetEntity(PlayerEntity)->Attack(&Map, HostileList[0]);
+						PendingTicks++;
+					}
 				} else {
 					Uint8 choice = ListQuestion("Was Angreifen?", HostileList);
 					Map.GetEntity(PlayerEntity)->Attack(&Map, HostileList[choice]);
+					PendingTicks++;
 				}
-				PendingTicks++;
 				return;
 
 			}
+
 			if(Map.GetEntity(PlayerEntity)->CanMove(&Map, Dir)) {
 				Map.GetEntity(PlayerEntity)->Mov += Dir;
 				PendingTicks++;
@@ -143,19 +146,15 @@ void Main::HandleUserAction(Uint16 c)
 			GameMode = GM_MESSAGE_ARCHIVE;
 			break;
 		case 'i':
-			if(InputMode != IM_MAIN)
-				break;
 			InputMode = IM_INTERACT;
 			gMessages.AddMessage("Interaktionsmodus: ('q' zum Beenden)");
 			break;
 		case 'e':
-			if(InputMode != IM_MAIN)
-				break;
 			InputMode = IM_EXAMINE;
 			gMessages.AddMessage("Untersuchungsmodus ('q' zum Beenden)");
 			break;
 		case 'u':
-			if(InputMode != IM_MAIN || !Map.GetEntity(PlayerEntity)->WieldsItem()) {
+			if(!Map.GetEntity(PlayerEntity)->WieldsItem()) {
 				gMessages.AddMessage("Du haelst nichts in der Hand was du benutzen könntest");
 				break;
 			}

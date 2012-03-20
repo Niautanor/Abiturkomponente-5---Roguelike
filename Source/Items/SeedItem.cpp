@@ -20,6 +20,9 @@ bool CSeedItem::RequiresDirection()
 void CSeedItem::OnUse(CVector UsePos, CEntity* pUser, CMap* pMap)
 {
 	if(pMap->GetTile(UsePos) == CMapTile::FarmTile) {
+		if(pMap->GetTileData(UsePos).Is_Set(FTD_FULLY_GROWN))
+			pMap->GetTile(UsePos)->OnInteract(UsePos, pMap, pUser);
+
 		pMap->GetTileData(UsePos).Unset(FTD_FULLY_GROWN);
 
 		pMap->GetTileData(UsePos).Unset(FT_GrowTimeMask);

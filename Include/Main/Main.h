@@ -30,6 +30,7 @@ enum eGameMode
 	GM_MAIN,
 	GM_MESSAGE_ARCHIVE,
 	GM_DEAD,
+	GM_EXIT,
 	GM_CRAFTING
 };
 

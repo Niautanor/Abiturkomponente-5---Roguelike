@@ -91,6 +91,7 @@ bool Main::OnInit()
 	//Testing Stuff
 
 	PlayerEntity = Map.AddEntity(new CPlayer(Tile('@', CColor(255,0,255), CColor(0,0,0)), CVector(1,1), EF_MOB));
+	Map.AddEntity(new CItemEntity(IT_SEED, ITL_BANELING_SEED, CVector (1,1)));
 
 	Map.Recalculate_FOV(Map.GetEntity(PlayerEntity)->Pos);
 
@@ -127,6 +128,7 @@ void Main::OnRender()
 	{
 	case GM_MAIN:
 	case GM_DEAD:
+	case GM_EXIT:
 		if(!gMessages.PrintMessages(&sMain, 0, 0, 5,  false))
 			gMessages.AddMessage("PrintMessages schlug fehl");
 
@@ -136,8 +138,11 @@ void Main::OnRender()
 		sMain.PutFText(CL_WHITE, CL_BLACK, sMain.W() - 16, 6, 32, "Item:\n%s", Map.GetEntity(PlayerEntity)->WieldsItem() ? ((CPlayer*)Map.GetEntity(PlayerEntity))->WieldedItem->GetName() : "Nichts");
 
 		if(GameMode == GM_DEAD) {
-			sMain.PutText("Du bist Tot", CColor(220,20,20), CColor(0,0,0), sMain.W() / 2 - 5, sMain.H() / 2);//strlen("du ...") / 2 -> 5
-			sMain.PutText("Druecke Enter um neu zu beginnen", CColor(220, 200, 200), CColor(0,0,0), sMain.W() / 2 - 16, sMain.H() / 2 + 1);
+			sMain.PutText("Du bist Tot", CColor(220,20,20), CL_BLACK, sMain.W() / 2 - 5, sMain.H() / 2);//strlen("du ...") / 2 -> 5
+			sMain.PutText("Druecke Enter um neu zu beginnen", CColor(220, 200, 200), CL_BLACK, sMain.W() / 2 - 16, sMain.H() / 2 + 1);
+		} else if(GameMode == GM_EXIT) {
+			sMain.PutText("Du bist entkommen!", CColor(20,20,200), CL_BLACK, sMain.W() / 2 - 9, sMain.H() / 2);
+			sMain.PutText("Herzlichen Glueckwunsch", CL_WHITE, CL_BLACK, sMain.W() / 2 - 11, sMain.H() / 2 + 1);
 		}
 		break;
 
@@ -169,6 +174,9 @@ void Main::Tick()
 	if(!Map.GetEntity(PlayerEntity)->IsAlive(&Map)) {
 		gMessages.AddMessage("Du stirbst");
 		GameMode = GM_DEAD;
+	} else if(Map.GetTile(Map.GetEntity(PlayerEntity)->Pos) == CMapTile::ExitTile) {
+		gMessages.AddMessage("Du hast es geschaft den Verliesen zu entkommen");
+		GameMode = GM_EXIT;
 	}
 
 	PendingTicks--;

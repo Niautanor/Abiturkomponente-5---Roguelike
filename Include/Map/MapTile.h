@@ -43,6 +43,7 @@ public:
 	static CMapTile* EmptyTile;
 	static CMapTile* WallTile;
 	static CMapTile* GroundTile;
+	static CMapTile* ExitTile;
 
 	static CMapTile* DoorTile;
 

@@ -12,6 +12,7 @@ MG_Room::MG_Room()
 	for(unsigned char i = 0; i < 4; i++)
 		Doors[i] = false;
 	Content = RC_NONE;
+	ConnectedToStart = false;
 }
 
 MG_Room::~MG_Room()

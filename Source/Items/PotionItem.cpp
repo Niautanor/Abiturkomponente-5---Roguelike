@@ -19,7 +19,7 @@ bool CPotionItem::RequiresDirection()
 
 void CPotionItem::OnUse(CVector UsePos, CEntity* pUser, CMap* pMap)
 {
-	pUser->GetHealed(4);
+	pUser->GetHealed(((CPotionType*)CItemTypeList::GetType(TypeId))->Heal);
 	CUseableItem::OnUse(UsePos, pUser, pMap);
 }
 
