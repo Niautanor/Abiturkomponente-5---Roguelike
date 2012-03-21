@@ -184,10 +184,10 @@ void Main::HandleUserAction(Uint16 c)
 			}
 			break;
 		}
-		/*case 'd':
+		case 'd':
 			Map.GetEntity(PlayerEntity)->Drop(&Map);
 			break;
-		case 's': { //Spawn Seed
+		/*case 's': { //Spawn Seed
 			const char* Names[] = { "Plumphelmet", "Spinecrawler", "Banelingplant" };
 
 			eItemTypeList ItemTypeId;
